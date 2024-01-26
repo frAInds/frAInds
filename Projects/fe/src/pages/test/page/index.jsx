@@ -3,6 +3,65 @@ import { useEffect } from 'react'
 import Message from './components/Message';
 
 const Test = () => {
+  let dummyMessages = [
+    { content: "멍멍멍", isMine: true, sent_time: '1:53 AM' },
+    { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
+    { content: "멍멍멍", isMine: true, sent_time: '1:53 AM' },
+    { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
+    { content: "멍멍멍", isMine: true, sent_time: '1:53 AM' },
+    { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
+    { content: "멍멍멍", isMine: true, sent_time: '1:53 AM' },
+    { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
+    { content: "멍멍멍", isMine: true, sent_time: '1:53 AM' },
+    { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
+    { content: "멍멍멍", isMine: true, sent_time: '1:53 AM' },
+    { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
+    { content: "멍멍멍", isMine: true, sent_time: '1:53 AM' },
+    { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
+    { content: "멍멍멍", isMine: true, sent_time: '1:53 AM' },
+    { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
+    { content: "멍멍멍", isMine: true, sent_time: '1:53 AM' },
+    { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
+    { content: "멍멍멍", isMine: true, sent_time: '1:53 AM' },
+    { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
+    { content: "멍멍멍", isMine: true, sent_time: '1:53 AM' },
+    { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
+    { content: "멍멍멍", isMine: true, sent_time: '1:53 AM' },
+    { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
+    { content: "멍멍멍", isMine: true, sent_time: '1:53 AM' },
+    { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
+    { content: "멍멍멍", isMine: true, sent_time: '1:53 AM' },
+    { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
+    { content: "멍멍멍", isMine: true, sent_time: '1:53 AM' },
+    { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
+    { content: "멍멍멍", isMine: true, sent_time: '1:53 AM' },
+    { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
+    { content: "멍멍멍", isMine: true, sent_time: '1:53 AM' },
+    { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
+    { content: "멍멍멍", isMine: true, sent_time: '1:53 AM' },
+    { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
+    { content: "멍멍멍", isMine: true, sent_time: '1:53 AM' },
+    { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
+    { content: "멍멍멍", isMine: true, sent_time: '1:53 AM' },
+    { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
+    { content: "멍멍멍", isMine: true, sent_time: '1:53 AM' },
+    { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
+    { content: "멍멍멍", isMine: true, sent_time: '1:53 AM' },
+    { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
+    { content: "멍멍멍", isMine: true, sent_time: '1:53 AM' },
+    { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
+    { content: "멍멍멍", isMine: true, sent_time: '1:53 AM' },
+    { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
+    { content: "멍멍멍", isMine: true, sent_time: '1:53 AM' },
+    { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
+    { content: "멍멍멍", isMine: true, sent_time: '1:53 AM' },
+    { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
+    { content: "멍멍멍", isMine: true, sent_time: '1:53 AM' },
+    { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
+    { content: "멍멍멍", isMine: true, sent_time: '1:53 AM' },
+    { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
+  ]
+
   useEffect(() => {
     document.body.classList.add('overflow-y-hidden')
   }, []);
@@ -49,20 +108,14 @@ const Test = () => {
 
           {/* 메시지 히스토리 영역 */}
           <div className='flex flex-col-reverse text-5xl grow-0 overflow-y-scroll h-full'>
-            <Message isMine={true}>멍멍멍</Message>
-            <Message isMine={false}>왈왈왈</Message>
-            <Message isMine={true}>멍멍멍</Message>
-            <Message isMine={false}>왈왈왈</Message>
-            <Message isMine={true}>멍멍멍</Message>
-            <Message isMine={false}>왈왈왈</Message>
-            <Message isMine={true}>멍멍멍</Message>
-            <Message isMine={false}>왈왈왈</Message>
-            <Message isMine={true}>멍멍멍</Message>
-            <Message isMine={false}>왈왈왈</Message>
-            <Message isMine={true}>멍멍멍</Message>
-            <Message isMine={false}>왈왈왈</Message>
-            <Message isMine={true}>멍멍멍</Message>
-            <Message isMine={false}>왈왈왈</Message>
+            {dummyMessages.map((dummyMessage, idx) =>
+              <Message
+                key={idx}
+                sent_time={dummyMessage.sent_time}
+                isMine={dummyMessage.isMine}>
+                {dummyMessage.content}
+              </Message>
+            )}
           </div>
         </div>
 

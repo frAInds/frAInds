@@ -38,7 +38,7 @@ const Message = (props) => {
 
                 <div className={`self-end text-xs flex flex-col ${additionalClasses2}`}>
                     <span>2</span>
-                    <span>1:53 AM</span>
+                    <span>{props.sent_time}</span>
                 </div>
             </div>
         </div>
