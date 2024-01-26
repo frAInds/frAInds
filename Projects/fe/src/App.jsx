@@ -11,6 +11,7 @@ import RootLayout from "@/pages/root/page/components/Layout";
 import AccountLayout from "@/pages/account/page/components/Layout"
 import SignIn from "@/pages/account/sign-in/page";
 import SignUp from "@/pages/account/sign-up/page";
+import Test from "./pages/test/page";
 
 function App() {
   const router = createBrowserRouter(
@@ -36,11 +37,15 @@ function App() {
           element={<RootLayout />}
         >
           <Route
-            index
+            path="/"
             element={<Root />}
           />
         </Route>
 
+        <Route
+          path="test"
+          element={<Test/>}
+        />
       </Route>
     )
   )
