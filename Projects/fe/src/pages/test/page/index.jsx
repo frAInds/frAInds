@@ -49,30 +49,30 @@ const Test = () => {
 
           {/* 메시지 히스토리 영역 */}
           <div className='flex flex-col-reverse text-5xl grow-0 overflow-y-scroll h-full'>
-            <Message>12323</Message>
-            <Message>1</Message>
-            <Message>2</Message>
-            <Message>3</Message>
-            <Message>4</Message>
-            <Message>5</Message>
-            <Message>6</Message>
-            <Message>7</Message>
-            <Message>8</Message>
-            <Message>9</Message>
-            <Message>10</Message>
-            <Message>11</Message>
-            <Message>12</Message>
-            <Message>13</Message>
+            <Message isMine={true}>멍멍멍</Message>
+            <Message isMine={false}>왈왈왈</Message>
+            <Message isMine={true}>멍멍멍</Message>
+            <Message isMine={false}>왈왈왈</Message>
+            <Message isMine={true}>멍멍멍</Message>
+            <Message isMine={false}>왈왈왈</Message>
+            <Message isMine={true}>멍멍멍</Message>
+            <Message isMine={false}>왈왈왈</Message>
+            <Message isMine={true}>멍멍멍</Message>
+            <Message isMine={false}>왈왈왈</Message>
+            <Message isMine={true}>멍멍멍</Message>
+            <Message isMine={false}>왈왈왈</Message>
+            <Message isMine={true}>멍멍멍</Message>
+            <Message isMine={false}>왈왈왈</Message>
           </div>
         </div>
 
         {/* 메시지 아래쪽 인풋 섹션 */}
         <div className="max-h-[15%] h-full bg-slate-50 p-3
         flex flex-col gap-1">
-            <input className='basis-full text-slate-600 w-full border-0
+          <input className='basis-full text-slate-600 w-full border-0
             active:borer-0 text-wrap' />
 
-          
+
           <div className='flex justify-start gap-1'>
             <svg className='opacity-25' xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M620-520q25 0 42.5-17.5T680-580q0-25-17.5-42.5T620-640q-25 0-42.5 17.5T560-580q0 25 17.5 42.5T620-520Zm-280 0q25 0 42.5-17.5T400-580q0-25-17.5-42.5T340-640q-25 0-42.5 17.5T280-580q0 25 17.5 42.5T340-520Zm140 260q68 0 123.5-38.5T684-400h-66q-22 37-58.5 58.5T480-320q-43 0-79.5-21.5T342-400h-66q25 63 80.5 101.5T480-260Zm0 180q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-400Zm0 320q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Z" /></svg>
             <svg className='opacity-25' xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M438-226 296-368l58-58 84 84 168-168 58 58-226 226ZM200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Zm0-480h560v-80H200v80Zm0 0v-80 80Z" /></svg>
