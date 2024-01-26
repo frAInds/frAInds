@@ -1,35 +1,51 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Root } from "@/pages/root/page/index";
+import {
+  Route,
+  RouterProvider,
+  createBrowserRouter,
+  createRoutesFromElements
+} from "react-router-dom";
+
+import ErrorBoundary from "@/common/components/ErrorBoundary";
+import RootLayout from "@/pages/root/page/components/Layout";
+import AccountLayout from "@/pages/account/page/components/Layout"
+import SignIn from "@/pages/account/sign-in/page";
+import SignUp from "@/pages/account/sign-up/page";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route
+        errorElement={<ErrorBoundary />}
+      >
+        <Route
+          path="account"
+          element={<AccountLayout />}
+        >
+          <Route
+            path="sign-in"
+            element={<SignIn />}
+          />
+          <Route
+            path="sign-up"
+            element={<SignUp />}
+          />
+        </Route>
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+        <Route
+          element={<RootLayout />}
+        >
+          <Route
+            index
+            element={<Root />}
+          />
+        </Route>
+
+      </Route>
+    )
   )
+
+  return <RouterProvider router={router} />
 }
 
 export default App
