@@ -12,6 +12,7 @@ import AccountLayout from "@/pages/account/page/components/Layout"
 import SignIn from "@/pages/account/sign-in/page";
 import SignUp from "@/pages/account/sign-up/page";
 import Test from "./pages/test/page";
+import TestProvider from "./common/contexts/TestProvider";
 
 function App() {
   const router = createBrowserRouter(
@@ -44,13 +45,18 @@ function App() {
 
         <Route
           path="test"
-          element={<Test/>}
+          element={<Test />}
         />
       </Route>
     )
   )
 
-  return <RouterProvider router={router} />
+  return <>
+    <TestProvider>
+      <RouterProvider router={router} />
+    </TestProvider>
+  </>
+
 }
 
 export default App

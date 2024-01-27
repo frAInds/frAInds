@@ -1,8 +1,23 @@
 import avatar from '@/pages/test/page/images/choongi_pic.png'
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import Message from './components/Message';
+import { TestContext } from '@/common/contexts/TestProvider';
 
 const Test = () => {
+  // #1 방법
+  // someUtilFunction을 object destructuring 해서 꺼내옴
+  const { someUtilFunction } = useContext(TestContext);
+  someUtilFunction();
+
+  // #2 방법
+  // object destructuring이 아직 낯설다면 아래와 같이 가져와서 접근해도 됨
+  // const TestState = useContext(TestContext);
+  // TestState.someUtilFunction();
+
+  useEffect(() => {
+    document.body.classList.add('overflow-y-hidden')
+  }, []);
+
   let dummyMessages = [
     { content: "멍멍멍", isMine: true, sent_time: '1:53 AM' },
     { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
@@ -62,9 +77,6 @@ const Test = () => {
     { content: "왈왈왈", isMine: false, sent_time: '1:53 AM' },
   ]
 
-  useEffect(() => {
-    document.body.classList.add('overflow-y-hidden')
-  }, []);
   return (
     <div className="w-screen h-screen bg-zinc-800">
 
