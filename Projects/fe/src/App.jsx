@@ -20,15 +20,14 @@ function App() {
         errorElement={<ErrorBoundary />}
       >
         <Route
-          path="account"
           element={<AccountLayout />}
         >
           <Route
-            path="sign-in"
+            path="account/sign-in"
             element={<SignIn />}
           />
           <Route
-            path="sign-up"
+            path="account/sign-up"
             element={<SignUp />}
           />
         </Route>
