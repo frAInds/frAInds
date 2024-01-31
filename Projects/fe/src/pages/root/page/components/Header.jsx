@@ -31,7 +31,7 @@ export const Header = () => {
 
   return (<>
     <div className="fixed w-screen flex flex-row h-[70px] items-center bg-white 
-    shadow-lg px-5 dark:bg-slate-700  dark:drop-shadow-xl z-10">
+    shadow-lg px-5 dark:bg-slate-950  dark:drop-shadow-xl z-10">
       <FriendsLogo />
       <Link>Button 1</Link>
       <Link>Button 2</Link>
