@@ -40,7 +40,7 @@ const SelectionsCarousel = () => {
                             onRightClicked={() => emblaApi.scrollNext()}
                         />
                         <div className="shadow-2xl bg-indigo-100 dark:shadow-black dark:bg-slate-800 rounded-2xl 
-                            shrink-0 grow-0 w-full py-3 px-10 flex flex-col max-w-[780px] mt-10 text-pretty dark:text-indigo-500 dark:font-medium text-lg">
+                            shrink-0 grow-0 w-full py-3 px-10 flex flex-col max-w-[780px] mt-10 text-pretty dark:text-indigo-400 dark:font-medium text-lg">
                             <span className="m-auto font-extrabold text-4xl">
                                 유태민 나무위키
                             </span>
@@ -66,7 +66,7 @@ const SelectionsCarousel = () => {
                             onRightClicked={() => emblaApi.scrollNext()}
                         />
                         <div className="shadow-2xl bg-indigo-100 dark:shadow-black dark:bg-slate-800 rounded-2xl 
-                            shrink-0 grow-0 w-full py-3 px-10 flex flex-col max-w-[780px] mt-10 text-pretty dark:text-indigo-500 dark:font-medium text-lg">
+                            shrink-0 grow-0 w-full py-3 px-10 flex flex-col max-w-[780px] mt-10 text-pretty dark:text-indigo-400 dark:font-medium text-lg">
                             <span className="m-auto font-extrabold text-4xl">
                                 충기 나무위키
                             </span>
@@ -92,7 +92,7 @@ const SelectionsCarousel = () => {
                             onRightClicked={() => emblaApi.scrollNext()}
                         />
                         <div className="shadow-2xl bg-indigo-100 dark:shadow-black dark:bg-slate-800 rounded-2xl 
-                            shrink-0 grow-0 w-full py-3 px-10 flex flex-col max-w-[780px] mt-10 text-pretty dark:text-indigo-500 dark:font-medium text-lg">
+                            shrink-0 grow-0 w-full py-3 px-10 flex flex-col max-w-[780px] mt-10 text-pretty dark:text-indigo-400 dark:font-medium text-lg">
                             <span className="m-auto font-extrabold text-4xl">
                                 강아지 나무위키
                             </span>
