@@ -13,6 +13,7 @@ import SignIn from "@/pages/account/sign-in/page";
 import SignUp from "@/pages/account/sign-up/page";
 import Test from "./pages/test/page";
 import TestProvider from "./common/contexts/TestProvider";
+import Chat from "./pages/chat/page";
 
 function App() {
   const router = createBrowserRouter(
@@ -46,6 +47,11 @@ function App() {
         <Route
           path="test"
           element={<Test />}
+        />
+
+        <Route
+          path="chat"
+          element={<Chat />}
         />
       </Route>
     )
