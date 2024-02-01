@@ -9,6 +9,16 @@ const SignIn = () => {
   const [step, nextStep] = useState(1);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  
+  const [isFocused, setFocus] = useState(false);
+
+  const handleFocus = () => {
+    setFocus(true);
+  }
+
+  const handleBlur = () => {
+    setFocus(false);
+  }
 
   const handleStep = () => {
     if(step === 1 && (username.length >= 8) && username.trim !== ''){
@@ -25,13 +35,43 @@ const SignIn = () => {
     // 2 -> 1 없음
   };
 
+  const handleLogin = async () => {
+    try{
+      const response = await fetch('@/pages/account/testdata/json/users.json');
+      if(!response.ok){
+          throw new Error(`http error ${response.status}`);
+      }
+      const data = await response.json();
+
+      const user = data.users.find(
+          (user) => user.username === username && user.password === password
+      );
+
+      if(user){
+          console.log('login success', user);
+          alert('login success');
+
+          //로그인 상태 true로 전환
+          setLoggedin((prevLoggedin) => !prevLoggedin);
+          console.log('Login state updated:', !loggedin);
+
+          navigate("/chat");
+
+      }else if(!username || !password){
+          console.log('username or password is not entered');
+          alert('username or password is not entered');
+      }else{
+          console.log('username or password is invalid');
+          alert('invalid username or password');
+      }
+  }catch(error){
+      console.error('error occured', error);
+  }
+
+  }
+
   return (
     <>
-    {/* h-full(매우 중요) */}
-    {/* h-full(매우 중요) */}
-    {/* h-full(매우 중요) */}
-    {/* h-full(매우 중요) */}
-    {/* h-full(매우 중요) */}
     {/* h-full(매우 중요) */}
     <div className="flex items-center justify-center h-full ">
       <div className="bg-white rounded-lg p-6 h-1/2 w-1/2 flex flex-col items-center justify-center">
@@ -43,13 +83,18 @@ const SignIn = () => {
             <input 
             type="text"
             placeholder="ID or username"
-            className="border border-gray-300 rounded-md p-1 mb-2 w-[70%]"
+            // className="border border-gray-300 rounded-md p-1 mb-2 w-[70%]"
+            className="border-2 rounded-lg border-gray-600 border-opacity-50 outline-none
+            focus:border-blue-600 transition duration-200 transform origin-top-left p-1 mb-2 w-[70%]"
             value={username}
+            required
             onChange={
               (e) => {
                 setUsername(e.target.value);
               }
             }
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             />
             
             <button className="bg-blue-600 rounded-md text-white w-[60%] mt-3"

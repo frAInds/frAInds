@@ -37,7 +37,7 @@ export const Layout = () => {
                     curSentenceIdx.current += 1;
                 else
                     curSentenceIdx.current = 0
-                console.log(curSentenceIdx.current)
+                // console.log(curSentenceIdx.current)
             }, 2000);
         }
         else {
