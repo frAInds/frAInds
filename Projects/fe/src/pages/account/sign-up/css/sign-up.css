@@ -2,6 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-input[type="text"]:focus ~ .input-text{
+/* input[type="text"]:focus ~ .input-text{
     @apply text-blue-500 transform -translate-x-10 -translate-y-10;
-}
+}; */
