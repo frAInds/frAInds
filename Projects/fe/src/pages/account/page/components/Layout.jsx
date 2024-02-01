@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { Outlet } from "react-router-dom";
 import FriendsLogo from "@/common/components/FriendsLogo";
 import choongGi from '@/pages/account/page/images/choongi_pic.png';
+// import SignIn from '@/pages/account/sign-in/page/index.jsx';
 
 export const Layout = () => {
     const sentences = [
@@ -85,6 +86,10 @@ export const Layout = () => {
                 {/* Right side */}
                 <div className="bg-black w-full h-full basis-[45%]
                 flex flex-col">
+
+                    {/* <div className="flex items-center justify-items-center">
+                        <Outlet />
+                    </div> */}
 
                     {/* Right side center */}
                     <div className="basis-full">

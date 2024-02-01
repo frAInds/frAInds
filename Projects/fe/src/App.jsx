@@ -19,17 +19,9 @@ function App() {
       <Route
         errorElement={<ErrorBoundary />}
       >
-        <Route
-          element={<AccountLayout />}
-        >
-          <Route
-            path="account/sign-in"
-            element={<SignIn />}
-          />
-          <Route
-            path="account/sign-up"
-            element={<SignUp />}
-          />
+        <Route path="account" element={<AccountLayout />}>
+          <Route path="sign-in"element={<SignIn />}/>
+          <Route path="sign-up" element={<SignUp />}/>
         </Route>
 
         <Route
