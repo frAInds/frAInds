@@ -11,7 +11,8 @@ import RootLayout from "@/pages/root/page/components/Layout";
 import AccountLayout from "@/pages/account/page/components/Layout"
 import SignIn from "@/pages/account/sign-in/page";
 import SignUp from "@/pages/account/sign-up/page";
-import Test from "./pages/test/page";
+// import Test from "./pages/test/page";
+import SignInTest from "@/pages/test/page/sign-in_test";
 
 function App() {
   const router = createBrowserRouter(
@@ -20,7 +21,7 @@ function App() {
         errorElement={<ErrorBoundary />}
       >
         <Route path="account" element={<AccountLayout />}>
-          <Route path="sign-in"element={<SignIn />}/>
+          <Route path="sign-in" element={<SignIn />}/>
           <Route path="sign-up" element={<SignUp />}/>
         </Route>
 
@@ -33,10 +34,7 @@ function App() {
           />
         </Route>
 
-        <Route
-          path="test"
-          element={<Test/>}
-        />
+        <Route path="test/*" element={<SignInTest />} />
       </Route>
     )
   )
