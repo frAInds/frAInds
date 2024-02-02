@@ -77,11 +77,11 @@ const SignIn = () => {
             <>
                 <FriendsLogo className="mb-3" />
 
-                <form className="flex flex-col h-full justify-center items-center p-3">
+                <form className="flex flex-col h-[80%] justify-center items-center p-3">
                     <label htmlFor="" className={`relative ${isFocusedUsername ? 'focused' : ''}`}>
                         <input
                         type="text"
-                        className="text-2xl border-2 rounded-lg border-gray-600 border-opacity-50 outline-none
+                        className="text-xl border-2 rounded-lg border-gray-600 border-opacity-50 outline-none
                         focus:border-blue-600 transition duration-200 transform origin-top-left mt-8"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
@@ -106,11 +106,11 @@ const SignIn = () => {
             <>
                 <FriendsLogo className="mb-3" />
 
-                <form className="flex flex-col h-full justify-center items-center p-3">
+                <form className="flex flex-col h-[80%] justify-center items-center p-3">
                     <label htmlFor="" className={`relative ${isFocusedPassword ? 'focused' : ''}`}>
                         <input
                         type="password"
-                        className="text-2xl border-2 rounded-lg border-gray-600 border-opacity-50 outline-none
+                        className="text-xl border-2 rounded-lg border-gray-600 border-opacity-50 outline-none
                         focus:border-blue-600 transition duration-200 transform origin-top-left mt-8"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -137,7 +137,7 @@ const SignIn = () => {
             <div className="flex-grow border-t border-gray-200 mt-2 ml-2"></div>
             </div>
 
-            <Link to="/account/sign-up" className="bg-green-600 rounded-md text-white w-[60%] text-center">
+            <Link to="/account/sign-up" className="bg-green-600 rounded-md text-white w-[60%] text-center mb-16">
                 <button>SIGN UP</button>
             </Link>
         </>
