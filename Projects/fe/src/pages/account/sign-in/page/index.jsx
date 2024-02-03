@@ -5,16 +5,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { login, logout } from '@/common/reducers/userSlice';
 
 const SignIn = () => {
-  const [step, nextStep] = useState(1);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+    const [step, nextStep] = useState(1);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
-  const isLoggedin = useSelector((state) => state.user.isAuthenticated);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+    const isLoggedin = useSelector((state) => state.user.isAuthenticated);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-  const [isFocusedUsername, setFocusUsername] = useState(false);
-  const [isFocusedPassword, setFocusPassword] = useState(false);
+    const [isFocusedUsername, setFocusUsername] = useState(false);
+    const [isFocusedPassword, setFocusPassword] = useState(false);
 
     const handleFocusUsername = () => {
         setFocusUsername(true);
@@ -33,11 +33,11 @@ const SignIn = () => {
         setFocusPassword(false);
     }
 
-  const handleStep = () => {
-    if(step === 1 && (username.length >= 8) && username.trim !== ''){
-      nextStep(2);
-    }
-  };
+    const handleStep = () => {
+        if(step === 1 && (username.length >= 8) && username.trim !== ''){
+        nextStep(2);
+        }
+    };
 
   // const handleSlide = () => {
   //   nextStep((prevStep) => {
@@ -48,20 +48,20 @@ const SignIn = () => {
   //   // 2 -> 1 없음
   // };
 
-  const handleLogin = async () => {
-    try {
-      await dispatch(login({ username, password }));
-      console.log('Login success!');
-      
-      // 로그인 성공 시 다른 URL로 이동
-      navigate('../../test'); 
-    } catch (error) {
-      console.error('Login failed:', error.message);
-    }
-  };
+    const handleLogin = async () => {
+        try {
+        await dispatch(login({ username, password }));
+        console.log('Login success!');
+        
+        // 로그인 성공 시 다른 URL로 이동
+        navigate('../../test'); 
+        } catch (error) {
+        console.error('Login failed:', error.message);
+        }
+    };
 
   // 로그인 상태에 따라 다른 UI 표시
-  return (
+    return (
     <div className="flex items-center justify-center h-full">
     <div className="bg-white rounded-lg p-6 h-1/2 w-1/2 flex flex-col items-center justify-center">
         {isLoggedin ? (
@@ -94,7 +94,7 @@ const SignIn = () => {
                         </span>
                     </label>
 
-                    <button className="bg-blue-600 rounded-md text-white w-[50%] h-10 mt-4" onClick={handleStep}>
+                    <button className="bg-blue-600 rounded-md text-white w-[60%] mt-3" onClick={handleStep}>
                     NEXT
                     </button>
                 </form>
