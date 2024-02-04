@@ -29,14 +29,6 @@ const SignInTest = () => {
         setFocusPassword(false);
     }
 
-    // const handleUsernameChange = (e) => {
-    //     setUsername(e.target.value);
-    // }
-    
-    // const handlePasswordChange = (e) => {
-    //     setPassword(e.target.value);
-    // }
-
     const isLoggedin = useSelector((state) => state.user.isAuthenticated);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -46,15 +38,6 @@ const SignInTest = () => {
         nextStep(2);
         }
     };
-
-    // const handleSlide = () => {
-    //     nextStep((prevStep) => {
-    //     if(prevStep === 1){
-    //         nextStep(2);
-    //     }
-    //     });
-    //     // 2 -> 1 없음
-    // };
 
     const handleLogin = async () => {
         try {
