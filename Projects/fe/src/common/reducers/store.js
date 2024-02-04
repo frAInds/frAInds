@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import rootReducer from "@/common/reducers/rootReducer";
+import userReducer from "@/common/reducers/userSlice";
 
 const store = configureStore({
-    reducer: rootReducer,
+    reducer: {
+        user: userReducer,
+    }
 
     //다른 미들웨어 추가
 });
