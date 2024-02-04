@@ -11,8 +11,10 @@ import RootLayout from "@/pages/root/page/components/Layout";
 import AccountLayout from "@/pages/account/page/components/Layout"
 import SignIn from "@/pages/account/sign-in/page";
 import SignUp from "@/pages/account/sign-up/page";
-// import Test from "./pages/test/page";
+import Test from "./pages/test/page";
 import SignInTest from "@/pages/test/page/sign-in_test";
+import TestProvider from "./common/contexts/TestProvider";
+import Chat from "./pages/chat/page";
 
 function App() {
   const router = createBrowserRouter(
@@ -35,11 +37,25 @@ function App() {
         </Route>
 
         <Route path="test/*" element={<SignInTest />} />
+        <Route
+          path="test"
+          element={<Test />}
+        />
+
+        <Route
+          path="chat"
+          element={<Chat />}
+        />
       </Route>
     )
   )
 
-  return <RouterProvider router={router} />
+  return <>
+    <TestProvider>
+      <RouterProvider router={router} />
+    </TestProvider>
+  </>
+
 }
 
 export default App
