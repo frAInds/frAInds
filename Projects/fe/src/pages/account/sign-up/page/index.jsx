@@ -41,13 +41,11 @@ const SignUp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Check if there is an error message
     if (errorMessage) {
       console.log(errorMessage);
       return;
     }
 
-    // Proceed with form submission
     console.log({ username, password });
   };
 

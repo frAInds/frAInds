@@ -11,7 +11,7 @@ export const loginUser = createAsyncThunk(
             console.log(userCredential, 'logging in.');
             
             //testuser1 testpassword1
-            if(userCredential.username === 'testuser1' && userCredential.password === ''){
+            if(userCredential.username === 'testuser1' && userCredential.password === 'testpassword1'){
                 return { id:1, username: 'testuser1' };
             }else{
                 throw new Error('login failed: invalid credentials');

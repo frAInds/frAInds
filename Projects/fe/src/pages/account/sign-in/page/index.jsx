@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import FriendsLogo from "@/common/components/FriendsLogo";
 import { Link, useNavigate } from "react-router-dom";
-import { login, logout } from '@/common/reducers/userSlice';
+import { login, loginUser, logout } from '@/common/reducers/userSlice';
 
 const SignIn = () => {
     const [step, nextStep] = useState(1);
@@ -33,11 +33,18 @@ const SignIn = () => {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        dispatch(loginUser({ username, password }));
-        <Link to="/account/sign-up">
-            
-        </Link>
+        dispatch(loginUser({ username, password })).then(
+            (result) => {
+                if(result.payload){
+                    redirectToMainContent();
+                }
+            });
     };
+
+    //로그인 성공시 메인페이지로 이동하기 따로 함수로 만듦
+    const redirectToMainContent = () => {
+        navigate("/");
+    }
 
   // 로그인 상태에 따라 다른 UI 표시
     return (
