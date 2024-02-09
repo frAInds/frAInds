@@ -12,12 +12,12 @@ export const loginUser = createAsyncThunk(
             
             //testuser1 testpassword1
             if(userCredential.username === 'testuser1' && userCredential.password === 'testpassword1'){
-                return { id:1, username: 'testuser1' };
+                return { id:1, username: '', password: 'test' };
             }else{
                 throw new Error('login failed: invalid credentials');
             }
         }catch(error){
-            return rejectWithValue(error);
+            return rejectWithValue(error.message);
         }
     }
 );
@@ -57,7 +57,7 @@ const userSlice = createSlice({
         })
         .addCase(loginUser.fulfilled, 
             (state, action) => {
-                state.loading = true;
+                state.loading = false;
                 state.user = action.payload;
                 state.error = null;
             })

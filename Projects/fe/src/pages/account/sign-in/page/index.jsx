@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import FriendsLogo from "@/common/components/FriendsLogo";
 import { Link, useNavigate } from "react-router-dom";
-import { login, loginUser, logout } from '@/common/reducers/userSlice';
+import { loginUser, logout } from '@/common/reducers/userSlice';
 
 const SignIn = () => {
     const [step, nextStep] = useState(1);
@@ -31,14 +31,16 @@ const SignIn = () => {
     //redux codes go here
     const dispatch = useDispatch();
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        dispatch(loginUser({ username, password })).then(
-            (result) => {
-                if(result.payload){
-                    redirectToMainContent();
-                }
-            });
+
+        try{
+            await dispatch(loginUser({ username, password }));
+            redirectToMainContent();
+
+        }catch(error){
+            console.error('login failed', error);
+        }
     };
 
     //로그인 성공시 메인페이지로 이동하기 따로 함수로 만듦
@@ -64,7 +66,7 @@ const SignIn = () => {
                         <FriendsLogo className="mb-3" />
 
                         <form className="flex flex-col h-[80%] justify-center items-center p-3">
-                            <label htmlFor="" className={`relative ${isFocusedUsername ? 'focused' : ''}`}>
+                            <label htmlFor="" className={`relative ${isFocusedUsername || username ? 'focused' : ''}`}>
                                 <input
                                 type="text"
                                 className="text-xl border-2 rounded-lg border-gray-600 border-opacity-50 outline-none
@@ -75,7 +77,7 @@ const SignIn = () => {
                                 onBlur={handleBlurUsername}
                                 />
                                 <span className={`absolute text-xl left-2 top-8 transition duration-200 pointer-events-none
-                                ${isFocusedUsername ? 'transform -translate-y-6 -translate-x-4 scale-75 text-blue-600  opacity-100' : 'opacity-20'}`}> 
+                                ${isFocusedUsername || username ? 'transform -translate-y-6 -translate-x-4 scale-75 text-blue-600  opacity-100' : 'opacity-20'}`}> 
                                     username?
                                 </span>
                             </label>
@@ -92,8 +94,8 @@ const SignIn = () => {
                     <>
                         <FriendsLogo className="mb-3" />
 
-                        <form className="flex flex-col h-[80%] justify-center items-center p-3" onSubmit={handleLogin}>
-                            <label htmlFor="" className={`relative ${isFocusedPassword ? 'focused' : ''}`}>
+                        <form className="flex flex-col h-[80%] justify-center items-center p-3" onSubmit={handleLogin} style={{ width: '90%' }}>
+                            <label htmlFor="" className={`relative ${isFocusedPassword || password ? 'focused' : ''}`}>
                                 <input
                                 type="password"
                                 className="text-xl border-2 rounded-lg border-gray-600 border-opacity-50 outline-none
@@ -102,9 +104,10 @@ const SignIn = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                                 onFocus={handleFocusPassword}
                                 onBlur={handleBlurPassword}
+                                style={{ flex:1 }}
                                 />
                                 <span className={`absolute text-xl left-2 top-8 transition duration-200 pointer-events-none
-                                ${isFocusedPassword ? 'transform -translate-y-6 -translate-x-4 scale-75 text-blue-600  opacity-100' : 'opacity-20'}`}> 
+                                ${isFocusedPassword || password ? 'transform -translate-y-6 -translate-x-4 scale-75 text-blue-600  opacity-100' : 'opacity-20'}`}> 
                                     password?
                                 </span>
                             </label>
