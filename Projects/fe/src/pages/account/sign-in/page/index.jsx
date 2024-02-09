@@ -35,8 +35,14 @@ const SignIn = () => {
         e.preventDefault();
 
         try{
-            await dispatch(loginUser({ username, password }));
-            redirectToMainContent();
+            await dispatch(loginUser({ username, password })).then(
+                (result) => {
+                    if(result.payload){
+                        redirectToMainContent();
+                    }else{
+                        console.log('login failed');
+                    }
+                })
 
         }catch(error){
             console.error('login failed', error);
@@ -66,7 +72,7 @@ const SignIn = () => {
                         <FriendsLogo className="mb-3" />
 
                         <form className="flex flex-col h-[80%] justify-center items-center p-3">
-                            <label htmlFor="" className={`relative ${isFocusedUsername || username ? 'focused' : ''}`}>
+                            <label className={`relative ${isFocusedUsername || username ? 'focused' : ''}`}>
                                 <input
                                 type="text"
                                 className="text-xl border-2 rounded-lg border-gray-600 border-opacity-50 outline-none
