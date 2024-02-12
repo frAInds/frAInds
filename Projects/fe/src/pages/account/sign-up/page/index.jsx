@@ -1,6 +1,8 @@
 import FriendsLogo from "@/common/components/FriendsLogo";
 import "@/pages/account/sign-up/css/sign-up.css";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 const SignUp = () => {
   const [isFocusedUsername, setFocusUsername] = useState(false);
@@ -13,6 +15,9 @@ const SignUp = () => {
   const handleBlurUsername = () => setFocusUsername(false);
   const handleFocusPassword = () => setFocusPassword(true);
   const handleBlurPassword = () => setFocusPassword(false);
+
+  //
+  const navigate = useNavigate();
 
   const handleUsernameChange = (e) => {
     const value = e.target.value;
@@ -47,6 +52,7 @@ const SignUp = () => {
     }
 
     console.log({ username, password });
+    navigate("/account/sign-up/result");
   };
 
   return (

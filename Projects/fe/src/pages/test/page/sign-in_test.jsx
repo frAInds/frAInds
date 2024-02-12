@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import FriendsLogo from "@/common/components/FriendsLogo";
 import { Link, useNavigate } from "react-router-dom";
-import { login, logout } from '@/common/reducers/userSlice';
+import { logout } from '@/common/reducers/userSlice';
 
 const SignInTest = () => {
     const [step, nextStep] = useState(1);
