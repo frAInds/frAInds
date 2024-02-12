@@ -35,13 +35,16 @@ const SignIn = () => {
         e.preventDefault();
 
         if (username.trim() === '' && password.trim() === '올바른 password') {
-            // 올바른 경우 로그인 시도
+            //올바른 경우 로그인 시도
             redirectToMainContent();
         } else {
-            // 올바르지 않은 경우 처리 (예: 에러 메시지 표시 등)
-            console.log('올바르지 않은 사용자 정보입니다.');
+            console.log('invalid user credentials');
+            alert("invalid user credentials");
+
+            //다시 id 입력화면으로
+            nextStep(1);
         }
-        redirectToMainContent();
+        // redirectToMainContent();
     };
 
     //로그인 성공시 메인페이지로 이동하기 따로 함수로 만듦
