@@ -15,6 +15,7 @@ import Test from "./pages/test/page";
 import SignInTest from "@/pages/test/page/sign-in_test";
 import TestProvider from "./common/contexts/TestProvider";
 import Chat from "./pages/chat/page";
+import SignUpResult from "./pages/account/sign-up/page/sign-up_result";
 
 function App() {
   const router = createBrowserRouter(
@@ -25,6 +26,9 @@ function App() {
         <Route path="account" element={<AccountLayout />}>
           <Route path="sign-in" element={<SignIn />}/>
           <Route path="sign-up" element={<SignUp />}/>
+          //회원가입 성공 테스트용
+
+          <Route path="sign-up-result" elemtent={<SignUpResult />}/>
         </Route>
 
         <Route

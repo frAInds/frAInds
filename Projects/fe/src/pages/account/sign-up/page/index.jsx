@@ -20,7 +20,7 @@ const SignUp = () => {
 
     // Check username conditions
     if (!/^[a-z0-9]{8,16}$/.test(value)) {
-      setErrorMessage("Username should contain only lowercase letters and numbers, with a length of 8 to 16 characters.");
+      setErrorMessage("Username only lowercase letters and numbers, with a length of 8 to 16 characters.");
     } else {
       setErrorMessage('');
     }
@@ -51,9 +51,11 @@ const SignUp = () => {
 
   return (
     <div className="flex justify-center items-center h-full">
-      <div className="bg-white rounded-lg p-6 h-[70%] w-1/2 flex flex-col items-center justify-center">
-        <form onSubmit={handleSubmit} className="flex flex-col h-full  items-center p-3">
-          <FriendsLogo className="mb-5"></FriendsLogo>
+      <div className="bg-white rounded-lg p-6 h-[70%] w-1/2 flex flex-col justify-center">
+        <FriendsLogo className="mb-20"></FriendsLogo>
+
+        <form onSubmit={handleSubmit} className="flex flex-col items-center p-3">
+          
           <label className={`relative ${isFocusedUsername ? 'focused' : ''}`}>
             <input
               type="text"
@@ -91,9 +93,10 @@ const SignUp = () => {
             <p className="text-red-500 mt-2">{errorMessage}</p>
           )}
 
-          <button className="rounded border-2 border-gray-400 mt-20 w-[40%] hover:bg-blue-600">
+          <button className="rounded border-2 border-gray-400 mt-20 w-[40%] bg-violet-400">
             SUBMIT
           </button>
+
         </form>
       </div>
     </div>

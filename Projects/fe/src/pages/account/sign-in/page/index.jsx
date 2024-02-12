@@ -34,7 +34,7 @@ const SignIn = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
 
-        if (username.trim() === '' && password.trim() === '올바른 password') {
+        if (username.trim() === 'testuser1' && password.trim() === 'testpassword1') {
             //올바른 경우 로그인 시도
             redirectToMainContent();
         } else {
@@ -44,7 +44,6 @@ const SignIn = () => {
             //다시 id 입력화면으로
             nextStep(1);
         }
-        // redirectToMainContent();
     };
 
     //로그인 성공시 메인페이지로 이동하기 따로 함수로 만듦
