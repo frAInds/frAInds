@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import FriendsLogo from "@/common/components/FriendsLogo";
 import { Link, useNavigate } from "react-router-dom";
-import { logout } from '@/common/reducers/userSlice';
+// import { logout } from '@/common/reducers/userSlice';
+import { login, logout } from '@/common/reducers/authSlice';
+
 
 const SignIn = () => {
     const [step, nextStep] = useState(1);
@@ -32,24 +34,52 @@ const SignIn = () => {
     const dispatch = useDispatch();
 
     const handleLogin = async (e) => {
+
         e.preventDefault();
 
-        if (username.trim() === 'testuser1' && password.trim() === 'testpassword1') {
-            //올바른 경우 로그인 시도
-            redirectToMainContent();
-        } else {
-            console.log('invalid user credentials');
-            alert("invalid user credentials");
+        try{
+            const result = await dispatch(login(username, password));
 
-            //다시 id 입력화면으로
-            nextStep(1);
+            if(login.fulfilled.match(result)){
+                
+                redirectToMainContent();
+            }else{
+                console.error('login failed');
+            }
+        }catch(error){
+            console.error('login failed', error);
         }
+
+
+        // e.preventDefault();
+
+        // if (username.trim() === 'testuser1' && password.trim() === 'testpassword1') {
+        //     //올바른 경우 로그인 시도
+        //     redirectToMainContent();
+        // } else {
+        //     console.log('invalid user credentials');
+        //     alert("invalid user credentials");
+
+        //     //다시 id 입력화면으로
+        //     nextStep(1);
+        // }
     };
+
+    const handleLogout = () => {
+        dispatch(logout());
+    }
 
     //로그인 성공시 메인페이지로 이동하기 따로 함수로 만듦
     const redirectToMainContent = () => {
+        // console.log("isLoggedin: ",isLoggedin);
         navigate("/");
     }
+
+    //로그인 여부 확인용 useEffect
+    useEffect(
+        () => {
+            console.log("isLoggedin: ",isLoggedin);
+        }, [isLoggedin]); 
 
   // 로그인 상태에 따라 다른 UI 표시
     return (
@@ -58,7 +88,7 @@ const SignIn = () => {
                 {isLoggedin ? (
                     <>
                         <h2>Welcome, {username}!</h2>
-                        <button onClick={() => dispatch(logout())}>Logout</button>
+                        <button onClick={() => handleLogout}>Logout</button>
                     </>
                 ) : (
                     <>
@@ -92,7 +122,8 @@ const SignIn = () => {
                         {step === 2 && (
                             <>
                                 <FriendsLogo className="mb-3" />
-                                <form className="flex flex-col h-[80%] justify-center items-center p-3" onSubmit={handleLogin} style={{ width: '90%' }}>
+                                <form className="flex flex-col h-[80%] justify-center items-center p-3" 
+                                onSubmit={handleLogin} style={{ width: '90%' }}>
                                     <label htmlFor="" className={`relative ${isFocusedPassword ? 'focused' : ''}`}>
                                         <input
                                             type="password"
@@ -108,7 +139,8 @@ const SignIn = () => {
                                             password?
                                         </span>
                                     </label>
-                                    <button className="bg-blue-600 rounded-md text-white w-[60%] mt-3" onClick={handleLogin}>
+                                    <button type='submit' className="bg-blue-600 rounded-md text-white w-[60%] mt-3" 
+                                        >
                                         LOG IN
                                     </button>
                                 </form>
