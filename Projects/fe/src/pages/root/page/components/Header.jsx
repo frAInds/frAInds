@@ -6,7 +6,8 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import UsageModal from "./UsageModal";
 
-export const Header = () => {
+//Chat.jsx에서 Header 쓸건데 로그인 버튼은 안써도 될듯해서 props로 처리함
+export const Header = ( { showLoginLink = true } ) => {
   //다크모드, 라이트모드
   const [isDarkModeOn, setIsDarkModeOn] = useState(false);
 
@@ -64,7 +65,8 @@ export const Header = () => {
 
         {/* //로그인 여부에 따라 다른 화면 보임 */}
         { isAuthenticated && <p>welcome user</p>}
-        <Link to={ "/account/sign-in" }>로그인</Link>
+        { showLoginLink && !isAuthenticated && <Link to={ "/account/sign-in" }>로그인</Link>}
+        
         
         {/* 다른 링크로 가는게 아니라서 div로 수정 + cursor올렸을 때 포인터로 바뀌게 수정함 */}
         <div className="mr-10 cursor-pointer" onClick={handleUsageModal} role="button">사용방법</div>

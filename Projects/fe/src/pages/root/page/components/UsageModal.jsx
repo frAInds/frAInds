@@ -27,7 +27,7 @@ const UsageModal = ({ onClose }) => {
 
                 <button
                 onClick={onClose}
-                className="absolute bottom-16 left-1/2 transform -translate-x-1/2 py-2 px-4 bg-red-500 hover:bg-red-800 text-white font-bold rounded">
+                className="absolute bottom-[96px] left-1/2 transform -translate-x-1/2 py-2 px-4 bg-red-500 hover:bg-red-800 text-white font-bold rounded">
                     X
                 </button>
             </div>

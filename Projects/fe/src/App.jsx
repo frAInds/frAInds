@@ -16,6 +16,7 @@ import SignInTest from "@/pages/test/page/sign-in_test";
 import TestProvider from "./common/contexts/TestProvider";
 import Chat from "./pages/chat/page";
 import SignUpResult from "@/pages/account/sign-up/page/sign-up_result";
+import DogChat from "./pages/chat/page/DogChat";
 
 function App() {
   const router = createBrowserRouter(
@@ -44,12 +45,12 @@ function App() {
           element={<Test />}
         />
 
-        <Route
-          path="chat"
-          element={<Chat />}
-        />
+        <Route path="chat" element={<Chat />}>
+          {/* dogchat */}
+          <Route path="dog" element={<DogChat />}/>
+        </Route>
 
-      //회원가입 성공 테스트용
+      {/* //회원가입 성공 테스트용 */}
 
       <Route path="account/sign-up/result" element={<SignUpResult />}/>
 

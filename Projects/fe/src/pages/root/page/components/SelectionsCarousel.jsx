@@ -6,6 +6,9 @@ import Autoplay from 'embla-carousel-autoplay';
 import exImg from '@/pages/test/page/images/1701826553654.jpg';
 import NavigationButtons from "./NavigationButtons";
 
+import { Link } from "react-router-dom";
+
+//carousel 형식으로 된 캐릭터 선택창
 const SelectionsCarousel = () => {
     const [emblaRef, emblaApi] = useEmblaCarousel({
         loop: true,
@@ -71,22 +74,30 @@ const SelectionsCarousel = () => {
                                 충기 나무위키
                             </span>
                             <br />
-                            충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기
-                            충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기
-                            충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기
-                            충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기충기
+                            <p>이충기 1979년 서울대학교 계산통계학과(이학사)</p> 
+                            <p>1981년 서울대학교 계산통계학과(이학석사)</p>
+                            <p>1993년 조지아공과대학교 전산과학대학(전산학박사)</p>
+                            <p>1994 ~ 1996 한국전산원 전산망 표준본부 선임연구원</p>
+                            <p>2000 ~ 2001 명지대학교 정보통신교육연구센터 센터장</p>
+                            <p>2003 ~ 2004 조지아공과대학교 전산과학대학 방문교수</p>
+                            <p>2010 ~ 2011 퍼듀대학교 컴퓨터과학과 방문교수 </p>
+                            <p>1996 ~ 현재 명지대학교 컴퓨터공학과 교수 관심분야 | 모바일 컴퓨팅, 공학 교육</p>
                         </div>
                     </div>
 
                     {/* 세 번째 셀렉션 */}
                     <div className="ml-[5vw] mr-[10vw] shrink-0 grow-0 flex flex-col items-center gap-6">
-                        <img className="bg-top  rounded-2xl w-[80vw] h-[45vh] block
-                            cursor-pointer"
-                            style={{
-                                backgroundImage: `url(${exImg})`
-                            }}
-                            onClick={() => console.log("Clicked")}
-                        />
+                        <Link to={"/chat/dog"}> 
+                            <img className="bg-top  rounded-2xl w-[80vw] h-[45vh] block
+                                cursor-pointer"
+                                style={{
+                                    backgroundImage: `url(${exImg})`
+                                }}
+                                onClick={() => console.log("dog Clicked")}
+
+                            />
+                        </Link>
+                        
                         <NavigationButtons
                             onLeftClicked={() => emblaApi.scrollPrev()}
                             onRightClicked={() => emblaApi.scrollNext()}

@@ -1,5 +1,5 @@
 import React from 'react'
-
+//carousel에 있는 좌우 버튼
 const NavigationButtons = ({ onLeftClicked, onRightClicked }) => {
     return (
         <div className="flex justify-center gap-[60px] font-semibold text-3xl
