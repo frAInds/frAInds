@@ -1,7 +1,7 @@
 //강아지 채팅방 url은 chat/dog
 //캐릭터마다 채팅창 양식이 달라서 구분해야함
 import { useState } from "react";
-import Chat from ".";
+import Chat from "..";
 import exImg from '@/pages/test/page/images/1701826553654.jpg';
 const DogChat = () => {
 

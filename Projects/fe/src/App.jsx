@@ -16,7 +16,8 @@ import SignInTest from "@/pages/test/page/sign-in_test";
 import TestProvider from "./common/contexts/TestProvider";
 import Chat from "./pages/chat/page";
 import SignUpResult from "@/pages/account/sign-up/page/sign-up_result";
-import DogChat from "./pages/chat/page/DogChat";
+import DogChat from "./pages/chat/page/char_details/DogChat";
+import TaeminChat from "./pages/chat/page/char_details/TaeminChat";
 
 function App() {
   const router = createBrowserRouter(
@@ -48,6 +49,7 @@ function App() {
         <Route path="chat" element={<Chat />}>
           {/* dogchat */}
           <Route path="dog" element={<DogChat />}/>
+          <Route path="taemin" element={<TaeminChat />} />
         </Route>
 
       {/* //회원가입 성공 테스트용 */}
