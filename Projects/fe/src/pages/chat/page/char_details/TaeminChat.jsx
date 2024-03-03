@@ -1,6 +1,6 @@
 //강아지 채팅방 url은 chat/dog
 //캐릭터마다 채팅창 양식이 달라서 구분해야함
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Chat from "..";
 import exImg from '@/pages/test/page/images/1701826553654.jpg';
 const TaeminChat = () => {
@@ -11,8 +11,16 @@ const TaeminChat = () => {
 
     const [selectedMood, setSelectedMood] = useState('');
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            const randomMood = TaeminMoods[Math.floor(Math.random() * TaeminMoods.length)];
+            setSelectedMood(randomMood);
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, []); 
     
-    const handleDogMood = () => {
+    const handleTaeminMood = () => {
         const randomMood = TaeminMoods[Math.floor(Math.random() * TaeminMoods.length)];
         console.log(randomMood); 
         setSelectedMood(randomMood);
@@ -38,11 +46,12 @@ const TaeminChat = () => {
                         <div className="h-3/4 w-full">
                             <img src="https://i.namu.wiki/i/HorlfONQCAnCvOGdYUFUX_lFTUiboyikJ4nbqmFVo_KVaKccJXV6K2yEICfhlGS6upPcGNIyYmQ1nxPuEZKD2v5d3HntL6Gru6LnT8yo4l-qg_CcykdrIhlC097hVkvOgWHbQ7cSbId-lUYioBV-rQ.webp" alt="dog"
                             className="rounded-2xl cursor-pointer object-contain h-full w-full"
-                            onClick={handleDogMood}/>
+                            />
                         </div>
 
                         {/* 랜덤 스트링 띄울곳 */}
                         <div className="w-full text-center">
+                            <p>유태민(25세)</p>
                             <div className="">
                                 {selectedMood && (
                                     <div className="text-2xl font-bold mt-16">
