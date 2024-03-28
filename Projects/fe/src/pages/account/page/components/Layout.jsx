@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { Outlet } from "react-router-dom";
 import FriendsLogo from "@/common/components/FriendsLogo";
 import choongGi from '@/pages/account/page/images/choongi_pic.png';
+import { Link } from 'react-router-dom';
 // import SignIn from '@/pages/account/sign-in/page/index.jsx';
 
 export const Layout = () => {
@@ -53,7 +54,10 @@ export const Layout = () => {
                 {/* Left side */}
                 <div className="bg-blue-950 w-full h-full basis-[55%] px-5">
                     {/* GPT logo top left */}
-                    <FriendsLogo className="fixed" />
+                    <Link to='/'>
+                        <FriendsLogo className="fixed" />
+                    </Link>
+                    
 
 
                     {/* text */}

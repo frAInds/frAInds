@@ -6,19 +6,26 @@ import exImg from '@/pages/test/page/images/1701826553654.jpg';
 const TaeminChat = () => {
 
     const TaeminMoods = [
-        "밥줘", "담배", "졸려", "돈줘",
+        { mood: "밥줘", image: "https://i.namu.wiki/i/HorlfONQCAnCvOGdYUFUX_lFTUiboyikJ4nbqmFVo_KVaKccJXV6K2yEICfhlGS6upPcGNIyYmQ1nxPuEZKD2v5d3HntL6Gru6LnT8yo4l-qg_CcykdrIhlC097hVkvOgWHbQ7cSbId-lUYioBV-rQ.webp" },
+        { mood: "담배", image: "https://dino-typing.com/data/file/free/2041600034_PmDWUZIo_527245174acc9558e7a60da50a6f23c6350915bc.jpg" },
+        { mood: "졸려", image: "https://i.namu.wiki/i/HorlfONQCAnCvOGdYUFUX_lFTUiboyikJ4nbqmFVo_KVaKccJXV6K2yEICfhlGS6upPcGNIyYmQ1nxPuEZKD2v5d3HntL6Gru6LnT8yo4l-qg_CcykdrIhlC097hVkvOgWHbQ7cSbId-lUYioBV-rQ.webp" },
+        { mood: "돈줘", image: "https://i.namu.wiki/i/HorlfONQCAnCvOGdYUFUX_lFTUiboyikJ4nbqmFVo_KVaKccJXV6K2yEICfhlGS6upPcGNIyYmQ1nxPuEZKD2v5d3HntL6Gru6LnT8yo4l-qg_CcykdrIhlC097hVkvOgWHbQ7cSbId-lUYioBV-rQ.webp" },
     ];
 
     const [selectedMood, setSelectedMood] = useState('');
 
     useEffect(() => {
         const interval = setInterval(() => {
-            const randomMood = TaeminMoods[Math.floor(Math.random() * TaeminMoods.length)];
+            const randomMood = TaeminMoods[Math.floor(Math.random() * TaeminMoods.length)].mood;
             setSelectedMood(randomMood);
         }, 1000);
 
         return () => clearInterval(interval);
     }, []); 
+
+    //스트링 - 이미지 
+    const selectedImage = TaeminMoods.find(moodObj => moodObj.mood === selectedMood)?.image;
+
     
     const handleTaeminMood = () => {
         const randomMood = TaeminMoods[Math.floor(Math.random() * TaeminMoods.length)];
@@ -44,7 +51,7 @@ const TaeminChat = () => {
 
                         {/* 이미지 들어갈곳 */}
                         <div className="h-3/4 w-full">
-                            <img src="https://i.namu.wiki/i/HorlfONQCAnCvOGdYUFUX_lFTUiboyikJ4nbqmFVo_KVaKccJXV6K2yEICfhlGS6upPcGNIyYmQ1nxPuEZKD2v5d3HntL6Gru6LnT8yo4l-qg_CcykdrIhlC097hVkvOgWHbQ7cSbId-lUYioBV-rQ.webp" alt="dog"
+                            <img src={selectedImage}
                             className="rounded-2xl cursor-pointer object-contain h-full w-full"
                             />
                         </div>
@@ -54,7 +61,7 @@ const TaeminChat = () => {
                             <p>유태민(25세)</p>
                             <div className="">
                                 {selectedMood && (
-                                    <div className="text-2xl font-bold mt-16">
+                                    <div className="text-6xl font-bold mt-16">
                                         <p>{selectedMood}</p>
                                     </div>
                                 )}

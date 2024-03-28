@@ -60,7 +60,8 @@ export const Header = ( { showLoginLink = true } ) => {
     <div className="fixed w-screen flex flex-row h-[70px] items-center z-10 shadow-lg px-8
       justify-between
     dark:bg-slate-950 bg-white  dark:drop-shadow-xl">
-      <FriendsLogo className="mb-1"/>
+      <Link to = '/'><FriendsLogo className="mb-1"/></Link>
+      
       <div className="flex gap-5 text-indigo-400 font-bold text-xl">
 
         {/* //로그인 여부에 따라 다른 화면 보임 */}
