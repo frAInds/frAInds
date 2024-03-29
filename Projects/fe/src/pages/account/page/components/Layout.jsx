@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react"
 import { Outlet } from "react-router-dom";
 import FriendsLogo from "@/common/components/FriendsLogo";
 import choongGi from '@/pages/account/page/images/choongi_pic.png';
+import { Link } from 'react-router-dom';
+// import SignIn from '@/pages/account/sign-in/page/index.jsx';
 
 export const Layout = () => {
     const sentences = [
@@ -36,7 +38,7 @@ export const Layout = () => {
                     curSentenceIdx.current += 1;
                 else
                     curSentenceIdx.current = 0
-                console.log(curSentenceIdx.current)
+                // console.log(curSentenceIdx.current)
             }, 2000);
         }
         else {
@@ -52,7 +54,10 @@ export const Layout = () => {
                 {/* Left side */}
                 <div className="bg-blue-950 w-full h-full basis-[55%] px-5">
                     {/* GPT logo top left */}
-                    <FriendsLogo className="fixed" />
+                    <Link to='/'>
+                        <FriendsLogo className="fixed" />
+                    </Link>
+                    
 
 
                     {/* text */}
@@ -85,6 +90,10 @@ export const Layout = () => {
                 {/* Right side */}
                 <div className="bg-black w-full h-full basis-[45%]
                 flex flex-col">
+
+                    {/* <div className="flex items-center justify-items-center">
+                        <Outlet />
+                    </div> */}
 
                     {/* Right side center */}
                     <div className="basis-full">

@@ -1,19 +1,8 @@
 import avatar from '@/pages/test/page/images/choongi_pic.png'
-import { useContext, useEffect } from 'react'
-import Message from './components/Message';
-import { TestContext } from '@/common/contexts/TestProvider';
+import { useEffect } from 'react'
+import Message from '@/pages/chat/page/components/Message';
 
-const Test = () => {
-  // #1 방법
-  // someUtilFunction을 object destructuring 해서 꺼내옴
-  const { someUtilFunction } = useContext(TestContext);
-  someUtilFunction();
-
-  // #2 방법
-  // object destructuring이 아직 낯설다면 아래와 같이 가져와서 접근해도 됨
-  // const TestState = useContext(TestContext);
-  // TestState.someUtilFunction();
-
+const Messenger = ({ className }) => {
   useEffect(() => {
     document.body.classList.add('overflow-y-hidden')
   }, []);
@@ -78,11 +67,9 @@ const Test = () => {
   ]
 
   return (
-    <div className="w-screen h-screen bg-zinc-800">
-
-
+    <>
       {/* 채팅창 */}
-      <div className="max-w-[400px] h-full flex flex-col">
+      <div className={`max-w-[400px] w-full h-full flex flex-col ${className}`}>
 
         {/* 채팅창 위쪽 섹션 */}
         <div className=" bg-slate-300 h-full max-h-[85%] flex flex-col">
@@ -95,18 +82,15 @@ const Test = () => {
           {/* 채팅창 헤더 */}
           <div className="flex mt-3 gap-2 px-2">
             {/* 채팅방 이미지 */}
-            <div className='place-content-center grid grid-cols-2 gap-1'>
-              <img src={avatar} alt="" className='w-[20px]' />
-              <img src={avatar} alt="" className='w-[20px]' />
-              <img src={avatar} alt="" className='w-[20px]' />
-              <img src={avatar} alt="" className='w-[20px]' />
+            <div className='place-content-center grid grid-cols-1 gap-1'>
+              <img src={avatar} alt="" className='max-w-[30px]' />
             </div>
             {/* 채팅방 정보 */}
             <div className='flex flex-col'>
-              <span className='text-sm text-slate-800'>캡스톤방</span>
-              <div className='grid grid-cols-2 place-items-center'>
+              <span className='text-sm text-slate-800'>이충기</span>
+              <div className='grid grid-cols-2 place-items-center gap-2'>
                 <img src={avatar} alt="" className='w-[15px] ' />
-                <span className='-ml-6 text-xs '>6</span>
+                <span className='-ml-6 text-xs'>6</span>
               </div>
             </div>
             {/* 헤더 각종 아이콘들 */}
@@ -149,9 +133,8 @@ const Test = () => {
           </div>
         </div>
       </div>
-
-    </div>
+    </>
   )
 }
 
-export default Test
+export default Messenger;

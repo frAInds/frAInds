@@ -12,6 +12,12 @@ import AccountLayout from "@/pages/account/page/components/Layout"
 import SignIn from "@/pages/account/sign-in/page";
 import SignUp from "@/pages/account/sign-up/page";
 import Test from "./pages/test/page";
+import SignInTest from "@/pages/test/page/sign-in_test";
+import TestProvider from "./common/contexts/TestProvider";
+import Chat from "./pages/chat/page";
+import SignUpResult from "@/pages/account/sign-up/page/sign-up_result";
+import DogChat from "./pages/chat/page/char_details/DogChat";
+import TaeminChat from "./pages/chat/page/char_details/TaeminChat";
 
 function App() {
   const router = createBrowserRouter(
@@ -19,18 +25,10 @@ function App() {
       <Route
         errorElement={<ErrorBoundary />}
       >
-        <Route
-          path="account"
-          element={<AccountLayout />}
-        >
-          <Route
-            path="sign-in"
-            element={<SignIn />}
-          />
-          <Route
-            path="sign-up"
-            element={<SignUp />}
-          />
+        <Route path="account" element={<AccountLayout />}>
+          <Route path="sign-in" element={<SignIn />}/>
+          <Route path="sign-up" element={<SignUp />}/>
+          
         </Route>
 
         <Route
@@ -42,15 +40,32 @@ function App() {
           />
         </Route>
 
+        <Route path="test/*" element={<SignInTest />} />
         <Route
           path="test"
-          element={<Test/>}
+          element={<Test />}
         />
+
+        <Route path="chat" element={<Chat />}>
+          {/* dogchat */}
+          <Route path="dog" element={<DogChat />}/>
+          <Route path="taemin" element={<TaeminChat />} />
+        </Route>
+
+      {/* //회원가입 성공 테스트용 */}
+
+      <Route path="account/sign-up/result" element={<SignUpResult />}/>
+
       </Route>
     )
   )
 
-  return <RouterProvider router={router} />
+  return <>
+    <TestProvider>
+      <RouterProvider router={router} />
+    </TestProvider>
+  </>
+
 }
 
 export default App
