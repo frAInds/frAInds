@@ -19,7 +19,7 @@ export const Root = () => {
       
       <SelectionsCarousel 
       items={[
-        exImg, exImg1, exImg2
+        exImg, exImg1, exImg
       ]} options={OPTIONS}
       slides={SLIDES}/>
 
