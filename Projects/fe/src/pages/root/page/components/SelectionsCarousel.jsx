@@ -45,7 +45,7 @@ const SelectionsCarousel = (props) => {
                             {items.map((image, index) => (
                                 <div className="embla__slide " key={index}>
                                     
-                                    <Link to='/'>
+                                    <Link to={`/chat/${index === 0 ? 'dog' : 'taemin'}`}>
                                         <img className="slides_images rounded-lg shadow-2xl" src={image} alt="123" />
                                     </Link>
                                 </div>

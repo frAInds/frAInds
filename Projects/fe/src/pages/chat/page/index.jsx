@@ -11,16 +11,11 @@ const Chat = () => {
                 <Header showLoginLink={false} />
 
                 {/* 자식컴포넌트(유태민, dog, chung-ki) 배치할 위치*/}
-                <Outlet></Outlet>
+                <div className='bg-indigo-400'>
+                    <Outlet />
+                </div>
                 
-            </div>
-            {/* <div style={{
-                backgroundImage: `url(${exImg})`
-            }}
-                className='w-screen h-screen flex flex-row bg-no-repeat bg-center'
-            >
-                <Messenger className='ml-auto' />
-            </div> */}
+            </div> 
         </>
     );
 };
