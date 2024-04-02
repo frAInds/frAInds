@@ -6,9 +6,10 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 //model dir
 const MODEL_DIR = '/models/godzilla/scene.gltf';
+const MODEL_DIR2 = '/models/miyu/scene.gltf';
 
-function Model(){
-    const modelRef = useRef();
+function Model({ modelDir, scale }){
+    // const modelRef = useRef();
     const groupRef = useRef(new THREE.Group());
 
     const loader = new GLTFLoader();
@@ -17,10 +18,12 @@ function Model(){
 
     useEffect(() => {
         loader.load(
-            MODEL_DIR,
+            modelDir,
             (gltf) => {
                 groupRef.current.add(gltf.scene);
                 groupRef.current.position.set(0, -3, 0);
+
+                groupRef.current.scale.set(scale,scale,scale)
                 // setModelLoaded(true); //model loaded
             },
             undefined,
@@ -28,14 +31,14 @@ function Model(){
                 console.log('error loading gltf', error);
             }
         );
-    }, [loader]);
+    }, [loader, modelDir]);
     
 
-    useFrame(() => {
-        if(groupRef.current){
-            groupRef.current.rotation.y += 0.01;
-        }
-    });
+    // useFrame(() => {
+    //     if(groupRef.current){
+    //         groupRef.current.rotation.y += 0.01;
+    //     }
+    // });
 
     return(
         <group ref={groupRef}>
@@ -60,7 +63,7 @@ const TaeminChat = () => {
                             <ambientLight  intensity={80}/>
                         {/* <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} decay={0} intensity={Math.PI} />
                         <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI} /> */}
-                            <Model />
+                            <Model modelDir={MODEL_DIR}  scale={0.7}/>
                         </Canvas>
                     </div>
 
@@ -70,9 +73,10 @@ const TaeminChat = () => {
                     </div>
                     {/* 오른쪽 */}
                     <div className="flex w-1/2 ">
-                        <p>4</p>
-                        <p>5</p>
-                        <p>6</p>
+                        <Canvas>
+                            <ambientLight intensity={50}></ambientLight>
+                            <Model modelDir={MODEL_DIR2}  scale={3.6}/>
+                        </Canvas>
                     </div>
                 
                 </div>
