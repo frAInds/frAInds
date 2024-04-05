@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 import { Canvas, useFrame } from 'react-three-fiber';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+
+
 //model dir
 const MODEL_DIR = '/models/godzilla/scene.gltf';
 const MODEL_DIR2 = '/models/miyu/scene.gltf';
@@ -13,8 +15,9 @@ function Model({ modelDir, scale }){
     const groupRef = useRef(new THREE.Group());
 
     const loader = new GLTFLoader();
-    //모델 로드
-    // const [modelLoaded, setModelLoaded] = useState(false);
+
+    // 모델 로드
+    const [modelLoaded, setModelLoaded] = useState(false);
 
     useEffect(() => {
         loader.load(
@@ -24,28 +27,21 @@ function Model({ modelDir, scale }){
                 groupRef.current.position.set(0, -3, 0);
 
                 groupRef.current.scale.set(scale,scale,scale)
-                // setModelLoaded(true); //model loaded
+                setModelLoaded(true); //model loaded
             },
             undefined,
             (error) => {
                 console.log('error loading gltf', error);
             }
         );
-    }, [loader, modelDir]);
+    }, [loader, modelDir, scale]);
     
 
-    // useFrame(() => {
-    //     if(groupRef.current){
-    //         groupRef.current.rotation.y += 0.01;
-    //     }
-    // });
-
     return(
-        <group ref={groupRef}>
-            {/* {modelLoaded && <primitive object={modelRef.current} />} */}
-        </group>
+        <group ref={groupRef}/>
     )
 }
+
 
 const TaeminChat = () => {
 
@@ -59,7 +55,7 @@ const TaeminChat = () => {
                     {/* 왼쪽 */}
                     <div className="flex w-1/2 flex-col items-center border-white">
                         {/* 3d goes here */}
-                        <Canvas>
+                        <Canvas camera={{ position: [0,0,5] }}>
                             <ambientLight  intensity={80}/>
                         {/* <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} decay={0} intensity={Math.PI} />
                         <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI} /> */}
@@ -76,6 +72,7 @@ const TaeminChat = () => {
                         <Canvas>
                             <ambientLight intensity={50}></ambientLight>
                             <Model modelDir={MODEL_DIR2}  scale={3.6}/>
+
                         </Canvas>
                     </div>
                 
