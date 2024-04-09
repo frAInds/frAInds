@@ -1,49 +1,26 @@
 // import Chat from "..";
 //import three js for 3d models
-import { useEffect, useRef, useState } from 'react';
-import { Canvas, useFrame } from 'react-three-fiber';
-import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-
+import { useState } from 'react';
+import { Canvas } from 'react-three-fiber';
+import Model from '../components/Model';
 
 //model dir
 const MODEL_DIR = '/models/godzilla/scene.gltf';
-const MODEL_DIR2 = '/models/miyu/scene.gltf';
-
-function Model({ modelDir, scale }){
-    // const modelRef = useRef();
-    const groupRef = useRef(new THREE.Group());
-
-    const loader = new GLTFLoader();
-
-    // 모델 로드
-    const [modelLoaded, setModelLoaded] = useState(false);
-
-    useEffect(() => {
-        loader.load(
-            modelDir,
-            (gltf) => {
-                groupRef.current.add(gltf.scene);
-                groupRef.current.position.set(0, -3, 0);
-
-                groupRef.current.scale.set(scale,scale,scale)
-                setModelLoaded(true); //model loaded
-            },
-            undefined,
-            (error) => {
-                console.log('error loading gltf', error);
-            }
-        );
-    }, [loader, modelDir, scale]);
-    
-
-    return(
-        <group ref={groupRef}/>
-    )
-}
-
+// const MODEL_DIR2 = '/models/miyu/scene.gltf';
 
 const TaeminChat = () => {
+
+    const [messages, setMessages] = useState('');
+
+    const handleInputChages = (e) => {
+        setMessages(e.target.value);
+    }
+
+    const handleSendMessage = (e) => {
+        e.preventDefault();
+        setMessages('');
+    };
+
 
     return(
         <div>
@@ -53,12 +30,10 @@ const TaeminChat = () => {
                 {/* container */}
                 <div className="flex w-full h-[92vh] ">
                     {/* 왼쪽 */}
-                    <div className="flex w-1/2 flex-col items-center border-white">
+                    <div className="flex w-2/3 flex-col items-center border-white">
                         {/* 3d goes here */}
-                        <Canvas camera={{ position: [0,0,5] }}>
+                        <Canvas camera={{ position: [0,0,7] }}>
                             <ambientLight  intensity={80}/>
-                        {/* <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} decay={0} intensity={Math.PI} />
-                        <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI} /> */}
                             <Model modelDir={MODEL_DIR}  scale={0.7}/>
                         </Canvas>
                     </div>
@@ -68,12 +43,20 @@ const TaeminChat = () => {
 
                     </div>
                     {/* 오른쪽 */}
-                    <div className="flex w-1/2 ">
-                        <Canvas>
-                            <ambientLight intensity={50}></ambientLight>
-                            <Model modelDir={MODEL_DIR2}  scale={3.6}/>
+                    <div className="flex w-3/4 flex-col">
+                        <div className='flex-1 overflow-auto'>
+                            <p>chat goes here</p>
+                        </div>
 
-                        </Canvas>
+                        <div className='p-4'>
+                            <form onSubmit={handleSendMessage} className='mt-auto'>
+                                <input type="text" 
+                                value={messages}
+                                onChange={handleInputChages}
+                                className='w-full h-10 border-2 border-gr rounded-md p-4'
+                                placeholder='Type your message here...'/>
+                            </form>
+                        </div>
                     </div>
                 
                 </div>

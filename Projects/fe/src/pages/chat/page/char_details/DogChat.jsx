@@ -1,28 +1,14 @@
 //강아지 채팅방 url은 chat/dog
 //캐릭터마다 채팅창 양식이 달라서 구분해야함
-import { useState } from "react";
-import Chat from "..";
-import exImg from '@/pages/test/page/images/1701826553654.jpg';
+import { useEffect, useRef, useState } from 'react';
+import { Canvas, useFrame } from 'react-three-fiber';
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+
+const MODEL_DIR = '/models/miyu/scene.gltf';
+
 const DogChat = () => {
 
-    const dogMoods = [
-        "밥줘", "산책", "졸려", "놀자",
-    ];
-
-    const [selectedMood, setSelectedMood] = useState('');
-
-    
-    const handleDogMood = () => {
-        const randomMood = dogMoods[Math.floor(Math.random() * dogMoods.length)];
-        console.log(randomMood); 
-        setSelectedMood(randomMood);
-    }
-
-{/* 
-    초기버전 구현사항
-    1. 이미지 클릭 시 랜덤 스트링 이미지 위 또는 아래에 출력 
-    2. 
-*/}
 
     return(
         <div>
@@ -30,39 +16,29 @@ const DogChat = () => {
                 {/* 오른쪽엔 채팅창 사용할 예정 */}
 
                 {/* container */}
-                <div className="flex w-full h-[92vh]">
+                <div className="flex w-full h-[92vh] ">
                     {/* 왼쪽 */}
-                    <div className="flex w-1/2 flex-col items-center">
-
-                        {/* 이미지 들어갈곳 */}
-                        <div className="h-3/4 w-full">
-                            <img src={exImg} alt="dog"
-                            className="rounded-2xl cursor-pointer object-contain h-full w-full"
-                            onClick={handleDogMood}/>
-                        </div>
-
-                        {/* 랜덤 스트링 띄울곳 */}
-                        <div className="w-full text-center">
-                            <div className="">
-                                {selectedMood && (
-                                    <div className="text-2xl font-bold mt-16">
-                                        <p>{selectedMood}</p>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                        
+                    <div className="flex w-1/2 flex-col items-center border-white">
+                        {/* 3d goes here */}
+                        <Canvas camera={{ position: [0,0,5] }}>
+                            <ambientLight  intensity={100}/>
+                        {/* <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} decay={0} intensity={Math.PI} />
+                        <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI} /> */}
+                            <Model modelDir={MODEL_DIR}  scale={0.7}/>
+                        </Canvas>
                     </div>
 
                     {/* 구분선(임시) */}
-                    <div className="border-2 border-gray-950">
+                    <div className="border-2 border-gr">
 
                     </div>
                     {/* 오른쪽 */}
-                    <div className="flex w-1/2 bg-emerald-300">
-                        <p>4</p>
-                        <p>5</p>
-                        <p>6</p>
+                    <div className="flex w-1/2 ">
+                        <Canvas>
+                            <ambientLight intensity={50}></ambientLight>
+                            <Model modelDir={MODEL_DIR2}  scale={3.6}/>
+
+                        </Canvas>
                     </div>
                 
                 </div>
