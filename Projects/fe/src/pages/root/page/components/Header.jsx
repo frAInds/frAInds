@@ -59,7 +59,7 @@ export const Header = ( { showLoginLink = true } ) => {
   return (<>
     <div className="fixed w-screen flex flex-row h-[70px] items-center z-10 shadow-lg px-8
       justify-between
-    dark:bg-slate-950 bg-white  dark:drop-shadow-xl">
+    dark:bg-charcoalBlack bg-white  dark:drop-shadow-xl">
       <Link to = '/'><FriendsLogo className="mb-1"/></Link>
       
       <div className="flex gap-5 text-indigo-400 font-bold text-xl">

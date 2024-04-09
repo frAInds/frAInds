@@ -19,6 +19,7 @@ export default{
     extend: {
       colors: {
         charcoalBlack: '#282828',
+        testBlack: '#333333',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

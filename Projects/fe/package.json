@@ -16,6 +16,8 @@
     "@react-three/drei": "^9.103.0",
     "@react-three/fiber": "^8.16.1",
     "@reduxjs/toolkit": "^2.2.2",
+    "@types/three": "^0.163.0",
+    "@vitejs/plugin-vue": "^5.0.4",
     "axios": "^1.6.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
@@ -29,9 +31,9 @@
     "react-awesome-slider": "^4.1.0",
     "react-dom": "^18.2.0",
     "react-redux": "^9.1.0",
+    "react-resizable-panels": "^2.0.16",
     "react-router-dom": "^6.21.3",
     "react-slick": "^0.30.2",
-    
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
     "three": "^0.163.0"
