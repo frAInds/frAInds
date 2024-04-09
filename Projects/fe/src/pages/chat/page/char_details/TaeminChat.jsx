@@ -1,6 +1,6 @@
 // import Chat from "..";
 //import three js for 3d models
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber'; //3d model canvas(container)
 import Model from '../components/Model'; //3d model
 
@@ -19,6 +19,18 @@ const TaeminChat = () => {
             text: 'Server message',
             timestamp: new Date().toISOString(),
             isUser: false,
+        },
+        {
+            id: 4,
+            text: 'Server message',
+            timestamp: new Date().toISOString(),
+            isUser: false,
+        },
+        {
+            id: 5,
+            text: 'Server message',
+            timestamp: new Date().toISOString(),
+            isUser: false,
         }
     ]);
 
@@ -28,17 +40,57 @@ const TaeminChat = () => {
 
     const handleSendMessage = (e) => {
         e.preventDefault();
-        const newMessages = {
-            id: chatMessages.length + 1,
+
+        const newMessage = {
             text: messages,
             timestamp: new Date().toISOString(),
             isUser: true,
         }
-        setChatMessages([...chatMessages, newMessages]);
+        setChatMessages([newMessage, ...chatMessages]);
         setMessages('');
     };
 
-    const model = useMemo(() => <Model modelDir={MODEL_DIR} scale={2} />, [MODEL_DIR])
+    const model = useMemo(
+        () => <Model modelDir={MODEL_DIR} scale={2} />, 
+        [MODEL_DIR]
+    );
+
+
+    //for testing messages from other users or server
+
+    const [dummyMessageCount, setDummyMessageCount] = useState(0);
+
+    useEffect(() => {
+        if(dummyMessageCount >= 3){
+            //after sending messages 3 times, stop sending messages
+            return;
+        }
+        const timer = setTimeout(() => {
+            const newMessage = {
+                text: 'Server message 2 seconds later',
+                timestamp: new Date().toISOString(),
+                isUser: false,
+            };
+            setChatMessages([newMessage, ...chatMessages]);
+            setDummyMessageCount(dummyMessageCount + 1);
+        }, 2000);  // 2 seconds delay
+    
+        // Cleanup function to clear the timeout when the component unmounts
+        return () => clearTimeout(timer);
+    }, [chatMessages, dummyMessageCount]);
+
+    const chatContainerRef = useRef(null);
+
+    //seding messages will now activate automatic scroll down
+
+    useEffect(() => {
+        if (chatContainerRef.current) {
+            const { scrollHeight, clientHeight } = chatContainerRef.current;
+            if(scrollHeight > clientHeight){
+                chatContainerRef.current.scrollTop = scrollHeight - clientHeight;
+            }
+        }
+    }, [chatMessages]);
 
     return(
         <ResizablePanelGroup direction="horizontal">
@@ -64,27 +116,28 @@ const TaeminChat = () => {
                 {/* 오른쪽 */}
                 <ResizablePanel defaultSize={35}>
                     <ResizablePanelGroup direction="vertical">
-                    <div className="flex h-full flex-col bg-gray-200 dark:bg-testBlack">
-                            <div className='flex-1 overflow-auto'>
-                                {chatMessages.map((message) => (
-                                    <div key={message.id} className={`'p-4 w-2/5 ${message.isUser ? 'ml-auto' : 'mr-auto'} mr-4`}>
-                                        <div className='bg-gray-300 p-2 rounded-tl-2xl rounded-bl-2xl rounded-br-2xl dark:text-black ml-4'>
+                        <div className="flex h-full flex-col bg-gray-200 justify-between dark:bg-testBlack">
+                            <div ref={chatContainerRef} className='flex flex-col-reverse overflow-auto'>
+                                {chatMessages.map((message, index) => (
+                                    <div key={index} className={`'p-4 w-2/5 ${message.isUser ? 'ml-auto' : 'mr-auto'} mr-4 my-6`}>
+                                        <div className={`bg-gray-300 p-2 
+                                        ${message.isUser ? 'rounded-tl-2xl rounded-bl-2xl rounded-br-2xl' : 'rounded-tr-2xl rounded-bl-2xl rounded-br-2xl'}
+                                        dark:text-black ml-4`}>
                                             <p>{message.text}</p>
                                         </div>
                                     </div>
                                 ))}
                             </div>
 
-                        <div className='p-4 px-6'>
-                            <form onSubmit={handleSendMessage} className='mt-auto'>
-                                <input type="text" 
-                                value={messages}
-                                onChange={handleInputChages}
-                                className='w-full h-10 border-2 border-gr rounded-md p-4 dark:text-black'
-                                placeholder='Type your message here...'/>
-                            </form>
-                        </div>
-                    </div> 
+                                <form onSubmit={handleSendMessage} className='p-4 px-6 mt-auto flex'>
+                                    <input type="text" 
+                                    value={messages}
+                                    onChange={handleInputChages}
+                                    className='w-full h-10 border-2 border-gr rounded-md p-4 dark:text-black'
+                                    placeholder='Type your message here...'/>
+                                    <button type='submit' className='  text-white mt-2 rounded-md'>Send</button>
+                                </form>
+                        </div> 
                     </ResizablePanelGroup>
                 </ResizablePanel>
             </div>

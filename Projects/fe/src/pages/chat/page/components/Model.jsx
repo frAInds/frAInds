@@ -4,7 +4,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import * as THREE from 'three';
 
-const Model = ({ modelDir, scale }) => {
+const Model =  ({ modelDir, scale }) => {
 
     const groupRef = useRef(new THREE.Group());
     const loader = new GLTFLoader();
@@ -33,4 +33,4 @@ const Model = ({ modelDir, scale }) => {
         </group>
     );
 };
-export default Model;
+export default React.memo(Model);
