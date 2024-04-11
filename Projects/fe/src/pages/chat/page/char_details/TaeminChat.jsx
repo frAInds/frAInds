@@ -7,10 +7,16 @@ import Model from '../components/Model'; //3d model
 //resizable library
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/common/components/ui/resizable"; 
 
+//reducer
+// import { useSelector } from 'react-redux';
+
+const isDarkModeOn = localStorage.theme === 'dark';
+
 //model dir
 const MODEL_DIR = '/models/miyu/scene.gltf';
 
 const TaeminChat = () => {
+
 
     const [messages, setMessages] = useState('');
     const [chatMessages, setChatMessages] = useState([
@@ -61,7 +67,6 @@ const TaeminChat = () => {
 
 
     //for testing messages from other users or server
-
     const [dummyMessageCount, setDummyMessageCount] = useState(0);
 
     useEffect(() => {
@@ -79,13 +84,10 @@ const TaeminChat = () => {
             setDummyMessageCount(dummyMessageCount + 1);
         }, 2000);  // 2 seconds delay
     
-        // Cleanup function to clear the timeout when the component unmounts
         return () => clearTimeout(timer);
     }, [chatMessages, dummyMessageCount]);
 
     const chatContainerRef = useRef(null);
-
-    //seding messages will now activate automatic scroll down
 
     useEffect(() => {
         if (chatContainerRef.current) {
@@ -113,9 +115,10 @@ const TaeminChat = () => {
                         </Canvas>
                     </div>
                 </ResizablePanel>
-                {/* 구분선(임시) */}
-                {/* 0409. resizable 사용해서 구분선 resizble하게 수정함 */}
-                <ResizableHandle withHandle className='dark:bg-white'/>
+
+                {/* handle */}
+                <ResizableHandle withHandle style={{ backgroundColor: '#000080' }} className='dark:bg-white'/>
+                
                 
                 {/* 오른쪽 */}
                 <ResizablePanel defaultSize={35}>
