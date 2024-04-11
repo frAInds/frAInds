@@ -41,6 +41,10 @@ const TaeminChat = () => {
     const handleSendMessage = (e) => {
         e.preventDefault();
 
+        if(!messages.trim()){
+            return;
+        }
+
         const newMessage = {
             text: messages,
             timestamp: new Date().toISOString(),
