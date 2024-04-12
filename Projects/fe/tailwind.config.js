@@ -73,6 +73,18 @@ export default{
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      width:{
+        '1/10': '10%',
+        '1/5': '20%',
+        '2/5': '40%',
+        '3/5': '60%',
+        '4/5': '80%',
+        '9/10': '90%',
+        '95p': '95%',
+      },
+      transitionProperty: {
+        'height': 'height',
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

@@ -11,7 +11,7 @@ const Chat = () => {
                 <Header showLoginLink={false} />
 
                 {/* 자식컴포넌트(유태민, dog, chung-ki) 배치할 위치*/}
-                <div className='bg-indigo-400'>
+                <div className='bg-gray-200'>
                     <Outlet />
                 </div>
                 
