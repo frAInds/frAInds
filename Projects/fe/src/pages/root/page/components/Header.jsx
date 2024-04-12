@@ -68,19 +68,8 @@ export const Header = ( { showLoginLink = true } ) => {
     navigate(url); // URL 변경
   };
 
-  useEffect(() => {
-    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark');
-      // setIsDarkModeOn(true);
-    dispatch(toggle());
 
-    }
-    else {
-      document.documentElement.classList.remove('dark');
-      // setIsDarkModeOn(false);
-      dispatch(toggle());
-    }
-  }, []);
+ 
 
   return (<>
     <div className="fixed w-screen flex flex-row h-[70px] items-center z-10 shadow-lg px-8

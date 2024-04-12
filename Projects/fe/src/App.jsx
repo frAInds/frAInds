@@ -18,44 +18,47 @@ import Chat from "./pages/chat/page";
 import SignUpResult from "@/pages/account/sign-up/page/sign-up_result";
 import DogChat from "./pages/chat/page/char_details/DogChat";
 import TaeminChat from "./pages/chat/page/char_details/TaeminChat";
+import InitialLoad from "./common/components/InitialLoad";
 
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route
         errorElement={<ErrorBoundary />}
+
       >
-        <Route path="account" element={<AccountLayout />}>
-          <Route path="sign-in" element={<SignIn />}/>
-          <Route path="sign-up" element={<SignUp />}/>
-          
+        <Route element={<InitialLoad />} >
+            <Route path="account" element={<AccountLayout />}>
+              <Route path="sign-in" element={<SignIn />}/>
+              <Route path="sign-up" element={<SignUp />}/>
+              
+            </Route>
+
+            <Route
+              element={<RootLayout />}
+            >
+              <Route
+                path="/"
+                element={<Root />}
+              />
+            </Route>
+
+            <Route path="test/*" element={<SignInTest />} />
+            <Route
+              path="test"
+              element={<Test />}
+            />
+
+            <Route path="chat" element={<Chat />}>
+              {/* dogchat */}
+              <Route path="dog" element={<DogChat />}/>
+              <Route path="taemin" element={<TaeminChat />} />
+            </Route>
+
+          {/* //회원가입 성공 테스트용 */}
+
+          <Route path="account/sign-up/result" element={<SignUpResult />}/>
         </Route>
-
-        <Route
-          element={<RootLayout />}
-        >
-          <Route
-            path="/"
-            element={<Root />}
-          />
-        </Route>
-
-        <Route path="test/*" element={<SignInTest />} />
-        <Route
-          path="test"
-          element={<Test />}
-        />
-
-        <Route path="chat" element={<Chat />}>
-          {/* dogchat */}
-          <Route path="dog" element={<DogChat />}/>
-          <Route path="taemin" element={<TaeminChat />} />
-        </Route>
-
-      {/* //회원가입 성공 테스트용 */}
-
-      <Route path="account/sign-up/result" element={<SignUpResult />}/>
-
       </Route>
     )
   )

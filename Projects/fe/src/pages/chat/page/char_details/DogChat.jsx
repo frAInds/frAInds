@@ -23,8 +23,6 @@ const DogChat = () => {
                         {/* 3d goes here */}
                         <Canvas camera={{ position: [0,0,5] }}>
                             <ambientLight  intensity={100}/>
-                        {/* <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} decay={0} intensity={Math.PI} />
-                        <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI} /> */}
                             <Model modelDir={MODEL_DIR}  scale={0.7}/>
                         </Canvas>
                     </div>
