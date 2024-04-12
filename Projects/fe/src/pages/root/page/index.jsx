@@ -20,17 +20,22 @@ export const Root = () => {
         {
           name: 'DALLE',
           url: '/chat/taemin',
-          img: exImg
+          img: exImg,
+          desc: '유태민이에요!'
         },
         {
+          //card hover아님
           name: 'Corgi',
           url: '/chat/dog',
-          img: exImg1
+          img: exImg1,
+          desc: '나만의 캐릭터를 만들어 볼까요?'
         },
         {
           name: 'DALLE Robot',
           url: '/chat/dog',
-          img: exImg2
+          img: exImg2,
+          desc: '사이보그 태민이에요!'
+
         },
       ]} options={OPTIONS}
       slides={SLIDES}/>

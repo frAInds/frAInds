@@ -39,16 +39,24 @@ const SelectionsCarousel = (props) => {
                     <p>[ CHOOSE YOUR CHARACTER ]</p>
                 </div>
 
-                <div className="embla">
-                    <div className="embla__viewport" ref={emblaRef}>
-                        <div className="embla__container">
+                <div className="embla w-full">
+                    <div className="embla__viewport w-full" ref={emblaRef}>
+                        <div className="embla__container ">
                             {items.map((item, index) => (
-                                <div className="embla__slide relative group" key={index}>
-                                    <Link to={item.url}>
-                                        <img className="slides_images rounded-lg shadow transition-all duration-600 ease-in-out hover:shadow-xl" src={item.img} alt="123" />
-                                        <div className="absolute bottom-0 left-0 w-full h-[15] bg-testBlack bg-opacity-50 group-hover:h-full transition-all duration-600 ease-in-out flex items-center justify-center p-4">
-                                            <span className="text-white text-lg text-center">{item.name}</span>
+                                <div className='embla__slide relative group mx-5' key={index}>
+                                    <Link to={item.url} className="flex relative">
+                                        <img className='slides_images rounded-lg shadow transition-all duration-[2000ms]  ease-in-out hover:shadow-xl hover:bg-testBlack ' src={item.img} alt={item.name} />
+                                        
+                                        <div className="absolute bottom-0 w-full h-[15] bg-testBlack bg-opacity-50 group-hover:h-full transition-all duration-[2000ms]  ease-in-out flex items-center justify-center p-4 flex-col overflow-hidden">
+                                            <span className="text-white text-lg text-center mb-2 z-10">{item.name}</span>
+                                            <div className="h-[2px] overflow-hidden"></div>
+                                            <span className="text-white z-10">{item.desc}</span>
+                                            <div className="absolute bottom-20 left-0 w-full text-center z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-[2000ms]">
+                                                
+                                                <span>Lorem ipsum dolor sit amet, </span>
+                                            </div>
                                         </div>
+                                        
                                     </Link>
                                 </div>
                             ))}

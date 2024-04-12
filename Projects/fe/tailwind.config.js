@@ -20,6 +20,9 @@ export default{
       },
     },
     extend: {
+      transitionDuration: {
+        '2000': '2000ms',
+      },
       colors: {
         charcoalBlack: '#282828',
         testBlack: '#333333',
