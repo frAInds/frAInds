@@ -20,6 +20,8 @@ export default{
       colors: {
         charcoalBlack: '#282828',
         testBlack: '#333333',
+        121212: '#121212',
+        test1A1918: '#1A1918',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
