@@ -3,7 +3,7 @@ import SelectionsCarousel from "./components/SelectionsCarousel";
 
 //images
 import exImg from '@/pages/test/page/images/DALLE.webp';
-import exImg1 from '@/pages/test/page/images/choongi_pic.png';
+import exImg1 from '@/pages/test/page/images/corgi.webp';
 import exImg2 from '@/pages/test/page/images/DALLE_robot.webp';
 
 export const Root = () => {
@@ -17,7 +17,21 @@ export const Root = () => {
 
       <SelectionsCarousel 
       items={[
-        exImg, exImg2, exImg1
+        {
+          name: 'DALLE',
+          url: '/chat/taemin',
+          img: exImg
+        },
+        {
+          name: 'Corgi',
+          url: '/chat/dog',
+          img: exImg1
+        },
+        {
+          name: 'DALLE Robot',
+          url: '/chat/dog',
+          img: exImg2
+        },
       ]} options={OPTIONS}
       slides={SLIDES}/>
 

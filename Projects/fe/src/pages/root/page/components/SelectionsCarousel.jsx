@@ -42,11 +42,13 @@ const SelectionsCarousel = (props) => {
                 <div className="embla">
                     <div className="embla__viewport" ref={emblaRef}>
                         <div className="embla__container">
-                            {items.map((image, index) => (
-                                <div className="embla__slide " key={index}>
-                                    
-                                    <Link to={`/chat/${index === 0 ? 'dog' : 'taemin'}`}>
-                                        <img className="slides_images rounded-lg shadow-2xl" src={image} alt="123" />
+                            {items.map((item, index) => (
+                                <div className="embla__slide relative group" key={index}>
+                                    <Link to={item.url}>
+                                        <img className="slides_images rounded-lg shadow transition-all duration-600 ease-in-out hover:shadow-xl" src={item.img} alt="123" />
+                                        <div className="absolute bottom-0 left-0 w-full h-[15] bg-testBlack bg-opacity-50 group-hover:h-full transition-all duration-600 ease-in-out flex items-center justify-center p-4">
+                                            <span className="text-white text-lg text-center">{item.name}</span>
+                                        </div>
                                     </Link>
                                 </div>
                             ))}
