@@ -6,15 +6,10 @@ import Model from '../components/Model'; //3d model
 
 //resizable library
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/common/components/ui/resizable";
-// import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger,  } from '@/common/components/ui/tooltip';
-import { Panel } from 'react-resizable-panels';
-
-import { useSelect } from '@react-three/drei';
 import { useSelector } from 'react-redux';
 
+import {  Dropdown,  DropdownTrigger,  DropdownMenu,  DropdownSection,  DropdownItem} from "@nextui-org/react";
 
-
-//reducer
 
 //model dir
 const MODEL_DIR = '/models/miyu/scene.gltf';

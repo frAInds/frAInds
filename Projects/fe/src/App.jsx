@@ -19,10 +19,12 @@ import SignUpResult from "@/pages/account/sign-up/page/sign-up_result";
 import DogChat from "./pages/chat/page/char_details/DogChat";
 import TaeminChat from "./pages/chat/page/char_details/TaeminChat";
 import InitialLoad from "./common/components/InitialLoad";
+import { NextUIProvider } from "@nextui-org/react";
 
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
+      
       <Route
         errorElement={<ErrorBoundary />}
 
@@ -64,9 +66,11 @@ function App() {
   )
 
   return <>
-    <TestProvider>
-      <RouterProvider router={router} />
-    </TestProvider>
+    <NextUIProvider>
+      <TestProvider>
+        <RouterProvider router={router} />
+      </TestProvider>
+    </NextUIProvider>
   </>
 
 }

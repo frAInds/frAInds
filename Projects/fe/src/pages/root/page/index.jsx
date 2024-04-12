@@ -2,8 +2,9 @@
 import SelectionsCarousel from "./components/SelectionsCarousel";
 
 //images
-import exImg from '@/pages/test/page/images/1701826553654.jpg';
+import exImg from '@/pages/test/page/images/DALLE.webp';
 import exImg1 from '@/pages/test/page/images/choongi_pic.png';
+import exImg2 from '@/pages/test/page/images/DALLE_robot.webp';
 
 export const Root = () => {
 
@@ -16,7 +17,7 @@ export const Root = () => {
 
       <SelectionsCarousel 
       items={[
-        exImg, exImg1, exImg
+        exImg, exImg2, exImg1
       ]} options={OPTIONS}
       slides={SLIDES}/>
 

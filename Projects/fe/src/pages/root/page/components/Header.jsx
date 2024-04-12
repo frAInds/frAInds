@@ -6,16 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import UsageModal from "./UsageModal";
 import { toggle } from "@/common/reducers/darkmodeSlice";
+import DropdownContent from "./DropDownContent";
 
 //nav menu
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-  SelectGroup,
-} from "@/common/components/ui/select"
+import { Dropdown,DropdownTrigger,DropdownMenu,DropdownItem, Button } from "@nextui-org/react";
 
 
 //Chat.jsx에서 Header 쓸건데 로그인 버튼은 안써도 될듯해서 props로 처리함
@@ -23,12 +17,11 @@ export const Header = ( { showLoginLink = true } ) => {
   //다크모드, 라이트모드
   // const [isDarkModeOn, setIsDarkModeOn] = useState(false);
 
-  const isDarkModeOn = useSelector(state => state.darkmode.value);
-  const dispatch = useDispatch();
-
-
   //사용방법 클릭 시 나오는 반투명 검정색 창 + 흰색 텍스트
   const [isUsageOn, setIsUsageOn] = useState(false);
+
+  const isDarkModeOn = useSelector((state) => state.darkmode.value);
+  const dispatch = useDispatch();
 
   //로그인 여부 가져오기
   const isAuthenticated = useSelector(
@@ -38,8 +31,8 @@ export const Header = ( { showLoginLink = true } ) => {
   //테마변경
   const handleChangeTheme = () => {
     // setIsDarkModeOn(!isDarkModeOn);
-    dispatch(toggle());
 
+    dispatch(toggle());
     if (isDarkModeOn === true) {
     localStorage.theme = 'light'
     document.documentElement.classList.remove('dark');
@@ -57,18 +50,22 @@ export const Header = ( { showLoginLink = true } ) => {
     setIsUsageOn(true);
   }
 
-  //UsageModal close시
-  const handleCloseUsageModal = () => {
-    console.log('usage modal false');
-
-    setIsUsageOn(false);
-  }
-
   const handleItemClick = (url) => {
     navigate(url); // URL 변경
   };
 
-
+  const itemsIntro = [{
+    name: '소개',
+    url: '/intro',
+  },
+  {
+    name: '커뮤니티',
+    url: '/community',
+  },
+  {
+    name: '고객센터',
+    url: '/help',
+  },];
  
 
   return (<>
@@ -86,7 +83,9 @@ export const Header = ( { showLoginLink = true } ) => {
         </div>
         
         {/* <div className="mr-10 cursor-pointer" onClick={handleUsageModal} role="button">사용방법</div> */}
-        
+        <DropdownContent name='이용 안내' color='success' 
+        items={itemsIntro}/>
+
 
         {isDarkModeOn ?
           <svg className="dark:fill-indigo-400 flex-shrink-0 h-10" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-120q-150 0-255-105T120-480q0-150 105-255t255-105q14 0 27.5 1t26.5 3q-41 29-65.5 75.5T444-660q0 90 63 153t153 63q55 0 101-24.5t75-65.5q2 13 3 26.5t1 27.5q0 150-105 255T480-120Z" /></svg>
