@@ -2,17 +2,30 @@ import FriendsLogo from "@/common/components/FriendsLogo";
 import { Switch } from "@/common/components/ui/switch";
 // import SignIn from "@/pages/account/sign-in/page";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import UsageModal from "./UsageModal";
+import { toggle } from "@/common/reducers/darkmodeSlice";
 
 //nav menu
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  SelectGroup,
+} from "@/common/components/ui/select"
 
 
 //Chat.jsx에서 Header 쓸건데 로그인 버튼은 안써도 될듯해서 props로 처리함
 export const Header = ( { showLoginLink = true } ) => {
   //다크모드, 라이트모드
-  const [isDarkModeOn, setIsDarkModeOn] = useState(false);
+  // const [isDarkModeOn, setIsDarkModeOn] = useState(false);
+
+  const isDarkModeOn = useSelector(state => state.darkmode.value);
+  const dispatch = useDispatch();
+
 
   //사용방법 클릭 시 나오는 반투명 검정색 창 + 흰색 텍스트
   const [isUsageOn, setIsUsageOn] = useState(false);
@@ -24,14 +37,17 @@ export const Header = ( { showLoginLink = true } ) => {
 
   //테마변경
   const handleChangeTheme = () => {
-    setIsDarkModeOn(!isDarkModeOn);
+    // setIsDarkModeOn(!isDarkModeOn);
+    dispatch(toggle());
+
     if (isDarkModeOn === true) {
-      localStorage.theme = 'light'
-      document.documentElement.classList.remove('dark');
+    localStorage.theme = 'light'
+    document.documentElement.classList.remove('dark');
+      
     }
     else {
-      localStorage.theme = 'dark'
-      document.documentElement.classList.add('dark');
+    localStorage.theme = 'dark'
+    document.documentElement.classList.add('dark');
     }
   }
 
@@ -55,11 +71,14 @@ export const Header = ( { showLoginLink = true } ) => {
   useEffect(() => {
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       document.documentElement.classList.add('dark');
-      setIsDarkModeOn(true);
+      // setIsDarkModeOn(true);
+    dispatch(toggle());
+
     }
     else {
       document.documentElement.classList.remove('dark');
-      setIsDarkModeOn(false);
+      // setIsDarkModeOn(false);
+      dispatch(toggle());
     }
   }, []);
 

@@ -6,23 +6,22 @@ import Model from '../components/Model'; //3d model
 
 //resizable library
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/common/components/ui/resizable";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger,  } from '@/common/components/ui/tooltip';
+// import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger,  } from '@/common/components/ui/tooltip';
 import { Panel } from 'react-resizable-panels';
 
-import { useSpring, animated } from '@react-spring/web';
+import { useSelect } from '@react-three/drei';
+import { useSelector } from 'react-redux';
+
+
 
 //reducer
-// import { useSelector } from 'react-redux';
-
-// const isDarkModeOn = localStorage.theme === 'dark';
 
 //model dir
 const MODEL_DIR = '/models/miyu/scene.gltf';
 
 const TaeminChat = () => {
 
-    const [springProps, setSpringProps] = useSpring(() => ({ width: '0%' }));
-
+    const isDarkModeOn = useSelector(state => state.darkmode.value);
 
     const [messages, setMessages] = useState('');
     const [chatMessages, setChatMessages] = useState([
@@ -150,7 +149,7 @@ const TaeminChat = () => {
                 </ResizablePanel>
 
                 {/* handle */}
-                <ResizableHandle withHandle style={{ backgroundColor: '#000080' }} className='dark:bg-white '/>
+                <ResizableHandle withHandle style={{ backgroundColor: `${isDarkModeOn ? 'white' : 'black'}` }} className='dark:bg-white '/>
 
                 {/* 오른쪽 */}
                 <ResizablePanel defaultSize={45} order={3}>
