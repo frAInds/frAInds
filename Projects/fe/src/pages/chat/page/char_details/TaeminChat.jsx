@@ -12,7 +12,7 @@ import {  Dropdown,  DropdownTrigger,  DropdownMenu,  DropdownSection,  Dropdown
 
 
 //model dir
-const MODEL_DIR = '/models/miyu/scene.gltf';
+const MODEL_DIR = '/models/godzilla/scene.gltf';
 
 const TaeminChat = () => {
 
@@ -50,7 +50,7 @@ const TaeminChat = () => {
     };
 
     const model = useMemo(
-        () => <Model modelDir={MODEL_DIR} scale={2} />,
+        () => <Model modelDir={MODEL_DIR} scale={0.5} />,
         [MODEL_DIR]
     );
 
@@ -84,8 +84,8 @@ const TaeminChat = () => {
             if (messagesToSend.text.startsWith('```') && messagesToSend.text.endsWith('```')) {
                 const codeBlock = messagesToSend.text.slice(3, -3);
 
-                const width = 750;
-                const height = 750;
+                const width = 400;
+                const height = 400;
 
                 //팝업 화면을 중앙에 띄우려면 width, height를 계산해야 한다..
                 const left = (window.screen.width - width) / 2;

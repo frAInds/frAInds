@@ -3,8 +3,8 @@ import SelectionsCarousel from "./components/SelectionsCarousel";
 
 //images
 import exImg from '@/pages/test/page/images/DALLE.webp';
-import exImg1 from '@/pages/test/page/images/corgi.webp';
-import exImg2 from '@/pages/test/page/images/DALLE_robot.webp';
+import exImg1 from '@/pages/test/page/images/DALLE_robot.webp';
+import Plus from '@/pages/root/page/images/plus-svgrepo-com.svg';
 
 export const Root = () => {
 
@@ -18,23 +18,24 @@ export const Root = () => {
       <SelectionsCarousel 
       items={[
         {
-          name: 'DALLE',
+          name: '유태민',
           url: '/chat/taemin',
           img: exImg,
           desc: '유태민이에요!'
         },
         {
-          //card hover아님
-          name: 'Corgi',
+          
+          name: '유태민(사이보그)',
           url: '/chat/dog',
           img: exImg1,
-          desc: '나만의 캐릭터를 만들어 볼까요?'
+          desc: '사이보그 태민이에요!'
         },
         {
-          name: 'DALLE Robot',
+          //card hover아님
+          name: 'Create',
           url: '/chat/dog',
-          img: exImg2,
-          desc: '사이보그 태민이에요!'
+          img: Plus,
+          desc: '나만의 캐릭터를 만들어 볼까요?'
 
         },
       ]} options={OPTIONS}
