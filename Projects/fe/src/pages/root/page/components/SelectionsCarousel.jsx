@@ -45,9 +45,9 @@ const SelectionsCarousel = (props) => {
                             {items.map((item, index) => (
                                 <div className='embla__slide relative group mx-5' key={index}>
                                     <Link to={item.url} className="flex relative">
-                                        <img className='slides_images rounded-lg shadow transition-all duration-[2000ms]  ease-in-out hover:shadow-xl hover:bg-testBlack ' src={item.img} alt={item.name} />
+                                        <img className=' rounded-lg shadow   ease-in-out hover:shadow-xl ' src={item.img} alt={item.name} />
                                         
-                                        <div className="absolute bottom-0 w-full h-[15] bg-testBlack bg-opacity-50 group-hover:h-full transition-all duration-[2000ms]  ease-in-out flex items-center justify-center p-4 flex-col overflow-hidden">
+                                        <div className="absolute bottom-0 w-full h-[15] bg-testBlack bg-opacity-50 group-hover:h-full transition-opacity duration-2000  ease-in-out flex items-center justify-center p-4 flex-col overflow-hidden">
                                             <span className="text-white text-lg text-center mb-2 z-10">{item.name}</span>
                                             <div className="h-[2px] overflow-hidden"></div>
                                             <span className="text-white z-10">{item.desc}</span>
