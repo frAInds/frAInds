@@ -23,11 +23,16 @@ export default{
       transitionDuration: {
         '2000': '2000ms',
       },
+      width: {
+        '344': '344px',
+      },
       colors: {
         charcoalBlack: '#282828',
         testBlack: '#333333',
         121212: '#121212',
         test1A1918: '#1A1918',
+        customGray: '#e5e5e1',
+        
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

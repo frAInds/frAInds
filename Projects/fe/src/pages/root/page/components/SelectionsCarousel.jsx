@@ -42,18 +42,21 @@ const SelectionsCarousel = (props) => {
                 <div className="embla w-full">
                     <div className="embla__viewport w-full" ref={emblaRef}>
                         <div className="embla__container ">
-                            {items.map((item, index) => (
+                        {items.map((item, index) => (
                                 <div className='embla__slide relative group mx-5' key={index}>
                                     <Link to={item.url} className="flex relative">
-                                        <img className=' rounded-lg shadow   ease-in-out hover:shadow-xl ' src={item.img} alt={item.name} />
-                                        
-                                        <div className="absolute bottom-0 w-full h-[15] bg-testBlack bg-opacity-50 group-hover:h-full transition-opacity duration-2000  ease-in-out flex items-center justify-center p-4 flex-col overflow-hidden">
+                                        {/* +는 svg인데 아이콘이 전체크기를 잡아먹어서 컨테이너에 따로 작게 렌더링함. */}
+                                        {item.name === 'Create' ? (
+                                            <div className="flex items-center justify-center border border-customGray rounded-lg" style={{ width: '344px', height: '344px', borderColor: '#e5e5e1' }}>
+                                                <img src={item.img} alt={item.name} className="w-1/2 h-1/2 rounded-lg "/>
+                                            </div>
+                                        ) : (
+                                            <img className=' rounded-lg shadow   ease-in-out hover:shadow-xl ' src={item.img} alt={item.name} />
+                                        )}
+                                        <div className="absolute  w-full h-full bg-testBlack/50 flex items-center justify-center -bottom-40 group-hover:bottom-0 opacity-0 group-hover:opacity-100 transition-all duration-1000 ease-in-out p-4 flex-col overflow-hidden">
                                             <span className="text-white text-lg text-center mb-2 z-10">{item.name}</span>
-                                            <div className="h-[2px] overflow-hidden"></div>
                                             <span className="text-white z-10">{item.desc}</span>
-                                            <div className="absolute bottom-20 left-0 w-full text-center z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-[2000ms]">
-                                                
-                                                <span>Lorem ipsum dolor sit amet, </span>
+                                            <div className="absolute bottom-20 left-0 w-full text-center z-10">
                                             </div>
                                         </div>
                                         

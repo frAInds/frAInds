@@ -103,7 +103,7 @@ export const Header = ( { showLoginLink = true } ) => {
     <div className="h-[70px] w-full"></div>
 
     {/* UsageModal의 활성/비활성 상태에 따른 창 */}
-    {isUsageOn && <UsageModal onClose={handleCloseUsageModal} />}
+    {/* {isUsageOn && <UsageModal onClose={handleCloseUsageModal} />} */}
   </>
   )
 }
