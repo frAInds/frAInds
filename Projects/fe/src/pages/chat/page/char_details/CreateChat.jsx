@@ -7,29 +7,16 @@ import React, { useState, useRef, useCallback } from 'react';
 
 const CreateChat = () => {
 
-    // const isDarkModeOn = useSelector(state => state.darkmode.value);
 
     //file upload
-    // const [, setFile] = useState(null);
     const fileInputRef = useRef(null);
     //svg -> image
-    // const [, setImagePreviewUrl] = useState('');
     const [state, setState] = useState({
         file: null,
         imagePreviewUrl: '',
         currentPage: 1,
     });
-
-    //next, prev page
-    // const [, setCurrentPage] = useState(1);
-    // const nextPage = () => {
-    //     setCurrentPage(currentPage + 1);
-    // };
-
-    // const prevPage = () => {
-    //     setCurrentPage(currentPage - 1);
-    // };
-
+   
     const nextPage = useCallback(() => {
         setState(prevState => ({ ...prevState, currentPage: prevState.currentPage + 1 }));
     }, []);
@@ -53,33 +40,10 @@ const CreateChat = () => {
         }
     }, []);
 
-    // const handleFileSelect = () => {
-    //     console.log(fileInputRef.current); 
-    //     fileInputRef.current.click();  
-    // }
-    // const handleFileChange = (e) => {
-    //     const selectedFile = e.target.files[0];
-    //     if(selectedFile){
-    //         setFile(selectedFile);
-
-    //         const reader = new FileReader();
-
-    //         reader.onloadend = () => {
-    //             setImagePreviewUrl(reader.result);
-    //         };
-
-    //         reader.readAsDataURL(selectedFile);
-    //     }
-    // };
     const handleDiscard = useCallback(() => {
         setFile(null);
         setImagePreviewUrl('');
     }, []);
-
-    // const handleDiscard = () => {
-    //     setFile(null);
-    //     setImagePreviewUrl('');
-    // };
 
     return(
         <>
@@ -149,6 +113,8 @@ const CreateChat = () => {
                                     labelPlacement="outside"
                                     placeholder="캐릭터 이름 입력"
                                     className='mt-10 px-10 transition-none'
+                                    disableAnimation={true}
+
                                 />
                             </div>
                             
@@ -161,6 +127,9 @@ const CreateChat = () => {
                                     placeholder="어떤 캐릭터인지 한 줄로 소개해주세요"
                                     className='mt-10 px-10'
                                     style={{height: '130px'}}
+                                    disableAnimation={true}
+
+
                                 />
                             </div>
                             
@@ -171,12 +140,18 @@ const CreateChat = () => {
                     {state.currentPage === 2 && (
                         <>
                             <div className='h-40'>
+                                
+                            </div>
+                            <div className='h-40'>
                                 <Textarea 
                                     isRequired
                                     label="첫 인사말"
                                     labelPlacement="outside"
                                     placeholder="캐릭터가 건넬 첫 인사말을 적어주세요"
-                                    className='mt-10 px-10'
+                                    className='mt-10 px-10 h-40'
+                                    disableAnimation={true}
+
+
                                 />
                             </div>
                             
@@ -186,9 +161,9 @@ const CreateChat = () => {
                                     label="캐릭터 설정 및 정보"
                                     labelPlacement="outside"
                                     placeholder="캐릭터의 역할, 외모, 성격, 스킬 등을 자유롭게 적어주세요"
-                                    minRows={5}
-                                    maxRows={10}
                                     className='mt-10 px-10'
+                                    disableAnimation={true}
+
                                 />
                             </div>
                             
@@ -222,7 +197,23 @@ const CreateChat = () => {
                     
 
                 {/* 오른쪽 */}
-                <div className="flex w-2/5 h-20 bg-blue-300">
+                <div className="flex w-2/5 h-full  border-l-2 border-black">
+                    {/* header(right) */}  
+                    <div className='flex w-full h-20 justify-center items-center bg-indigo-700 text-createHeaderText'>
+                        {state.currentPage === 1 && (
+                            <p className=''>캐릭터 미리보기</p>
+                        )}
+                        {state.currentPage === 2 && (
+                            <p className=''>채팅 미리보기</p>
+                        )}
+                        {state.currentPage === 3 && (
+                            <div className='flex-col text-center'>
+                                <p className=''>캐릭터 채팅 테스트</p>
+                                <p className=''>내가 만든 AI 캐릭터와 대화를 해보세요. 대화는 10턴까지 가능해요.</p>
+                            </div>
+                        )}
+
+                    </div>
                     
                 </div>
 

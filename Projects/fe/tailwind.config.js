@@ -32,6 +32,7 @@ export default{
         121212: '#121212',
         test1A1918: '#1A1918',
         customGray: '#e5e5e1',
+        createHeaderText: '#2DADF7',
         
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
