@@ -8,7 +8,7 @@ import Model from '../components/Model';
 
 const MODEL_DIR = '/models/miyu/scene.gltf';
 
-const DogChat = () => {
+const CyborgTaeminChat = () => {
 
 
     return(
@@ -40,4 +40,4 @@ const DogChat = () => {
         </div>
     );
 }
-export default DogChat;
+export default CyborgTaeminChat;

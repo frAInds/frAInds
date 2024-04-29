@@ -27,14 +27,13 @@ export const Root = () => {
         {
           
           name: '유태민(사이보그)',
-          url: '/chat/dog',
+          url: '/chat/cyborg',
           img: exImg1,
           desc: '어느 따뜻한 봄날 유태민은 조윤기에게 납치당해 기계에 갇히고 맙니다. [더보기] '
         },
         {
-          //card hover아님
           name: 'Create',
-          url: '/chat/dog',
+          url: '/chat/create',
           img: Plus,
           desc: '나만의 캐릭터를 만들어 볼까요?'
 
@@ -42,7 +41,16 @@ export const Root = () => {
       ]} options={OPTIONS}
       slides={SLIDES}/>
 
+      {/* wrtn 이런 프롬프트는 어때요? 부분 */}
+      <div>
+
+      </div>
+
+
+
     </div>
+
+    
   )
 }
 

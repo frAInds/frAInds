@@ -16,10 +16,11 @@ import SignInTest from "@/pages/test/page/sign-in_test";
 import TestProvider from "./common/contexts/TestProvider";
 import Chat from "./pages/chat/page";
 import SignUpResult from "@/pages/account/sign-up/page/sign-up_result";
-import DogChat from "./pages/chat/page/char_details/DogChat";
+import CyborgTaeminChat from "./pages/chat/page/char_details/CyborgTaeminChat";
 import TaeminChat from "./pages/chat/page/char_details/TaeminChat";
 import InitialLoad from "./common/components/InitialLoad";
 import { NextUIProvider } from "@nextui-org/react";
+import CreateChat from "./pages/chat/page/char_details/CreateChat";
 
 function App() {
   const router = createBrowserRouter(
@@ -45,16 +46,23 @@ function App() {
               />
             </Route>
 
+            {/* 추후 삭제예정 */}
             <Route path="test/*" element={<SignInTest />} />
             <Route
               path="test"
               element={<Test />}
             />
 
+
+
             <Route path="chat" element={<Chat />}>
               {/* dogchat */}
-              <Route path="dog" element={<DogChat />}/>
               <Route path="taemin" element={<TaeminChat />} />
+              <Route path="cyborg" element={<CyborgTaeminChat />} />
+              <Route path="create" element={<CreateChat />}
+              
+              /> 
+              
             </Route>
 
           {/* //회원가입 성공 테스트용 */}

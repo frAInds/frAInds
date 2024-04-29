@@ -117,13 +117,13 @@ const TaeminChat = () => {
     }, [chatMessages]);
 
 
-    const [isBlockOpen, setIsBlockOpen] = useState(false);
-    //블록 확장 버튼
-    const handleBlockOpen = () => {
-        // Add your implementation here
-        setIsBlockOpen(!isBlockOpen);
+    // const [isBlockOpen, setIsBlockOpen] = useState(false);
+    // //블록 확장 버튼
+    // const handleBlockOpen = () => {
+    //     // Add your implementation here
+    //     setIsBlockOpen(!isBlockOpen);
     
-    }
+    // }
 
     return(
         <ResizablePanelGroup direction="horizontal" autoSaveId="conditional">
@@ -169,7 +169,7 @@ const TaeminChat = () => {
                                         type="text"
                                         value={messages}
                                         onChange={handleInputChages}
-                                        className='flex-grow w-full h-10 border-2 border-gr rounded-md p-4 dark:text-black'
+                                        className='flex-grow w-full h-10 border-2 border-gr rounded-md p-4 dark:text-white'
                                         placeholder='Type your message here...'
                                     />
                                     {/* <button type='submit' className='  text-white mt-2 rounded-md'>Send</button> */}
