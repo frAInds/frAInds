@@ -15,6 +15,9 @@ const CreateChat = () => {
         file: null,
         imagePreviewUrl: '',
         currentPage: 1,
+        name: '캐릭터 이름',
+        intro: '캐릭터 한 줄 소개',
+
     });
    
     const nextPage = useCallback(() => {
@@ -45,6 +48,15 @@ const CreateChat = () => {
         setImagePreviewUrl('');
     }, []);
 
+    const setName = useCallback((name) => {
+        setState(prevState => ({ ...prevState, name }));
+    }, []);
+
+    const setIntro = useCallback((intro) => {
+        setState(prevState => ({ ...prevState, intro }));
+    }, []);
+
+
     return(
         <>
         {/* container */}
@@ -55,16 +67,20 @@ const CreateChat = () => {
                     {/* 왼쪽 헤더 */}
                     <div className="flex h-20 items-center justify-center bg-gray-400 dark:bg-neutral-800 gap-12">
 
-                        <button className='flex flex-col h-full pt-3 gap-2 items-center'>
+                        <button className={`flex flex-col h-full pt-3 gap-2 items-center ${state.currentPage === 1 ? 'text-violet-400 opacity-80' : 'text-white'}`}
+                        onClick={() => setState(prevState => (({ ...prevState, currentPage: 1 })))}>
                             <p className='text-xl '>1단계</p>
-                            <p>profile</p>
+                            <p className=''>profile</p>
+
                         </button>
-                        <button className='flex flex-col h-full pt-3 gap-2 items-center'>
+                        <button className={`flex flex-col h-full pt-3 gap-2 items-center ${state.currentPage === 2 ? 'text-violet-400 opacity-80' : 'text-white'}`}
+                        onClick={() => setState(prevState => (({ ...prevState, currentPage: 2 })))}>
                             <p className='text-xl '>2단계</p>
                             <p>상세 설정</p>
 
                         </button>
-                        <button className='flex flex-col h-full pt-3 gap-2 items-center'>
+                        <button className={`flex flex-col h-full pt-3 gap-2 items-center ${state.currentPage === 3 ? 'text-violet-400 opacity-80' : 'text-white'}`}
+                        onClick={() => setState(prevState => (({ ...prevState, currentPage: 3 })))}>
                             <p className='text-xl '>3단계</p>
                             <p>등록하기!</p>
 
@@ -114,7 +130,8 @@ const CreateChat = () => {
                                     placeholder="캐릭터 이름 입력"
                                     className='mt-10 px-10 transition-none'
                                     disableAnimation={true}
-
+                                    
+                                    onChange={(e) => setName(e.target.value)}
                                 />
                             </div>
                             
@@ -128,12 +145,10 @@ const CreateChat = () => {
                                     className='mt-10 px-10'
                                     style={{height: '130px'}}
                                     disableAnimation={true}
-
-
+                                    
+                                    onChange={(e) => setIntro(e.target.value)}
                                 />
                             </div>
-                            
-                        
                         </>
                     )}
                     {/* page 2 */}
@@ -150,8 +165,6 @@ const CreateChat = () => {
                                     placeholder="캐릭터가 건넬 첫 인사말을 적어주세요"
                                     className='mt-10 px-10 h-40'
                                     disableAnimation={true}
-
-
                                 />
                             </div>
                             
@@ -166,8 +179,6 @@ const CreateChat = () => {
 
                                 />
                             </div>
-                            
-                        
                         </>
                     )}
                     {/* area for buttons */}
@@ -190,14 +201,10 @@ const CreateChat = () => {
                             </div>
                         </div>
                     </div>
-                    
-
-
                 </div>
-                    
 
                 {/* 오른쪽 */}
-                <div className="flex w-2/5 h-full  border-l-2 border-black">
+                <div className="flex flex-col w-2/5 h-full  border-l-2 border-black">
                     {/* header(right) */}  
                     <div className='flex w-full h-20 justify-center items-center bg-indigo-700 text-createHeaderText'>
                         {state.currentPage === 1 && (
@@ -212,9 +219,29 @@ const CreateChat = () => {
                                 <p className=''>내가 만든 AI 캐릭터와 대화를 해보세요. 대화는 10턴까지 가능해요.</p>
                             </div>
                         )}
-
                     </div>
                     
+                    {/* 캐릭터 이름, 한 줄 소개 등 들어갈 블록 */}
+                    <div className='flex w-full h-[200px] justify-center items-center mt-10'>
+                        {/* 여기 이미지는 왼쪽 패널 이미지 따라감 */}
+                        <div className='flex flex-col w-9/10 h-4/5 bg-test1A1918 rounded-2xl p-5 '>
+                            <div className='flex w-full h-full items-center gap-3 mb-5'>
+                                <img src={DefaultImage} alt="userImage" className='max-w-16 h-16 object-contain rounded-2xl'/>
+
+                                {/* 여기 캐릭터 이름, 한 줄 소개는 왼족 페이지의 값 따라감. 변화 실시간으로 하기 */}
+                                <p className='items-center text-xl opacity-70'>{state.name}</p>
+                            </div>
+                            <p className='items-center text-xl opacity-70'>{state.intro}</p>
+                        </div>
+                    </div>
+
+                    {/* 채팅예시 부분 */}
+                    <div className='flex w-full h-[300px] justify-center items-center '>
+                        {/* 여기 이미지는 왼쪽 패널 이미지 따라감 */}
+                        <div className='flex flex-col w-9/10 h-full bg-test1A1918 rounded-2xl p-5 '>
+                            
+                        </div>
+                    </div>
                 </div>
 
 
