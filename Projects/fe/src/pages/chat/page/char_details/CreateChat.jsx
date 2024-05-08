@@ -1,7 +1,7 @@
 //자기 캐릭터 생성 화면
 // import { useSelector } from 'react-redux';
 import DefaultImage from '@/pages/root/page/images/avatar_fallback.png';
-import { Divider, Textarea, Button } from '@nextui-org/react';
+import { Divider, Textarea, Button, Tooltip } from '@nextui-org/react';
 
 import React, { useState, useRef, useCallback } from 'react';
 
@@ -17,21 +17,16 @@ const CreateChat = () => {
         currentPage: 1,
         name: '캐릭터 이름',
         intro: '캐릭터 한 줄 소개',
-
     });
-   
     const nextPage = useCallback(() => {
         setState(prevState => ({ ...prevState, currentPage: prevState.currentPage + 1 }));
     }, []);
-
     const prevPage = useCallback(() => {
         setState(prevState => ({ ...prevState, currentPage: prevState.currentPage - 1 }));
     }, []);
-
     const handleFileSelect = useCallback(() => {
         fileInputRef.current.click();
     }, []);
-
     const handleFileChange = useCallback((e) => {
         const selectedFile = e.target.files[0];
         if (selectedFile) {
@@ -54,6 +49,14 @@ const CreateChat = () => {
 
     const setIntro = useCallback((intro) => {
         setState(prevState => ({ ...prevState, intro }));
+    }, []);
+
+    const setFile = useCallback((file) => {
+        setState(prevState => ({ ...prevState, file }));
+    }, []);
+
+    const setImagePreviewUrl = useCallback((imagePreviewUrl) => {
+        setState(prevState => ({ ...prevState, imagePreviewUrl }));
     }, []);
 
 
@@ -113,7 +116,7 @@ const CreateChat = () => {
                                     <Divider orientation="vertical" />
                                     {/* discard */}
                                     <button onClick={handleDiscard}>
-                                        <svg width="20" height="20" viewBox="0 0 25 25" fill="currentColor" xmlns="http://www.w3.org/2000/svg" color="#42413dff">
+                                        <svg width="20" height="20" viewBox="0 0 25 25" fill="currentColor" xmlns="http://www.w3.org/2000/svg" color="#f0efebff">
                                             <path fillRule="evenodd" clipRule="evenodd" d="M15.5 2.43702H9.5V4.43702H3.5V6.43702H5.5V19.437C5.5 20.5416 6.39543 21.437 7.5 21.437H17.5C18.6046 21.437 19.5 20.5416 19.5 19.437V6.43702H21.5V4.43702H15.5V2.43702ZM7.5 6.43702H17.5V19.437H7.5V6.43702ZM11.5 17.437H9.5V8.43702H11.5V17.437ZM15.5 17.437H13.5V8.43702H15.5V17.437Z" fill="currentColor"></path>
                                         </svg>
                                         {/* <input type="file" /> */}
@@ -226,7 +229,11 @@ const CreateChat = () => {
                         {/* 여기 이미지는 왼쪽 패널 이미지 따라감 */}
                         <div className='flex flex-col w-9/10 h-4/5 bg-test1A1918 rounded-2xl p-5 '>
                             <div className='flex w-full h-full items-center gap-3 mb-5'>
-                                <img src={DefaultImage} alt="userImage" className='max-w-16 h-16 object-contain rounded-2xl'/>
+                                { state.imagePreviewUrl ? (
+                                    <img src={state.imagePreviewUrl} alt="Preview" className='max-w-16 h-16 object-contain  rounded-2xl'/>
+                                ) : (
+                                    <img src={DefaultImage} alt="userImage" className='max-w-16 h-16 object-contain rounded-2xl'/>
+                                )}
 
                                 {/* 여기 캐릭터 이름, 한 줄 소개는 왼족 페이지의 값 따라감. 변화 실시간으로 하기 */}
                                 <p className='items-center text-xl opacity-70'>{state.name}</p>
