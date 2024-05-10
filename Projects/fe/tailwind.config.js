@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+const {nextui} = require("@nextui-org/react");
+
 export default{
   darkMode: ["class"],
   content: [
@@ -6,6 +9,7 @@ export default{
     './components/**/*.{js,jsx}',
     './app/**/*.{js,jsx}',
     './src/**/*.{js,jsx}',
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   prefix: "",
   theme: {
@@ -17,7 +21,20 @@ export default{
       },
     },
     extend: {
+      transitionDuration: {
+        '2000': '2000ms',
+      },
+      width: {
+        '344': '344px',
+      },
       colors: {
+        charcoalBlack: '#282828',
+        testBlack: '#333333',
+        121212: '#121212',
+        test1A1918: '#1A1918',
+        customGray: '#e5e5e1',
+        createHeaderText: '#2DADF7',
+        
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -71,7 +88,20 @@ export default{
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      width:{
+        '1/10': '10%',
+        '1/5': '20%',
+        '2/5': '40%',
+        '3/5': '60%',
+        '4/5': '80%',
+        '9/10': '90%',
+        '95p': '95%',
+      },
+      transitionProperty: {
+        'height': 'height',
+      },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  darkMode: "class",
+  plugins: [require("tailwindcss-animate"), nextui(),],
 }

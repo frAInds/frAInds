@@ -25,7 +25,7 @@ const SignUp = () => {
 
     // Check username conditions
     if (!/^[a-z0-9]{8,16}$/.test(value)) {
-      setErrorMessage("Username only lowercase letters and numbers, with a length of 8 to 16 characters.");
+      setErrorMessage("Username은 8 - 16 자리 사이의 소문자와 숫자여야 합니다.");
     } else {
       setErrorMessage('');
     }
@@ -43,16 +43,28 @@ const SignUp = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (errorMessage) {
-      console.log(errorMessage);
-      return;
-    }
+    try{
+      const response = await fetch('/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
 
+      //실패
+      if (!response.ok) {
+        throw new Error('Sign up failed!');
+      }
+
+      const data = await response.json();
+    }catch(e){
+      console.error('Error:', error);
+    }
     console.log({ username, password });
-    navigate("/account/sign-up/result");
   };
 
   return (
@@ -66,14 +78,15 @@ const SignUp = () => {
             <input
               type="text"
               required
-              className="text-2xl border-2 rounded-lg border-gray-600 border-opacity-50 outline-none focus:border-blue-600 transition duration-200 transform origin-top-left"
+              className="text-2xl border-2 rounded-lg border-gray-600 border-opacity-50 outline-none focus:border-blue-600 transition duration-200 transform origin-top-left
+              dark:bg-white dark:text-test1A1918"
               onFocus={handleFocusUsername}
               onBlur={handleBlurUsername}
               onChange={handleUsernameChange}
               value={username}
             />
             <span className={`absolute text-xl left-2 transition duration-200 pointer-events-none
-              ${isFocusedUsername || username.trim() !== '' ? 'transform -translate-y-6 -translate-x-4 scale-75 text-blue-600  opacity-100' : 'opacity-20'}`}>
+              ${isFocusedUsername || username.trim() !== '' ? 'transform -translate-y-6 -translate-x-4 scale-75 text-blue-600  opacity-100' : 'text-gray-400 opacity-60'}`}>
               username
             </span>
           </label>
@@ -83,21 +96,25 @@ const SignUp = () => {
               type="password"
               required
               className="text-2xl border-2 rounded-lg border-gray-600 border-opacity-50 outline-none
-              focus:border-blue-600 transition duration-200 transform origin-top-left mt-8"
+              focus:border-blue-600 transition duration-200 transform origin-top-left mt-8
+              dark:bg-white dark:text-test1A1918"
               onFocus={handleFocusPassword}
               onBlur={handleBlurPassword}
               onChange={handlePasswordChange}
               value={password}
             />
             <span className={`absolute text-xl left-2 top-8 transition duration-200 pointer-events-none
-              ${isFocusedPassword || password.trim() !== '' ? 'transform -translate-y-6 -translate-x-4 scale-75 text-blue-600  opacity-100' : 'opacity-20'}`}>
+              ${isFocusedPassword || password.trim() !== '' ? 'transform -translate-y-6 -translate-x-4 scale-75 text-blue-600  opacity-100' : 'text-gray-400 opacity-60'}`}>
               password
             </span>
           </label>
 
-          {errorMessage && (
-            <p className="text-red-500 mt-2">{errorMessage}</p>
-          )}
+          <div className="mt-10">
+            {errorMessage && (
+              <p className="text-red-500">{errorMessage}</p>
+            )}
+          </div>
+          
 
           <button className="rounded border-2 border-gray-400 mt-20 w-[40%] bg-violet-400">
             SUBMIT

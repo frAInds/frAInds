@@ -51,18 +51,7 @@ const SignIn = () => {
         }
 
 
-        // e.preventDefault();
-
-        // if (username.trim() === 'testuser1' && password.trim() === 'testpassword1') {
-        //     //올바른 경우 로그인 시도
-        //     redirectToMainContent();
-        // } else {
-        //     console.log('invalid user credentials');
-        //     alert("invalid user credentials");
-
-        //     //다시 id 입력화면으로
-        //     nextStep(1);
-        // }
+        
     };
 
     const handleLogout = () => {
@@ -79,7 +68,8 @@ const SignIn = () => {
     useEffect(
         () => {
             console.log("isLoggedin: ",isLoggedin);
-        }, [isLoggedin]); 
+        }, [isLoggedin]
+    ); 
 
   // 로그인 상태에 따라 다른 UI 표시
     return (
@@ -95,12 +85,12 @@ const SignIn = () => {
                         {step === 1 && (
                             <>
                                 <FriendsLogo className="mb-3" />
-                                <form className="flex flex-col h-[80%] justify-center items-center p-3">
+                                <div className="flex flex-col h-[80%] justify-center items-center p-3">
                                     <label className={ `relative ${ isFocusedUsername ? 'focused' : '' }` }>
                                         <input
                                             type="text"
                                             className="text-xl border-2 rounded-lg border-gray-600 border-opacity-50 outline-none
-                                            focus:border-blue-600 transition duration-200 transform origin-top-left mt-8"
+                                            focus:border-blue-600 transition duration-200 transform origin-top-left mt-8 dark:bg-white dark:text-test1A1918"
                                             value={username}
                                             required
                                             onChange={(e) => setUsername(e.target.value)}
@@ -108,14 +98,14 @@ const SignIn = () => {
                                             onBlur={handleBlurUsername}
                                         />
                                         <span className={`absolute text-xl left-2 top-8 transition duration-200 pointer-events-none
-                                            ${isFocusedUsername ? 'transform -translate-y-6 -translate-x-4 scale-75 text-blue-600  opacity-100' : 'opacity-20'}`}> 
-                                            username?
+                                            ${isFocusedUsername || username.trim() !== '' ? 'transform -translate-y-6 -translate-x-4 scale-75 text-blue-600 opacity-100' : 'text-gray-400 opacity-60'}`}> 
+                                            Username?
                                         </span>
                                     </label>
                                     <button className="bg-blue-600 rounded-md text-white w-[60%] mt-3" onClick={handleStep}>
                                         NEXT
                                     </button>
-                                </form>
+                                </div>
                             </>
                         )}
 
@@ -128,15 +118,15 @@ const SignIn = () => {
                                         <input
                                             type="password"
                                             className="text-xl border-2 rounded-lg border-gray-600 border-opacity-50 outline-none
-                                            focus:border-blue-600 transition duration-200 transform origin-top-left mt-8"
+                                            focus:border-blue-600 transition duration-200 transform origin-top-left mt-8 dark:bg-white dark:text-test1A1918"
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
                                             onFocus={handleFocusPassword}
                                             onBlur={handleBlurPassword}
                                         />
                                         <span className={`absolute text-xl left-2 top-8 transition duration-200 pointer-events-none
-                                            ${isFocusedPassword ? 'transform -translate-y-6 -translate-x-4 scale-75 text-blue-600  opacity-100' : 'opacity-20'}`}> 
-                                            password?
+                                            ${isFocusedPassword || password.trim() !== '' ? 'transform -translate-y-6 -translate-x-4 scale-75 text-blue-600 opacity-100' : 'text-gray-400 opacity-60'}`}> 
+                                            Password?
                                         </span>
                                     </label>
                                     <button type='submit' className="bg-blue-600 rounded-md text-white w-[60%] mt-3" 
