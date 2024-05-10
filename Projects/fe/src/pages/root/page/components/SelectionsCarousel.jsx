@@ -33,12 +33,6 @@ const SelectionsCarousel = (props) => {
     return (
         <>
             <div className="overflow-hidden flex-grow">
-                {/* choose your character */}
-                <div className="flex mt-10 text-6xl text-center mb-20 text-indigo-400">
-                    {/* font 추후 수정 예정 */}
-                    <p>[ CHOOSE YOUR CHARACTER ]</p>
-                </div>
-
                 <div className="embla w-full">
                     <div className="embla__viewport w-full" ref={emblaRef}>
                         <div className="embla__container ">

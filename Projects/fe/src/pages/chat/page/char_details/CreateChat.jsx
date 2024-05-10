@@ -106,21 +106,25 @@ const CreateChat = () => {
                                 
                                 <div className='w-28 h-10 rounded-lg bg-121212 flex justify-center items-center gap-5'>
                                     {/* input */}
-                                    <button onClick={handleFileSelect} className="focus:outline-none">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" color="#f0efebff">
-                                            <path fillRule="evenodd" clipRule="evenodd" d="M3 6C3 4.34315 4.34315 3 6 3H12V5H6C5.44772 5 5 5.44772 5 6V12.1492L6.45991 10.3243C7.2465 9.34107 8.73508 9.32059 9.54843 10.2818L13.5049 14.9577L15.365 12.7875C15.9596 12.0938 17.0311 12.0884 17.6328 12.776L19 14.3385V12H21V16.6243V18C21 19.6569 19.6569 21 18 21H6C4.34315 21 3 19.6569 3 18V14.6492V6ZM19 17.3757L16.5078 14.5275L14.6413 16.705C14.0402 17.4064 12.9541 17.4029 12.3574 16.6977L8.02165 11.5737L5 15.3508V18C5 18.5505 5.4449 18.9972 5.99478 19H18.0052C18.5551 18.9972 19 18.5505 19 18V17.3757ZM19 5V2H17V5H14V7H17V10H19V7H22V5H19Z" fill="currentColor"/>
-                                        </svg>
-                                    </button>
+                                    <Tooltip content="이미지 설정">
+                                        <button onClick={handleFileSelect} className="focus:outline-none">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" color="#f0efebff">
+                                                <path fillRule="evenodd" clipRule="evenodd" d="M3 6C3 4.34315 4.34315 3 6 3H12V5H6C5.44772 5 5 5.44772 5 6V12.1492L6.45991 10.3243C7.2465 9.34107 8.73508 9.32059 9.54843 10.2818L13.5049 14.9577L15.365 12.7875C15.9596 12.0938 17.0311 12.0884 17.6328 12.776L19 14.3385V12H21V16.6243V18C21 19.6569 19.6569 21 18 21H6C4.34315 21 3 19.6569 3 18V14.6492V6ZM19 17.3757L16.5078 14.5275L14.6413 16.705C14.0402 17.4064 12.9541 17.4029 12.3574 16.6977L8.02165 11.5737L5 15.3508V18C5 18.5505 5.4449 18.9972 5.99478 19H18.0052C18.5551 18.9972 19 18.5505 19 18V17.3757ZM19 5V2H17V5H14V7H17V10H19V7H22V5H19Z" fill="currentColor"/>
+                                            </svg>
+                                        </button>
+                                    </Tooltip>
                                     <input type="file" onChange={handleFileChange} className='hidden' ref={fileInputRef}/>
 
                                     <Divider orientation="vertical" />
                                     {/* discard */}
-                                    <button onClick={handleDiscard}>
-                                        <svg width="20" height="20" viewBox="0 0 25 25" fill="currentColor" xmlns="http://www.w3.org/2000/svg" color="#f0efebff">
-                                            <path fillRule="evenodd" clipRule="evenodd" d="M15.5 2.43702H9.5V4.43702H3.5V6.43702H5.5V19.437C5.5 20.5416 6.39543 21.437 7.5 21.437H17.5C18.6046 21.437 19.5 20.5416 19.5 19.437V6.43702H21.5V4.43702H15.5V2.43702ZM7.5 6.43702H17.5V19.437H7.5V6.43702ZM11.5 17.437H9.5V8.43702H11.5V17.437ZM15.5 17.437H13.5V8.43702H15.5V17.437Z" fill="currentColor"></path>
-                                        </svg>
-                                        {/* <input type="file" /> */}
-                                    </button>
+                                    <Tooltip content="이미지 제거">
+                                        <button onClick={handleDiscard}>
+                                            <svg width="20" height="20" viewBox="0 0 25 25" fill="currentColor" xmlns="http://www.w3.org/2000/svg" color="#f0efebff">
+                                                <path fillRule="evenodd" clipRule="evenodd" d="M15.5 2.43702H9.5V4.43702H3.5V6.43702H5.5V19.437C5.5 20.5416 6.39543 21.437 7.5 21.437H17.5C18.6046 21.437 19.5 20.5416 19.5 19.437V6.43702H21.5V4.43702H15.5V2.43702ZM7.5 6.43702H17.5V19.437H7.5V6.43702ZM11.5 17.437H9.5V8.43702H11.5V17.437ZM15.5 17.437H13.5V8.43702H15.5V17.437Z" fill="currentColor"></path>
+                                            </svg>
+                                            {/* <input type="file" /> */}
+                                        </button>
+                                    </Tooltip>
                                 </div>
                             </div>
 

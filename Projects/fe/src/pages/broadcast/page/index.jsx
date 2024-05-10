@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import Header from "@/pages/root/page/components/Header";
-
-const Chat = () => {
+//방송용 화면 구현하기. 화면에는 
+const Broadcast = () => {
     return (
         <>
             <div>
@@ -9,7 +9,7 @@ const Chat = () => {
                 <Header showLoginLink={false} />
 
                 {/* 자식컴포넌트(유태민 etc.) 배치할 위치*/}
-                <div className='bg-gray-200'>
+                <div className='bg-gray-200 h-full'>
                     <Outlet />
                 </div>
                 
@@ -18,4 +18,4 @@ const Chat = () => {
     );
 };
 
-export default Chat;
+export default Broadcast;

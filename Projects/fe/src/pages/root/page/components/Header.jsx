@@ -7,9 +7,9 @@ import { Link } from "react-router-dom";
 import UsageModal from "./UsageModal";
 import { toggle } from "@/common/reducers/darkmodeSlice";
 import DropdownContent from "./DropDownContent";
+import { Button } from "@nextui-org/react";
+import {BroadcastIcon} from './BroadcastIcon';
 
-//nav menu
-import { Dropdown,DropdownTrigger,DropdownMenu,DropdownItem, Button } from "@nextui-org/react";
 
 
 //Chat.jsx에서 Header 쓸건데 로그인 버튼은 안써도 될듯해서 props로 처리함
@@ -72,7 +72,14 @@ export const Header = ( { showLoginLink = true } ) => {
     <div className="fixed w-screen flex flex-row h-[70px] items-center z-10 shadow-lg px-8
       justify-between
     dark:bg-test1A1918 bg-white  dark:drop-shadow-xl">
-      <Link to = '/'><FriendsLogo className="mb-1"/></Link>
+      <div className="flex flex-row items-center">
+        <Link to = '/' className="mr-10"><FriendsLogo className="mb-1"/></Link>
+
+        <Button startContent={<BroadcastIcon />} variant="flat" className="bg-gradient-to-tr from-violet-500 to-blue-500 text-white shadow-lg">
+          <Link to='/broadcast'>방송하기</Link>
+        </Button>
+      </div>
+      
       
       <div className="flex items-center  gap-5 text-indigo-400 font-bold text-xl">
         
@@ -82,7 +89,6 @@ export const Header = ( { showLoginLink = true } ) => {
           { showLoginLink && !isAuthenticated && <Link  to={ "/account/sign-in" }>Sign In</Link>}
         </div>
         
-        {/* <div className="mr-10 cursor-pointer" onClick={handleUsageModal} role="button">사용방법</div> */}
         <DropdownContent name='이용 안내' color='success' 
         items={itemsIntro}/>
 
