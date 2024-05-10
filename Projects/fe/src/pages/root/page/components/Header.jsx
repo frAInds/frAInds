@@ -3,23 +3,19 @@ import { Switch } from "@/common/components/ui/switch";
 // import SignIn from "@/pages/account/sign-in/page";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import UsageModal from "./UsageModal";
 import { toggle } from "@/common/reducers/darkmodeSlice";
 import DropdownContent from "./DropDownContent";
 import { Button } from "@nextui-org/react";
 import {BroadcastIcon} from './BroadcastIcon';
+import { ChatBotIcon } from "./ChatbotIcon";
 
 
 
 //Chat.jsx에서 Header 쓸건데 로그인 버튼은 안써도 될듯해서 props로 처리함
 export const Header = ( { showLoginLink = true } ) => {
   //다크모드, 라이트모드
-  // const [isDarkModeOn, setIsDarkModeOn] = useState(false);
-
-  //사용방법 클릭 시 나오는 반투명 검정색 창 + 흰색 텍스트
-  const [isUsageOn, setIsUsageOn] = useState(false);
-
   const isDarkModeOn = useSelector((state) => state.darkmode.value);
   const dispatch = useDispatch();
 
@@ -44,12 +40,6 @@ export const Header = ( { showLoginLink = true } ) => {
     }
   }
 
-  //UsageModal click handler
-  const handleUsageModal = () => {
-    // console.log('usage modal true');
-    setIsUsageOn(true);
-  }
-
   const handleItemClick = (url) => {
     navigate(url); // URL 변경
   };
@@ -67,17 +57,56 @@ export const Header = ( { showLoginLink = true } ) => {
     url: '/help',
   },];
  
+  //
+  const location = useLocation();
+
+  const isBroadcastSubpage = () => {
+    // /broadcast로 시작하면서 /broadcast/ 이후에 문자열이 있는 경우
+    return location.pathname.startsWith('/broadcast/') && location.pathname.length > '/broadcast/'.length;
+  }
+  
+
 
   return (<>
     <div className="fixed w-screen flex flex-row h-[70px] items-center z-10 shadow-lg px-8
       justify-between
     dark:bg-test1A1918 bg-white  dark:drop-shadow-xl">
-      <div className="flex flex-row items-center">
-        <Link to = '/' className="mr-10"><FriendsLogo className="mb-1"/></Link>
+      <div className="flex flex-row items-center ">
+        <Link to = '/' className="mr-10"><FriendsLogo className="mb-1 "/></Link>
 
-        <Button startContent={<BroadcastIcon />} variant="flat" className="bg-gradient-to-tr from-violet-500 to-blue-500 text-white shadow-lg">
-          <Link to='/broadcast'>방송하기</Link>
-        </Button>
+        <div className="mt-2">
+          {location.pathname === '/' && (
+            //main 화면일때 -> 방송하기 버튼
+            <Link to='/broadcast'>
+              <Button startContent={<BroadcastIcon />} variant="flat" className="bg-gradient-to-tr from-violet-500 to-blue-500 text-white shadow-lg">
+                방송하기
+              </Button>
+            </Link>
+          )}  
+          {location.pathname === '/broadcast' && (
+            //main 화면이 아닐때 -> 뒤로가기 버튼
+            <Link to='/'>
+              <Button startContent={<ChatBotIcon className="mt-3"  />} variant="flat" className="bg-gradient-to-tr from-violet-500 to-blue-500 text-white shadow-lg">
+                챗봇이랑 놀기
+              </Button>
+            </Link>
+          )}
+          
+          {isBroadcastSubpage() && (
+            <>
+              <Link to='/'>
+                <Button startContent={<ChatBotIcon className="mt-3"  />} variant="flat" className="bg-gradient-to-tr from-violet-500 to-blue-500 text-white shadow-lg">
+                  챗봇이랑 놀기
+                </Button>
+              </Link>
+              <Link to='/broadcast'>
+              <Button startContent={<ChatBotIcon className="mt-3"  />} variant="solid" color="danger" className=" text-white shadow-lg ml-6">
+                방송 중지
+              </Button>
+            </Link>
+          </>
+          )}
+        </div>
       </div>
       
       
@@ -108,8 +137,6 @@ export const Header = ( { showLoginLink = true } ) => {
     {/* 헤더와 본문 사이 여백 */}
     <div className="h-[70px] w-full"></div>
 
-    {/* UsageModal의 활성/비활성 상태에 따른 창 */}
-    {/* {isUsageOn && <UsageModal onClose={handleCloseUsageModal} />} */}
   </>
   )
 }

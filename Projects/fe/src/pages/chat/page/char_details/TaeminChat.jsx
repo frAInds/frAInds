@@ -1,14 +1,12 @@
 // import Chat from "..";
 //import three js for 3d models
 import { useState, useMemo, useEffect, useRef } from 'react';
-import { Canvas } from '@react-three/fiber'; //3d model canvas(container)
-import Model from '../components/Model'; //3d model
 
 //resizable library
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/common/components/ui/resizable";
 import { useSelector } from 'react-redux';
 
-import {  Dropdown,  DropdownTrigger,  DropdownMenu,  DropdownSection,  DropdownItem} from "@nextui-org/react";
+import {  Dropdown,  DropdownTrigger,  DropdownMenu,  DropdownSection,  DropdownItem, Input} from "@nextui-org/react";
 
 
 //model dir
@@ -19,18 +17,51 @@ const TaeminChat = () => {
     const isDarkModeOn = useSelector(state => state.darkmode.value);
 
     const [messages, setMessages] = useState('');
-    const [chatMessages, setChatMessages] = useState([
-        {
-            id: 1,
-            text: 'Server message',
-            timestamp: new Date().toISOString(),
-            isUser: false,
-        },
-    ]);
+    const [chatMessages, setChatMessages] = useState([]);
 
     const handleInputChages = (e) => {
         setMessages(e.target.value);
     }
+
+    //서버 메세지 처리
+    useEffect(() => {
+        const websocketUrl = "ws://localhost:8000/api/django/";
+        const websocket = new WebSocket(websocketUrl);
+
+        //websocket connection 성공
+        websocket.onopen = () => { 
+            console.log('WebSocket Connection Established');
+        }
+
+        websocket.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            setChatMessages((prevMessages) => [
+                ...prevMessages,
+                {
+                    id: prevMessages.length + 1,
+                    text: data.message,
+                    timestamp: new Date().toISOString(),
+                    isUser:false,
+                }
+            ]);
+        };
+
+        //websocket 에러
+        websocket.onerror = (event) => {
+            console.error('WebSocket Error:', event);
+        }
+
+        //websocket 종료
+        websocket.onclose = () => {
+            console.log('WebSocket Connection Closed');
+        };
+        
+        return () => {
+            websocket.close();
+        }
+
+        
+    }, []);
 
     //사용자 입력 text 채팅창에 쓰기
     const handleSendMessage = (e) => {
@@ -48,62 +79,6 @@ const TaeminChat = () => {
         setChatMessages([newMessage, ...chatMessages]);
         setMessages('');
     };
-
-    const model = useMemo(
-        () => <Model modelDir={MODEL_DIR} scale={0.5} />,
-        [MODEL_DIR]
-    );
-
-
-    //for testing messages from other users or server
-    const [dummyMessageCount, setDummyMessageCount] = useState(0);
-
-    useEffect(() => {
-        
-        if(dummyMessageCount >= 4){
-            //after sending messages 3 times, stop sending messages
-            return;
-        }
-        const timer = setTimeout(() => {
-            let messagesToSend;
-
-            if (dummyMessageCount < 2 || dummyMessageCount === 3) {
-                messagesToSend = {
-                    text: 'Server message 2 seconds later',
-                    timestamp: new Date().toISOString(),
-                    isUser: false,
-                }
-            } else if (dummyMessageCount === 2) {
-                messagesToSend = {
-                    text: '```print("Hello, World!")\n```',
-                    timestamp: new Date().toISOString(),
-                    isUser: false,
-                }
-            }
-
-            if (messagesToSend.text.startsWith('```') && messagesToSend.text.endsWith('```')) {
-                const codeBlock = messagesToSend.text.slice(3, -3);
-
-                const width = 400;
-                const height = 400;
-
-                //팝업 화면을 중앙에 띄우려면 width, height를 계산해야 한다..
-                const left = (window.screen.width - width) / 2;
-                const top = (window.screen.height - height) / 2;
-
-                const windowFeatures = `width=${width},height=${height},left=${left},top=${top}`;
-    
-                const newWindow = window.open('', '', windowFeatures);
-                newWindow.document.write('<html><head><title>Code Block</title></head><body><pre>');
-                newWindow.document.write(codeBlock);
-                newWindow.document.write('</pre></body></html>');
-            }
-            setChatMessages([messagesToSend, ...chatMessages]);
-            setDummyMessageCount(dummyMessageCount + 1);
-        }, 2000);  // 2 seconds delay
-
-        return () => clearTimeout(timer);
-    }, [chatMessages, dummyMessageCount]);
 
     const chatContainerRef = useRef(null);
 
@@ -124,13 +99,7 @@ const TaeminChat = () => {
                 {/* 왼쪽 */}
                 <ResizablePanel defaultSize={55} order={1}>
                     <div className="flex w-full h-full flex-col bg-gray-200 dark:bg-testBlack">
-                        {/* 3d goes here */}
-                        <Canvas camera={{ position: [0,0,3] }}
-                        className="w-full h-full">
-                            <ambientLight  intensity={80}/>
-
-                            {model}
-                        </Canvas>
+                        
                     </div>
                 </ResizablePanel>
 
@@ -156,7 +125,7 @@ const TaeminChat = () => {
 
                             <div className="flex items-center justify-center">
                                 <form onSubmit={handleSendMessage} className='p-4 px-2 mt-auto flex w-95p mr-4'>
-                                    <input
+                                    <Input
                                         type="text"
                                         value={messages}
                                         onChange={handleInputChages}

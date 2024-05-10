@@ -11,7 +11,7 @@ const TaeminBroadcast = () => {
 
     useEffect(() => {
         // API 호출을 통해 이미지 URL을 받아오는 함수
-        const websocketUrl = "wss://example.com/ws/images";
+        const websocketUrl = "ws://localhost:8000/api/django/";
         const websocket = new WebSocket(websocketUrl);
 
         websocket.onopen = () => {
