@@ -2,7 +2,7 @@
 //import three js for 3d models
 import { useState, useMemo, useEffect, useRef } from 'react';
 import defaultBg from '../images/default_bg.jpg'
-import defaultPerson from '../images/default_person.jpg'
+import defaultPerson from '../images/default_person.png'
 
 const TaeminBroadcast = () => {
 
@@ -44,14 +44,14 @@ const TaeminBroadcast = () => {
             websocket.close();
         };
       },);
-       
+
     return(
         <>
             {/* container */}
             <div className="flex justify-center items-center w-full h-screen"> {/* 전체 화면을 채우는 flex 컨테이너 */}
                 <img src={defaultBg} alt="Background" className="absolute w-full h-full object-cover z-0" />
                 <div className="absolute z-10 flex justify-center items-center"> {/* 사람 이미지를 중앙 정렬하기 위한 컨테이너 */}
-                    <img src={defaultPerson} alt="Person" className="size-80 object-cover" />
+                    <img src={defaultPerson} alt="Person" className="size-auto object-cover" />
                 </div>
             </div>
         </>
