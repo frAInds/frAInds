@@ -129,10 +129,9 @@ const TaeminChat = () => {
                                         type="text"
                                         value={messages}
                                         onChange={handleInputChages}
-                                        className='flex-grow w-full h-10 border-2 border-gr rounded-md p-4 dark:text-white'
+                                        className=' dark:text-white'
                                         placeholder='Type your message here...'
                                     />
-                                    {/* <button type='submit' className='  text-white mt-2 rounded-md'>Send</button> */}
                                 </form>
                             </div>
 
