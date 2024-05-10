@@ -116,15 +116,6 @@ const TaeminChat = () => {
         }
     }, [chatMessages]);
 
-
-    // const [isBlockOpen, setIsBlockOpen] = useState(false);
-    // //블록 확장 버튼
-    // const handleBlockOpen = () => {
-    //     // Add your implementation here
-    //     setIsBlockOpen(!isBlockOpen);
-    
-    // }
-
     return(
         <ResizablePanelGroup direction="horizontal" autoSaveId="conditional">
             {/* container */}

@@ -18,7 +18,7 @@ const CyborgTaeminBroadcast = () => {
 
     useEffect(() => {
         // API 호출을 통해 이미지 URL, 음성, 자막을 받아오기
-        const websocketUrl = "wss://example.com/ws/images";
+        const websocketUrl = "ws://localhost:8000/api/django/";
         const websocket = new WebSocket(websocketUrl);
 
         websocket.onopen = () => {
