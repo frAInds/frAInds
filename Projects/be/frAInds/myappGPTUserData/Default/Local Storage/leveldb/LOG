@@ -1,0 +1,6 @@
+2024/05/10-18:55:54.149 3703 Reusing MANIFEST /Users/baejongchan/Desktop/frAInds/myappGPTUserData/Default/Local Storage/leveldb/MANIFEST-000001
+2024/05/10-18:55:54.153 3703 Recovering log #10
+2024/05/10-18:55:54.153 3703 Reusing old log /Users/baejongchan/Desktop/frAInds/myappGPTUserData/Default/Local Storage/leveldb/000010.log 
+2024/05/10-18:56:55.524 4003 Level-0 table #14: started
+2024/05/10-18:56:55.529 4003 Level-0 table #14: 12345 bytes OK
+2024/05/10-18:56:55.541 4003 Delete type=0 #10
