@@ -24,7 +24,7 @@ class UserStatus(enum.Enum):
 # 사용자 모델 정의
 class User(Base):
     __tablename__ = "users"
-    id = Column(String, primary_key=True, index=True)
+    username = Column(String, primary_key=True, index=True)
     hashed_password = Column(String)
     status = Column(Enum(UserStatus), default=UserStatus.일반)
 
@@ -33,11 +33,11 @@ Base.metadata.create_all(bind=engine)
 
 # Pydantic 모델 정의
 class UserCreate(BaseModel):
-    id: str
+    username: str
     password: str
 
 class UserSignIn(BaseModel):
-    id: str
+    username: str
     password: str
 
 # FastAPI 앱 생성
@@ -61,11 +61,11 @@ def verify_password(plain_password, hashed_password):
 # 회원 가입 엔드포인트
 @app.post("/api/signup", status_code=status.HTTP_201_CREATED)
 async def signup(user: UserCreate, db: Session = Depends(get_db)):
-    db_user = db.query(User).filter(User.id == user.id).first()
+    db_user = db.query(User).filter(User.username == user.username).first()
     if db_user:
         raise HTTPException(status_code=400, detail="User already registered")
     hashed_password = get_password_hash(user.password)
-    db_user = User(id=user.id, hashed_password=hashed_password)
+    db_user = User(username=user.username, hashed_password=hashed_password)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
@@ -74,21 +74,21 @@ async def signup(user: UserCreate, db: Session = Depends(get_db)):
 # 로그인 엔드포인트
 @app.post("/api/signin")
 async def signin(user: UserSignIn, db: Session = Depends(get_db)):
-    db_user = db.query(User).filter(User.id == user.id).first()
+    db_user = db.query(User).filter(User.username == user.username).first()
     if not db_user:
-        raise HTTPException(status_code=400, detail="Invalid ID or password")
+        raise HTTPException(status_code=400, detail="Invalid username or password")
     if not verify_password(user.password, db_user.hashed_password):
-        raise HTTPException(status_code=400, detail="Invalid ID or password")
+        raise HTTPException(status_code=400, detail="Invalid username or password")
     return {"message": "Login successful"}
 
 # 결제 상태 변경 엔드포인트
 @app.post("/api/pay")
 async def pay(user: UserSignIn, db: Session = Depends(get_db)):
-    db_user = db.query(User).filter(User.id == user.id).first()
+    db_user = db.query(User).filter(User.username == user.username).first()
     if not db_user:
         raise HTTPException(status_code=400, detail="User not found")
     if not verify_password(user.password, db_user.hashed_password):
-        raise HTTPException(status_code=400, detail="Invalid ID or password")
+        raise HTTPException(status_code=400, detail="Invalid username or password")
     db_user.status = UserStatus.결제
     db.commit()
     db.refresh(db_user)
