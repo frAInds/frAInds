@@ -65,15 +65,13 @@ export const Layout = () => {
     }, [isOnLogin]);
     return (
         <>
-            <div className="flex flex-row w-screen h-screen">
+            <div className="flex flex-row w-screen h-screen overflow-hidden">
                 {/* Left side */}
-                <div className="bg-sky-200 w-full h-full basis-[50%] px-5">
+                <div className={`transition-transform duration-500 ${isOnLogin ? 'translate-x-0' : 'translate-x-full'} bg-sky-200 w-full h-full basis-[50%] px-5 flex flex-col justify-between`}>
                     {/* GPT logo top left */}
                     <Link to='/'>
                         <FriendsLogo className="fixed" />
                     </Link>
-                    
-
 
                     {/* text */}
                     <div className="w-full h-full flex flex-col justify-center gap-5">
@@ -119,12 +117,11 @@ export const Layout = () => {
                 </div>
 
                 {/* Right side */}
-                <div className={`transition-transform duration-500 ${isOnLogin ? 'translate-x-0' : '-translate-x-full'} bg-testBlack w-full h-full basis-[50%] flex-shrink-0 flex flex-col relative overflow-hidden`}>
-
+                <div className={`transition-transform duration-500 ${isOnLogin ? 'translate-x-0' : '-translate-x-full'} bg-testBlack w-full h-full basis-[50%] flex-shrink-0 flex flex-col justify-between relative overflow-hidden`}>
                     {/* Right side center */}
-                    <div className="basis-full">
+                    <div className="basis-full w-full flex-shrink-0">
                         {isOnLogin ? <SignIn /> : <SignUp />}
-                    </div> 
+                    </div>
                     
 
                     {/* Right side bottom area */}
