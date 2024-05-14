@@ -31,6 +31,13 @@ const SignUp = () => {
       }
 
       const data = await response.json();
+
+      if(!data){
+        throw new Error('Sign up failed!');
+      }
+
+      navigate('/');
+
     }catch(error){
       console.error('Error:', error);
     }

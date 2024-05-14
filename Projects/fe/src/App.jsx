@@ -24,6 +24,8 @@ import { NextUIProvider } from "@nextui-org/react";
 import CreateChat from "./pages/chat/page/char_details/CreateChat";
 import BroadcastRoot from "./pages/broadcast/page/BroadcastRoot";
 
+import Landing from "./pages/landing/page";
+
 //방송 url
 import TaeminBroadcast from "./pages/broadcast/page/broadcast_details/TaeminBroadcast";
 import CyborgTaeminBroadcast from "./pages/broadcast/page/broadcast_details/CyborgTaeminBroadcast";
@@ -34,8 +36,11 @@ function App() {
       
       <Route
         errorElement={<ErrorBoundary />}
-
       >
+        <Route
+          path="/"
+          element={<Landing />}
+        />
         <Route element={<InitialLoad />} >
             <Route path="account" element={<AccountLayout />}>
               <Route path="sign-in" element={<SignIn />}/>
@@ -47,9 +52,10 @@ function App() {
               element={<RootLayout />}
             >
               <Route
-                path="/"
+                path="/root"
                 element={<Root />}
               />
+              
               <Route
                 path="/broadcast"
                 element={<BroadcastRoot />}

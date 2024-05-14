@@ -45,7 +45,7 @@ const TaeminBroadcast = () => {
         return () => {
             websocket.close();
         };
-      },);
+    },);
 
     return(
         <>
