@@ -2,7 +2,7 @@
 
 export async function loginUserApi(username, password) {
     try{
-        const response = await fetch('http://localhost:5173/account/sign-in', {
+        const response = await fetch('/api/account/sign-in', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
