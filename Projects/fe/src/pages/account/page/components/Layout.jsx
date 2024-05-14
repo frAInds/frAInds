@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react"
-import { Outlet } from "react-router-dom";
+import { useEffect, useMemo, useRef, useState } from "react"
+// import { Outlet } from "react-router-dom";
 import FriendsLogo from "@/common/components/FriendsLogo";
 import choongGi from '@/pages/account/page/images/choongi_pic.png';
 import { Link } from 'react-router-dom';
@@ -9,7 +9,7 @@ import SignUp from '@/pages/account/sign-up/page/index.jsx';
 import { Button } from "@nextui-org/react";
 
 export const Layout = () => {
-    const sentences = [
+    const sentences = useMemo(() => [
         ['나는', '알고리즘을', '공부해야', '하는데', '너무', '어려워서', '하기', '싫다...'],
         ['코딩하는', '모습이', '멋있어', '보여서', '끝까지', '열심히', '공부하고', '싶다!'],
         ['프로그래밍', '마치', '마법', '같아서', '계속', '빠져들게', '된다.'],
@@ -25,7 +25,7 @@ export const Layout = () => {
         ['코딩은', '창의력을', '자유롭게', '펼칠', '수', '있는', '분야야.'],
         ['문제를', '해결하면서', '느껴지는', '자신감은', '최고야.'],
         ['코딩은', '혼자', '하는', '것도', '좋지만,', '협업으로', '더', '흥미진진하다.'],
-    ];
+    ], []);
 
     const [curWordIdx, setCurWordIdx] = useState(0);
     const curSentenceIdx = useRef(0);
@@ -34,35 +34,40 @@ export const Layout = () => {
     const [isOnLogin, setIsOnLogin] = useState(true);
 
     const timer = useRef();
-    clearTimeout(timer.current);
+    // clearTimeout(timer.current);
 
     useEffect(() => {
-        if (curWordIdx >= sentences[curSentenceIdx.current].length) {
-            timer.current = setTimeout(() => {
-                setCurWordIdx(0);
-                if (curSentenceIdx.current < sentences.length - 1)
-                    curSentenceIdx.current += 1;
-                else
-                    curSentenceIdx.current = 0
-                // console.log(curSentenceIdx.current)
-            }, 2000);
-        }
-        else {
-            timer.current = setTimeout(() => {
-                setCurWordIdx(prevWordIdx => prevWordIdx + 1);
-            }, 200)
-        }
-    }, [curWordIdx]);
+        const updateText = () => {
+            if (curWordIdx >= sentences[curSentenceIdx.current].length) {
+                timer.current = setTimeout(() => {
+                    setCurWordIdx(0);
+                    curSentenceIdx.current = (curSentenceIdx.current + 1) % sentences.length;
+                }, 2000);
+            } else {
+                timer.current = setTimeout(() => {
+                    setCurWordIdx(prevWordIdx => prevWordIdx + 1);
+                }, 200);
+            }
+        };
+        updateText();
+
+        return () => clearTimeout(timer.current); // Cleanup timer on unmount
+    }, [curWordIdx, sentences]);
 
     const toggleAuthPage = () => {
         setIsOnLogin(!isOnLogin);
     }
+
+    // useEffect(() => {
+    //     clearTimeout(timer.current);
+    // }, [isOnLogin]);
 
     useEffect(() => {
         // 상태 변경 시 애니메이션을 초기화
         setCurWordIdx(0);
         curSentenceIdx.current = 0;
     }, [isOnLogin]);
+
     return (
         <>
             <div className="flex flex-row w-screen h-screen overflow-hidden">
@@ -83,12 +88,15 @@ export const Layout = () => {
                                 (word, idx) => {
                                     if (idx < curWordIdx)
                                         return <span key={idx} className="inline-block py-[10px]">
-                                            {sentences[curSentenceIdx.current][idx]}&#160;
+                                            {/* {sentences[curSentenceIdx.current][idx]}{" "}; */}
+                                            {word}{"  "}
                                         </span>
-                                    else if (idx == curWordIdx)
+                                    else if (idx === curWordIdx)
                                         return <span key={idx} className="inline-block py-[10px] underline underline-offset-8">
-                                            {sentences[curSentenceIdx.current][idx]}
+                                            {/* {sentences[curSentenceIdx.current][idx]} */}
+                                            {word}{"  "}
                                         </span>
+                                    // return null;
                                 })}
                             {sentences[curSentenceIdx.current].length - 1 > curWordIdx ?
                                 <span className="text-5xl">
@@ -96,11 +104,18 @@ export const Layout = () => {
                                 </span>
                                 : null
                             }
+                            {/* {sentences[curSentenceIdx.current].length > curWordIdx && (
+                            <span className="text-5xl">●</span>
+                        )} */}
                         </div>
 
                         <div className="flex items-center justify-center flex-col">
 
-                            <p className="text-test1A1918 text-2xl font-sans">처음이신가요?</p>
+                            {isOnLogin ? (
+                                <p className="text-test1A1918 text-2xl font-sans">처음이신가요?</p>
+                            ) : (
+                                <p className="text-test1A1918 text-2xl font-sans">회원이시라고요??</p>
+                            )}
                             <br />
                             {isOnLogin ? (
                                 <Button variant="flat" color="default" className="w-60 bg-gradient-to-tr from-violet-500 to-blue-500 text-white shadow-lg" onClick={toggleAuthPage}>
@@ -119,7 +134,7 @@ export const Layout = () => {
                 {/* Right side */}
                 <div className={`transition-transform duration-500 ${isOnLogin ? 'translate-x-0' : '-translate-x-full'} bg-testBlack w-full h-full basis-[50%] flex-shrink-0 flex flex-col justify-between relative overflow-hidden`}>
                     {/* Right side center */}
-                    <div className="basis-full w-full flex-shrink-0">
+                    <div className="basis-full w-full flex-grow">
                         {isOnLogin ? <SignIn /> : <SignUp />}
                     </div>
                     
