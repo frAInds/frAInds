@@ -1,9 +1,9 @@
 // header의 사용방법 눌렀을 때 나오는 반투명 검은색 사용설명서
 const UsageModal = ({ onClose }) => {
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-black text-white p-5 rounded-lg w-2/5 h-[600px] mx-auto">
-                <div className="flex flex-col min-h-full text-center">
+        <div className="fixed inset-0 bg-charcoalBlack bg-opacity-50 flex justify-center items-center z-50">
+            <div className="bg-charcoalBlack text-white p-5 rounded-lg w-2/5 h-[600px] mx-auto">
+                <div className="flex flex-col min-h-full text-center mt-16">
                     <p className="text-center text-3xl mb-12">사용설명서</p>
                     <p className="mb-6">
                         1. 캐릭터를 선택해주세요.
