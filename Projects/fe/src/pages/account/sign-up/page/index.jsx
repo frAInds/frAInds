@@ -13,29 +13,7 @@ const SignUp = () => {
 
   const navigate = useNavigate();
 
-  // const handleUsernameChange = (e) => {
-  //   const value = e.target.value;
-  //   setUsername(value);
-
-  //   // Check username conditions
-  //   if (!/^[a-z0-9]{8,16}$/.test(value)) {
-  //     setErrorMessage("Username은 8 - 16 자리 사이의 소문자와 숫자여야 합니다.");
-  //   } else {
-  //     setErrorMessage('');
-  //   }
-  // };
-
-  // const handlePasswordChange = (e) => {
-  //   const value = e.target.value;
-  //   setPassword(value);
-
-  //   // Check password conditions
-  //   if (!/^(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])[a-z\d!@#$%^&*]{10,20}$/.test(value)) {
-  //     setErrorMessage("Password should contain at least one lowercase letter, one number, one special character, and have a length of 10 to 20 characters.");
-  //   } else {
-  //     setErrorMessage('');
-  //   }
-  // };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -106,7 +84,7 @@ const SignUp = () => {
               }}/>
           </div>
           
-         
+
           <div className="w-3/4 mb-2">
             <Input
               isRequired
@@ -138,7 +116,6 @@ const SignUp = () => {
               }}
             />
           </div>
-         
 
           <button className="rounded border-2 border-gray-400 mt-5 w-[40%] bg-violet-400">
             SUBMIT

@@ -3,7 +3,10 @@ import { Outlet } from "react-router-dom";
 import FriendsLogo from "@/common/components/FriendsLogo";
 import choongGi from '@/pages/account/page/images/choongi_pic.png';
 import { Link } from 'react-router-dom';
-// import SignIn from '@/pages/account/sign-in/page/index.jsx';
+import SignIn from '@/pages/account/sign-in/page/index.jsx';
+import SignUp from '@/pages/account/sign-up/page/index.jsx';
+
+import { Button } from "@nextui-org/react";
 
 export const Layout = () => {
     const sentences = [
@@ -48,11 +51,19 @@ export const Layout = () => {
         }
     }, [curWordIdx]);
 
+    //로그인, 회원가입 상태(현재)
+    const [isOnLogin, setIsOnLogin] = useState(true);
+    // const [isOnSignup, setIsOnSignup] = useState(false);
+
+    const toggleAuthPage = () => {
+        setIsOnLogin(!isOnLogin);
+    }
+
     return (
         <>
             <div className="flex flex-row w-screen h-screen">
                 {/* Left side */}
-                <div className="bg-blue-950 w-full h-full basis-[55%] px-5">
+                <div className="bg-sky-200 w-full h-full basis-[50%] px-5">
                     {/* GPT logo top left */}
                     <Link to='/'>
                         <FriendsLogo className="fixed" />
@@ -65,7 +76,7 @@ export const Layout = () => {
                         <div className="flex justify-center">
                             <img className="inline-block h-[40vh]" src={choongGi} alt="" />
                         </div>
-                        <div className="text-pink-400 text-4xl text-pretty font-semibold h-[25vh]">
+                        <div className="text-pink-300 text-4xl text-pretty font-semibold h-[25vh] mb-10">
                             {sentences[curSentenceIdx.current].map(
                                 (word, idx) => {
                                     if (idx < curWordIdx)
@@ -84,20 +95,33 @@ export const Layout = () => {
                                 : null
                             }
                         </div>
+
+                        <div className="flex items-center justify-center flex-col">
+
+                            <p className="text-test1A1918 text-2xl font-sans">처음이신가요?</p>
+                            <br />
+                            {isOnLogin ? (
+                                <Button variant="flat" color="default" className="w-60 bg-gradient-to-tr from-violet-500 to-blue-500 text-white shadow-lg" onClick={toggleAuthPage}>
+                                    SIGN UP
+                                </Button>
+                            ) : (
+                                <Button variant="solid" color="success" className="w-60 text-white shadow-lg" onClick={toggleAuthPage}>
+                                    SIGN IN
+                                </Button>
+                            )}
+                            
+                        </div>
                     </div>
                 </div>
 
                 {/* Right side */}
-                <div className="bg-black w-full h-full basis-[45%]
+                <div className="bg-testBlack w-full h-full basis-[50%]
                 flex flex-col">
-
-                    {/* <div className="flex items-center justify-items-center">
-                        <Outlet />
-                    </div> */}
 
                     {/* Right side center */}
                     <div className="basis-full">
-                        <Outlet />
+                        {/* <Outlet /> */}
+                        {isOnLogin ? <SignIn /> : <SignUp />}
                     </div>
 
                     {/* Right side bottom area */}
