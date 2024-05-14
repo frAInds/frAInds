@@ -9,17 +9,17 @@ export default defineConfig({
   server: {
     proxy: {
       // 프록시 경로 설정 1
-      '/api/django': {
-        target: 'http://localhost:8000/', // Django 서버
+      '/api': {
+        target: 'http://localhost:5173/', // Django 서버
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api\/django/,'')
+        // rewrite: (path) => path.replace(/^\/api/,'')
       },
-      // 프록시 경로 설정 2
-      '/api/spring': {
-        target: 'http://localhost:8080/', // Spring 서버
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api\/spring/,'')
-      }
+      // // 프록시 경로 설정 2
+      // '/api/spring': {
+      //   target: 'http://localhost:8080/', // Spring 서버
+      //   changeOrigin: true,
+      //   rewrite: (path) => path.replace(/^\/api\/spring/,'')
+      // }
     }
   },
   resolve: {
