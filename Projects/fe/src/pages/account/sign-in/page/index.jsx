@@ -8,7 +8,6 @@ import { Input } from "@nextui-org/react";
 
 
 const SignIn = () => {
-    const [step, nextStep] = useState(1);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -16,22 +15,6 @@ const SignIn = () => {
 
     const isLoggedin = useSelector((state) => state.user.isAuthenticated);
     const navigate = useNavigate();
-
-    const [isFocusedUsername, setFocusUsername] = useState(false);
-    const [isFocusedPassword, setFocusPassword] = useState(false);
-
-    const handleFocusUsername = () => setFocusUsername(true);
-    const handleBlurUsername = () => setFocusUsername(false);
-        
-    //password 입력창 focus시
-    const handleFocusPassword = () => setFocusPassword(true);
-    const handleBlurPassword = () => setFocusPassword(false);
-
-    const handleStep = () => {
-        if(step === 1 && username.trim() !== ''){
-        nextStep(2);
-        }
-    };
 
     //redux codes go here
     const dispatch = useDispatch();
@@ -136,8 +119,8 @@ const SignIn = () => {
                     </div>
                 
                 
-                    <button className="rounded border-2 border-gray-400 mt-5 w-[40%] bg-violet-400">
-                        SUBMIT
+                    <button className="rounded-2xl border-2 border-gray-400 mt-5 w-[40%] bg-violet-400">
+                        Login !
                     </button>
                 </div>
             </div>

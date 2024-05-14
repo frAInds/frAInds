@@ -13,8 +13,6 @@ const SignUp = () => {
 
   const navigate = useNavigate();
 
-  
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -33,7 +31,7 @@ const SignUp = () => {
       }
 
       const data = await response.json();
-    }catch(e){
+    }catch(error){
       console.error('Error:', error);
     }
     console.log({ username, password });

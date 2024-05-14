@@ -30,6 +30,9 @@ export const Layout = () => {
     const [curWordIdx, setCurWordIdx] = useState(0);
     const curSentenceIdx = useRef(0);
 
+    //로그인, 회원가입 상태(현재)
+    const [isOnLogin, setIsOnLogin] = useState(true);
+
     const timer = useRef();
     clearTimeout(timer.current);
 
@@ -51,14 +54,15 @@ export const Layout = () => {
         }
     }, [curWordIdx]);
 
-    //로그인, 회원가입 상태(현재)
-    const [isOnLogin, setIsOnLogin] = useState(true);
-    // const [isOnSignup, setIsOnSignup] = useState(false);
-
     const toggleAuthPage = () => {
         setIsOnLogin(!isOnLogin);
     }
 
+    useEffect(() => {
+        // 상태 변경 시 애니메이션을 초기화
+        setCurWordIdx(0);
+        curSentenceIdx.current = 0;
+    }, [isOnLogin]);
     return (
         <>
             <div className="flex flex-row w-screen h-screen">
@@ -115,14 +119,13 @@ export const Layout = () => {
                 </div>
 
                 {/* Right side */}
-                <div className="bg-testBlack w-full h-full basis-[50%]
-                flex flex-col">
+                <div className={`transition-transform duration-500 ${isOnLogin ? 'translate-x-0' : '-translate-x-full'} bg-testBlack w-full h-full basis-[50%] flex-shrink-0 flex flex-col relative overflow-hidden`}>
 
                     {/* Right side center */}
                     <div className="basis-full">
-                        {/* <Outlet /> */}
                         {isOnLogin ? <SignIn /> : <SignUp />}
-                    </div>
+                    </div> 
+                    
 
                     {/* Right side bottom area */}
                     <div className="h-fit mb-[3rem]">
