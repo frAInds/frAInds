@@ -63,7 +63,7 @@ const SignIn = () => {
         <div className="flex items-center justify-center h-full">
             <div className="bg-white rounded-lg p-6 h-[70%] w-1/2 flex flex-col items-center justify-center">
                 <FriendsLogo className="mb-20"></FriendsLogo>
-                <div className='flex flex-col p-3 gap-5 w-full items-center'>
+                <form className='flex flex-col p-3 gap-5 w-full items-center'>
                     <div className="w-3/4 mb-2">
                         <Input
                         isRequired
@@ -122,7 +122,7 @@ const SignIn = () => {
                     <button className="rounded-2xl border-2 border-gray-400 mt-5 w-[40%] bg-violet-400">
                         Login !
                     </button>
-                </div>
+                </form>
             </div>
         </div>
         </>

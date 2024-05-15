@@ -6,7 +6,7 @@ import { Input } from "@nextui-org/react";
 
 
 const SignUp = () => {
-  const [value, setValue] = useState("");
+  // const [value, setValue] = useState("");
  
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -15,34 +15,40 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try{
-      const response = await fetch('/signup', {
+  
+    if (!validateEmail(username)) {
+      console.error('Invalid email format');
+      return;  // 이메일 형식이 올바르지 않으면 제출 중단
+    }
+  
+    try {
+      const response = await fetch('/api/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ username, password }),
       });
+  
+      // 실패
+    if (!response.ok) {
+      throw new Error('Sign up failed!');
+    }
 
-      //실패
-      if (!response.ok) {
-        throw new Error('Sign up failed!');
-      }
+    const data = await response.json();
 
-      const data = await response.json();
-
-      if(!data){
-        throw new Error('Sign up failed!');
-      }
-
-      navigate('/');
-
-    }catch(error){
+    if (!data) {
+      throw new Error('Sign up failed!');
+    }
+  
+    navigate('/');
+  
+    } catch (error) {
       console.error('Error:', error);
     }
     console.log({ username, password });
   };
+  
 
   const validateEmail = (value) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
   const isInvalid = useMemo(() => {
