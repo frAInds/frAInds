@@ -4,6 +4,12 @@ from sqlalchemy import Column, Integer, String, Enum, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 from passlib.context import CryptContext
+from fastapi.middleware.cors import CORSMiddleware
+
+#사용자 조회용
+from typing import List
+
+
 import enum
 
 # 데이터베이스 설정
@@ -21,12 +27,14 @@ class UserStatus(enum.Enum):
     결제 = "결제"
     관리자 = "관리자"
 
+
 # 사용자 모델 정의
 class User(Base):
     __tablename__ = "users"
     username = Column(String, primary_key=True, index=True)
     hashed_password = Column(String)
     status = Column(Enum(UserStatus), default=UserStatus.일반)
+
 
 # 데이터베이스 생성
 Base.metadata.create_all(bind=engine)
@@ -40,8 +48,21 @@ class UserSignIn(BaseModel):
     username: str
     password: str
 
+# 사용자 조회용
+class UserOut(BaseModel):
+    username: str
+    status: UserStatus
+
 # FastAPI 앱 생성
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # 모든 도메인 허용
+    allow_credentials=True,
+    allow_methods=["*"],  # 모든 HTTP 메소드 허용
+    allow_headers=["*"],  # 모든 헤더 허용
+)
 
 # 의존성 함수
 def get_db():
@@ -51,12 +72,19 @@ def get_db():
     finally:
         db.close()
 
+
 # 헬퍼 함수
 def get_password_hash(password):
     return pwd_context.hash(password)
 
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
+
+@app.get("/")
+def read_root():
+    return {"message": "Hello World"}
+
+
 
 # 회원 가입 엔드포인트
 @app.post("/api/signup", status_code=status.HTTP_201_CREATED)
@@ -93,6 +121,14 @@ async def pay(user: UserSignIn, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(db_user)
     return {"status": db_user.status}
+
+# 사용자 조회 엔드포인트
+@app.get("/api/users", response_model=List[UserOut])
+async def get_users(db: Session = Depends(get_db)):
+    users = db.query(User).all()
+    return users
+
+
 
 # 앱 실행
 if __name__ == "__main__":
