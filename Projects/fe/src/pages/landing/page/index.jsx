@@ -34,13 +34,19 @@ const Landing = () => {
                     <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
                     
                     <div className="text-center">
-                        <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                        Data to enrich your online business
+                        <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-5xl break-words">
+                            친구의 목소리로 만나는 AI 캐릭터, 실시간 방송까지!
                         </h1>
                         <p className="mt-6 text-lg leading-8 text-gray-600">
-                        Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet
-                        fugiat veniam occaecat fugiat aliqua.
+                            친구와 지인의 말투를 학습한 AI 챗봇과 1대1 대화를 나누고, 
                         </p>
+                        <p className="mt-6 text-lg leading-8 text-gray-600">
+                            특별한 AI 캐릭터와 함께 유튜브 실시간 방송을 진행해 보세요. 
+                        </p>
+                        <p className="mt-6 text-lg leading-8 text-gray-600">
+                            새로운 소통의 경험이 기다리고 있습니다.
+                        </p>
+
                         <div className="mt-10 flex items-center justify-center gap-x-6">
                         <a
                             href="#"
