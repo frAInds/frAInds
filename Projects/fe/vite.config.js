@@ -7,19 +7,14 @@ const __dirname = path.resolve();
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
+    port: 5173,
     proxy: {
       // 프록시 경로 설정 1
       '/api': {
-        target: 'http://localhost:5173/', // Django 서버
+        target: 'http://127.0.0.1:8000/', // Django 서버
         changeOrigin: true,
-        // rewrite: (path) => path.replace(/^\/api/,'')
+        rewrite: (path) => path.replace(/^\/api/, "/api"),
       },
-      // // 프록시 경로 설정 2
-      // '/api/spring': {
-      //   target: 'http://localhost:8080/', // Spring 서버
-      //   changeOrigin: true,
-      //   rewrite: (path) => path.replace(/^\/api\/spring/,'')
-      // }
     }
   },
   resolve: {
