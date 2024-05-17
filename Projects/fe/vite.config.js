@@ -9,11 +9,9 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
-      // 프록시 경로 설정 1
       '/api': {
-        target: 'http://127.0.0.1:8000/', // Django 서버
+        target: 'http://localhost:8000',  // 백엔드 서버 주소
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, "/api"),
       },
     }
   },
