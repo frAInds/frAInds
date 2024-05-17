@@ -16,7 +16,6 @@ import SignInTest from "@/pages/test/page/sign-in_test";
 import TestProvider from "./common/contexts/TestProvider";
 import Chat from "./pages/chat/page";
 import Broadcast from "@/pages/broadcast/page/index";
-import SignUpResult from "@/pages/account/sign-up/page/sign-up_result";
 import CyborgTaeminChat from "./pages/chat/page/char_details/CyborgTaeminChat";
 import TaeminChat from "./pages/chat/page/char_details/TaeminChat";
 import InitialLoad from "./common/components/InitialLoad";
@@ -85,7 +84,6 @@ function App() {
             </Route>
 
           {/* //회원가입 성공 테스트용 */}
-          <Route path="account/sign-up/result" element={<SignUpResult />}/>
         </Route>
       </Route>
     )

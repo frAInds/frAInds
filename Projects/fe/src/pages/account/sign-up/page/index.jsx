@@ -27,7 +27,8 @@ const SignUp = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }),
+        // 전달할 값(key)와 이 파일에서 사용하는 변수 이름(value)
+        body: JSON.stringify({ username: username, password:password }),
       });
   
       // 실패
