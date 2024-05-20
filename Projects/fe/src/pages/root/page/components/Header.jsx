@@ -4,7 +4,6 @@ import { Switch } from "@/common/components/ui/switch";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import UsageModal from "./UsageModal";
 import { toggle } from "@/common/reducers/darkmodeSlice";
 import DropdownContent from "./DropDownContent";
 import { Button } from "@nextui-org/react";
@@ -40,10 +39,6 @@ export const Header = ( { showLoginLink = true } ) => {
     }
   }
 
-  const handleItemClick = (url) => {
-    navigate(url); // URL 변경
-  };
-
   const itemsIntro = [{
     name: '소개',
     url: '/intro',
@@ -56,8 +51,6 @@ export const Header = ( { showLoginLink = true } ) => {
     name: '고객센터',
     url: '/help',
   },];
- 
-  //
   const location = useLocation();
 
   const isBroadcastSubpage = () => {

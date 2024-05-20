@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import FriendsLogo from "@/common/components/FriendsLogo";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,11 +7,10 @@ import { login, logout } from '@/common/reducers/authSlice';
 import { Input } from "@nextui-org/react";
 
 
-const SignIn = () => {
+const SignIn = ({ isOnLogin }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const [value, setValue] = useState("");
 
     const isLoggedin = useSelector((state) => state.user.isAuthenticated);
     const navigate = useNavigate();
@@ -19,24 +18,49 @@ const SignIn = () => {
     //redux codes go here
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        setUsername('');
+        setPassword('');
+      }, []);
+
+    const handleUsernameChange = useCallback((e) => {
+        const value = e.target.value;
+        setUsername(value);
+    }, [username]);
+
+    const handlePasswordChange = useCallback((e) => {
+        const value = e.target.value;
+        setPassword(value);
+    }, [password]);
+
     const handleLogin = async (e) => {
 
         e.preventDefault();
 
-        try{
-            const result = await dispatch(login(username, password));
+        try {
+            const response = await fetch('/api/signin', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ username: username, password:password }),
+            });
+        
 
-            if(login.fulfilled.match(result)){
-                
-                redirectToMainContent();
-            }else{
-                console.error('login failed');
-            }
-        }catch(error){
-            console.error('login failed', error);
-        }
+            if (!response.ok) {
+                throw new Error('Login failed!');
+              }
+          
+              const data = await response.json();
+              redirectToMainContent();
 
-
+              if (!data) {
+                throw new Error('Login failed!');
+              }
+            
+          } catch (error) {
+            console.error('Login failed 2', error);
+          }
         
     };
 
@@ -47,7 +71,7 @@ const SignIn = () => {
     //로그인 성공시 메인페이지로 이동하기 따로 함수로 만듦
     const redirectToMainContent = () => {
         // console.log("isLoggedin: ",isLoggedin);
-        navigate("/");
+        navigate("/root");
     }
 
     //로그인 여부 확인용 useEffect
@@ -63,14 +87,19 @@ const SignIn = () => {
         <div className="flex items-center justify-center h-full">
             <div className="bg-white rounded-lg p-6 h-[70%] w-1/2 flex flex-col items-center justify-center">
                 <FriendsLogo className="mb-20"></FriendsLogo>
-                <form className='flex flex-col p-3 gap-5 w-full items-center'>
+                <form className='flex flex-col p-3 gap-5 w-full items-center ' onSubmit={handleLogin} autoComplete="off">
                     <div className="w-3/4 mb-2">
                         <Input
                         isRequired
+                        name="username"
                         type="text"
                         label="Username"
-                        onValueChange={setValue}
+                        onChange={handleUsernameChange}
                         placeholder="Username"
+                        autoComplete="off"
+                        value={username}
+                        // key={Date.now()}
+
                         classNames={{
                             label: "text-black dark:text-white",
                             input: [
@@ -81,12 +110,8 @@ const SignIn = () => {
                             innerWrapper: "bg-transparent",
                             inputWrapper: [
                             "shadow-xl",
-                            "bg-default-200",
-                            // "dark:bg-default/60",
-                            "dark:hover:bg-default/70",
-                            // "group-data-[focused=true]:bg-default-200/50",
-                            // "dark:group-data-[focused=true]:bg-default/60",
-                            // "!cursor-text",
+                            "bg-primary-200/50",
+                            "dark:hover:bg-primary-200/70",
                             ],
                         }}/>
                     </div>
@@ -94,10 +119,15 @@ const SignIn = () => {
                     <div className="w-3/4 mb-2">
                         <Input
                         isRequired
-                        type="text"
+                        name="password"
+                        type="password"
                         label="Password"
-                        onValueChange={setValue}
+                        onChange={handlePasswordChange}
+
                         placeholder="Password"
+                        autoComplete="off"
+                        // key={Date.now()}
+                        value={password}
                         classNames={{
                             label: "text-black dark:text-white",
                             input: [
@@ -107,13 +137,9 @@ const SignIn = () => {
                             ],
                             innerWrapper: "bg-transparent",
                             inputWrapper: [
-                            "shadow-xl",
-                            "bg-default-200",
-                            // "dark:bg-default/60",
-                            "dark:hover:bg-default/70",
-                            // "group-data-[focused=true]:bg-default-200/50",
-                            // "dark:group-data-[focused=true]:bg-default/60",
-                            // "!cursor-text",
+                                "shadow-xl",
+                                "bg-primary-200/50",
+                                "dark:hover:bg-primary-200/70",
                             ],
                         }}/>
                     </div>
@@ -129,4 +155,4 @@ const SignIn = () => {
     );
 };
 
-export default SignIn;
+export default memo(SignIn);

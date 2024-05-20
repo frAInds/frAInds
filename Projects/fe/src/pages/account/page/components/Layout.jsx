@@ -1,12 +1,13 @@
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState, lazy, Suspense } from "react"
 // import { Outlet } from "react-router-dom";
 import FriendsLogo from "@/common/components/FriendsLogo";
 import choongGi from '@/pages/account/page/images/choongi_pic.png';
 import { Link } from 'react-router-dom';
-import SignIn from '@/pages/account/sign-in/page/index.jsx';
-import SignUp from '@/pages/account/sign-up/page/index.jsx';
-
+// import SignIn from '@/pages/account/sign-in/page/index.jsx';
+// import SignUp from '@/pages/account/sign-up/page/index.jsx';
 import { Button } from "@nextui-org/react";
+const SignIn = lazy(() => import('@/pages/account/sign-in/page/index.jsx'));
+const SignUp = lazy(() => import('@/pages/account/sign-up/page/index.jsx'));
 
 export const Layout = () => {
     const sentences = useMemo(() => [
@@ -34,7 +35,6 @@ export const Layout = () => {
     const [isOnLogin, setIsOnLogin] = useState(true);
 
     const timer = useRef();
-    // clearTimeout(timer.current);
 
     useEffect(() => {
         const updateText = () => {
@@ -51,16 +51,12 @@ export const Layout = () => {
         };
         updateText();
 
-        return () => clearTimeout(timer.current); // Cleanup timer on unmount
+        return () => clearTimeout(timer.current); 
     }, [curWordIdx, sentences]);
 
     const toggleAuthPage = () => {
         setIsOnLogin(!isOnLogin);
     }
-
-    // useEffect(() => {
-    //     clearTimeout(timer.current);
-    // }, [isOnLogin]);
 
     useEffect(() => {
         // 상태 변경 시 애니메이션을 초기화
@@ -72,7 +68,7 @@ export const Layout = () => {
         <>
             <div className="flex flex-row w-screen h-screen overflow-hidden">
                 {/* Left side */}
-                <div className={`transition-transform duration-500 ${isOnLogin ? 'translate-x-0' : 'translate-x-full'} bg-sky-200 w-full h-full basis-[50%] px-5 flex flex-col justify-between`}>
+                <div className={`transform transition duration-500 will-change-transform ${isOnLogin ? 'translate-x-0' : 'translate-x-full'} bg-sky-200 w-full h-full basis-[50%] px-5 flex flex-col `}>
                     {/* GPT logo top left */}
                     <Link to='/'>
                         <FriendsLogo className="fixed" />
@@ -88,15 +84,12 @@ export const Layout = () => {
                                 (word, idx) => {
                                     if (idx < curWordIdx)
                                         return <span key={idx} className="inline-block py-[10px]">
-                                            {/* {sentences[curSentenceIdx.current][idx]}{" "}; */}
                                             {word}{"  "}
                                         </span>
                                     else if (idx === curWordIdx)
                                         return <span key={idx} className="inline-block py-[10px] underline underline-offset-8">
-                                            {/* {sentences[curSentenceIdx.current][idx]} */}
                                             {word}{"  "}
                                         </span>
-                                    // return null;
                                 })}
                             {sentences[curSentenceIdx.current].length - 1 > curWordIdx ?
                                 <span className="text-5xl">
@@ -104,9 +97,6 @@ export const Layout = () => {
                                 </span>
                                 : null
                             }
-                            {/* {sentences[curSentenceIdx.current].length > curWordIdx && (
-                            <span className="text-5xl">●</span>
-                        )} */}
                         </div>
 
                         <div className="flex items-center justify-center flex-col">
@@ -126,19 +116,33 @@ export const Layout = () => {
                                     SIGN IN
                                 </Button>
                             )}
-                            
                         </div>
                     </div>
                 </div>
 
                 {/* Right side */}
-                <div className={`transition-transform duration-500 ${isOnLogin ? 'translate-x-0' : '-translate-x-full'} bg-testBlack w-full h-full basis-[50%] flex-shrink-0 flex flex-col justify-between relative overflow-hidden`}>
+                <div className={`transform transition duration-500 will-change-transform ${isOnLogin ? 'translate-x-0' : '-translate-x-full'} bg-testBlack w-full h-full basis-[50%] flex-shrink-0 flex flex-col justify-between relative overflow-hidden`}>
                     {/* Right side center */}
                     <div className="basis-full w-full flex-grow">
-                        {isOnLogin ? <SignIn /> : <SignUp />}
+                    <Suspense fallback={<div>Loading...</div>}>
+                        {isOnLogin ? (
+                        <div className={`absolute inset-0 ${isOnLogin ? 'block' : 'hidden'}`}>
+                            <SignIn isOnLogin={true}/>
+                        </div>
+                        ) : (
+                        <div className={`absolute inset-0 ${isOnLogin ? 'hidden' : 'block'}`}>
+                            <SignUp isOnLogin={false}/>
+                        </div>
+                        )}
+                    </Suspense>
+                        {/* <div className={`absolute inset-0 ${isOnLogin ? 'block' : 'hidden'}`}>
+                            <SignIn />
+                        </div>
+                        <div className={`absolute inset-0 ${isOnLogin ? 'hidden' : 'block'}`}>
+                            <SignUp />
+                        </div> */}
                     </div>
                     
-
                     {/* Right side bottom area */}
                     <div className="h-fit mb-[3rem]">
                         <FriendsLogo />
