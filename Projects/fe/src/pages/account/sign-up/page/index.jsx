@@ -1,58 +1,65 @@
 import FriendsLogo from "@/common/components/FriendsLogo";
 import "@/pages/account/sign-up/css/sign-up.css";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo,memo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@nextui-org/react";
 
 
-const SignUp = () => {
+const SignUp = ({ isOnLogin }) => {
   // username, password, 확인용 password
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-
-  //검증
   const [isUsernameInvalid, setIsUsernameInvalid] = useState(false);
   const [isPasswordInvalid, setIsPasswordInvalid] = useState(false);
   const [isPasswordMismatch, setIsPasswordMismatch] = useState(false);
-  
+
+  // 이전에 입력한 값이 계속 남아있어서 초기화 하는 부분
+  const reset = useCallback(() => {
+    setUsername('');
+    setPassword('');
+    setConfirmPassword('');
+    setIsUsernameInvalid(false);
+    setIsPasswordInvalid(false);
+    setIsPasswordMismatch(false);
+  }, []);
+
+  useEffect(() => {
+    if (!isOnLogin) {
+      reset();
+    }
+  }, [isOnLogin, reset]);
+
   const navigate = useNavigate();
 
   //username, password regex
-  const validateUsername = (value) => /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{10,20}$/.test(value);
-  const validatePassword = (value) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(value);
+  const validateUsername = useCallback((value) => /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{10,20}$/.test(value), []);
+  const validatePassword = useCallback((value) => /^(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])[a-z\d!@#$%^&*]{8,}$/.test(value), []);
 
-  // // username 검증.
-  // const isInvalid = useMemo(() => {
-  //   if (username === "") return false;
-  //   return validateUsername(username) ? false : true;
-  // }, [username]);
-
-  const handleUsernameChange = (e) => {
+  const handleUsernameChange = useCallback((e) => {
     const value = e.target.value;
     setUsername(value);
-
-    console.log(`isInvalid`+isUsernameInvalid);
-  };
-
-  const handlePasswordChange = (e) => {
+    setIsUsernameInvalid(!validateUsername(value));
+  }, [validateUsername]);
+  
+  const handlePasswordChange = useCallback((e) => {
     const value = e.target.value;
     setPassword(value);
     setIsPasswordInvalid(!validatePassword(value));
     setIsPasswordMismatch(value !== confirmPassword);
-  }
-
-  const handleConfirmPasswordChange = (e) => {
+  }, [validatePassword, confirmPassword]);
+  
+  const handleConfirmPasswordChange = useCallback((e) => {
     const value = e.target.value;
     setConfirmPassword(value);
     setIsPasswordMismatch(value !== password);
-  };
+  }, [password]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
   
-    if (isUsernameInvalid) {
-      console.error('Invalid username format');
+    if (isUsernameInvalid || isPasswordInvalid || isPasswordMismatch) {
+      console.error('Invalid form data');
       return;
     }
   
@@ -83,7 +90,7 @@ const SignUp = () => {
       console.error('Error:', error);
     }
     console.log({ username, password });
-  };
+  },[username, password, isUsernameInvalid, isPasswordInvalid, isPasswordMismatch, navigate]);
 
   return (
     <div className="flex justify-center items-center h-full">
@@ -101,7 +108,9 @@ const SignUp = () => {
             onChange={handleUsernameChange}
             placeholder="Username"
             isInvalid={isUsernameInvalid}
+            value={username}
             status
+            disableAnimation={true}
             classNames={{
               label: "text-black dark:text-white",
               input: [
@@ -112,8 +121,8 @@ const SignUp = () => {
               innerWrapper: "bg-transparent",
               inputWrapper: [
                 "shadow-xl",
-                "bg-default-200",
-                "dark:hover:bg-default/70",
+                "bg-default-200/90",
+                "hover:bg-default-300/80",
               ],
             }}/>
             {/* username 검증 에러 */}
@@ -130,10 +139,14 @@ const SignUp = () => {
             isRequired
             type="password"
             label="password"
-            color="primary"
+            color={isPasswordInvalid ? "danger" : "default"}
             onChange={handlePasswordChange}
             placeholder="password"
-            status={isPasswordInvalid ? "error" : "default"}
+            // status={isPasswordInvalid ? "error" : "default"}
+            disableAnimation={true}
+            value={password}
+            // key={Date.now()}
+
             classNames={{
               label: "text-black dark:text-white",
               input: [
@@ -144,19 +157,10 @@ const SignUp = () => {
               innerWrapper: "bg-transparent",
               inputWrapper: [
                 "shadow-xl",
-                "bg-primary-200/50",
-                "dark:bg-default",
-                "backdrop-blur-xl",
-                "backdrop-saturate-200",
-                "hover:bg-default-200/70",
-                "dark:hover:bg-default/70",
-                "group-data-[focused=true]:bg-default-200/50",
-                "dark:group-data-[focused=true]:bg-default/60",
-                "!cursor-text",
-                
+                "bg-default-200/90",
+                "hover:bg-default-300/80",
               ],
-            }}
-          />
+            }}/>
           {isPasswordInvalid && (
               <div className="text-red-500 text-sm mt-1">
                 비밀번호는 8자 이상이어야 하며, 숫자와 특수문자를 포함해야 합니다.
@@ -170,9 +174,13 @@ const SignUp = () => {
             isRequired
             type="password"
             label="password confirm"
-            color="primary"
-            onInput={(e) => setPassword(e.target.value)}
-            placeholder="password"
+            color={isPasswordMismatch ? "danger" : "default"}
+            onChange={handleConfirmPasswordChange}
+            placeholder="password confirm"
+            disableAnimation={true}
+            value={confirmPassword}
+            // key={Date.now()}
+
             classNames={{
               label: "text-black dark:text-white",
               input: [
@@ -183,19 +191,16 @@ const SignUp = () => {
               innerWrapper: "bg-transparent",
               inputWrapper: [
                 "shadow-xl",
-                "bg-primary-200/50",
-                "dark:bg-default",
-                "backdrop-blur-xl",
-                "backdrop-saturate-200",
-                "hover:bg-default-200/70",
-                "dark:hover:bg-default/70",
-                "group-data-[focused=true]:bg-default-200/50",
-                "dark:group-data-[focused=true]:bg-default/60",
-                "!cursor-text",
-                
+                "bg-default-200/90",
+                "hover:bg-default-300/80",
               ],
             }}
           />
+          {isPasswordMismatch && (
+              <div className="text-red-500 text-sm mt-1">
+                비밀번호가 일치하지 않습니다.
+              </div>
+          )}
         </div>
 
         <button className="rounded border-2 border-gray-400 mt-5 w-[40%] bg-violet-400">
@@ -208,4 +213,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default memo(SignUp);

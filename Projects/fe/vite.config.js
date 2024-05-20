@@ -7,10 +7,10 @@ const __dirname = path.resolve();
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
-    port: 5173,
+    port: 5173, 
     proxy: {
       '/api': {
-        target: 'http://localhost:8000',  // 백엔드 서버 주소
+        target: 'http://127.0.0.1:8000',  // 백엔드 서버 주소
         changeOrigin: true,
       },
     }
