@@ -128,6 +128,16 @@ async def get_users(db: Session = Depends(get_db)):
     users = db.query(User).all()
     return users
 
+@app.put("/api/users/{username}")
+async def update_user_status(username: str, status: UserStatus, db: Session = Depends(get_db)):
+    db_user = db.query(User).filter(User.username == username).first()
+    if not db_user:
+        raise HTTPException(status_code=400, detail="User not found")
+    db_user.status = status
+    db.commit()
+    db.refresh(db_user)
+    return {"username": db_user.username, "status": db_user.status}
+
 
 
 # 앱 실행
