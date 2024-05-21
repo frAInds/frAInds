@@ -7,7 +7,7 @@ import { login, logout } from '@/common/reducers/authSlice';
 import { Input } from "@nextui-org/react";
 
 
-const SignIn = ({ isOnLogin }) => {
+const SignIn = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -16,7 +16,7 @@ const SignIn = ({ isOnLogin }) => {
     const navigate = useNavigate();
 
     //redux codes go here
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
     useEffect(() => {
         setUsername('');
@@ -26,47 +26,42 @@ const SignIn = ({ isOnLogin }) => {
     const handleUsernameChange = useCallback((e) => {
         const value = e.target.value;
         setUsername(value);
-    }, [username]);
+    }, []);
 
     const handlePasswordChange = useCallback((e) => {
         const value = e.target.value;
         setPassword(value);
-    }, [password]);
+    }, []);
 
     const handleLogin = async (e) => {
-
         e.preventDefault();
-
+      
         try {
-            const response = await fetch('/api/signin', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ username: username, password:password }),
-            });
-        
-
-            if (!response.ok) {
-                throw new Error('Login failed!');
-              }
+          const response = await fetch('/api/signin', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password }),  // 요청 데이터 확인
+          });
+        //   console.log(response);
           
-              const data = await response.json();
-              redirectToMainContent();
-
-              if (!data) {
-                throw new Error('Login failed!');
-              }
-            
-          } catch (error) {
-            console.error('Login failed 2', error);
+          if (!response.ok) {
+            const data = await response.json();
+            throw new Error(data.detail);
           }
-        
-    };
+      
+          const data = await response.json();
+          console.log(data);
+          redirectToMainContent();
+        } catch (error) {
+          console.error('Login failed:', error);
+        }
+      };
 
-    const handleLogout = () => {
-        dispatch(logout());
-    }
+    // const handleLogout = () => {
+        // dispatch(logout());
+    // }
 
     //로그인 성공시 메인페이지로 이동하기 따로 함수로 만듦
     const redirectToMainContent = () => {

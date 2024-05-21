@@ -5,6 +5,9 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 from passlib.context import CryptContext
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.exceptions import HTTPException as StarletteHTTPException
+from fastapi.responses import JSONResponse
+
 
 #사용자 조회용
 from typing import List
@@ -64,6 +67,14 @@ app.add_middleware(
     allow_headers=["*"],  # 모든 헤더 허용
 )
 
+
+@app.exception_handler(StarletteHTTPException)
+async def http_exception_handler(request, exc):
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"detail": exc.detail}
+    )
+
 # 의존성 함수
 def get_db():
     db = SessionLocal()
@@ -104,10 +115,10 @@ async def signup(user: UserCreate, db: Session = Depends(get_db)):
 async def signin(user: UserSignIn, db: Session = Depends(get_db)):
     db_user = db.query(User).filter(User.username == user.username).first()
     if not db_user:
-        raise HTTPException(status_code=400, detail="Invalid username or password")
+        raise HTTPException(status_code=400, detail="Invalid username")
     if not verify_password(user.password, db_user.hashed_password):
-        raise HTTPException(status_code=400, detail="Invalid username or password")
-    return {"message": "Login successful"}
+        raise HTTPException(status_code=400, detail="Invalid password")
+    return {"username": db_user.username, "status": db_user.status}
 
 # 결제 상태 변경 엔드포인트
 @app.post("/api/pay")
