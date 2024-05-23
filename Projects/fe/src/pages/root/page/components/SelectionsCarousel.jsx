@@ -47,7 +47,7 @@ const SelectionsCarousel = (props) => {
                                         ) : (
                                             <img className=' rounded-lg shadow   ease-in-out hover:shadow-xl ' src={item.img} alt={item.name} />
                                         )}
-                                        <div className="absolute  w-full h-full bg-testBlack/50 flex items-center justify-center -bottom-40 group-hover:bottom-0 opacity-0 group-hover:opacity-100 transition-all duration-1000 ease-in-out p-4 flex-col overflow-hidden">
+                                        <div className="absolute  w-full h-full bg-testBlack/50 flex items-center justify-center -bottom-40 group-hover:bottom-0 opacity-0 group-hover:opacity-100 transition-all duration-700 ease-in-out p-4 flex-col overflow-hidden">
                                             <span className="text-white text-lg text-center mb-2 z-10">{item.name}</span>
                                             <span className="text-white z-10">{item.desc}</span>
                                             <div className="absolute bottom-20 left-0 w-full text-center z-10">

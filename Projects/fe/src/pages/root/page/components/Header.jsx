@@ -1,9 +1,8 @@
 import FriendsLogo from "@/common/components/FriendsLogo";
 import { Switch } from "@/common/components/ui/switch";
-// import SignIn from "@/pages/account/sign-in/page";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { toggle } from "@/common/reducers/darkmodeSlice";
 import DropdownContent from "./DropDownContent";
 import { Button } from "@nextui-org/react";
@@ -17,6 +16,7 @@ export const Header = ( { showLoginLink = true } ) => {
   //다크모드, 라이트모드
   const isDarkModeOn = useSelector((state) => state.darkmode.value);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   //로그인 여부 가져오기
   const isAuthenticated = useSelector(
@@ -57,7 +57,6 @@ export const Header = ( { showLoginLink = true } ) => {
     // /broadcast로 시작하면서 /broadcast/ 이후에 문자열이 있는 경우
     return location.pathname.startsWith('/broadcast/') && location.pathname.length > '/broadcast/'.length;
   }
-  
 
 
   return (<>
@@ -70,33 +69,27 @@ export const Header = ( { showLoginLink = true } ) => {
         <div className="mt-2">
           {location.pathname === '/' && (
             //main 화면일때 -> 방송하기 버튼
-            <Link to='/broadcast'>
-              <Button startContent={<BroadcastIcon />} variant="flat" className="bg-gradient-to-tr from-violet-500 to-blue-500 text-white shadow-lg">
+              <Button startContent={<BroadcastIcon />} variant="flat" className="bg-gradient-to-tr from-violet-500 to-blue-500 text-white shadow-lg"
+              as={Link} to="/broadcast">
                 방송하기
               </Button>
-            </Link>
           )}  
           {location.pathname === '/broadcast' && (
             //main 화면이 아닐때 -> 뒤로가기 버튼
-            <Link to='/'>
-              <Button startContent={<ChatBotIcon className="mt-3"  />} variant="flat" className="bg-gradient-to-tr from-violet-500 to-blue-500 text-white shadow-lg">
+              <Button startContent={<ChatBotIcon className="mt-3"  />} variant="flat" className="bg-gradient-to-tr from-violet-500 to-blue-500 text-white shadow-lg"
+              as={Link} to="/root">
                 챗봇이랑 놀기
               </Button>
-            </Link>
           )}
           
           {isBroadcastSubpage() && (
             <>
-              <Link to='/'>
-                <Button startContent={<ChatBotIcon className="mt-3"  />} variant="flat" className="bg-gradient-to-tr from-violet-500 to-blue-500 text-white shadow-lg">
+                <Button as={Link} to="/root" startContent={<ChatBotIcon className="mt-3"  />} variant="flat" className="bg-gradient-to-tr from-violet-500 to-blue-500 text-white shadow-lg">
                   챗봇이랑 놀기
                 </Button>
-              </Link>
-              <Link to='/broadcast'>
-              <Button startContent={<ChatBotIcon className="mt-3"  />} variant="solid" color="danger" className=" text-white shadow-lg ml-6">
+              <Button as={Link} to="/broadcast" startContent={<ChatBotIcon className="mt-3"  />} variant="solid" color="danger" className=" text-white shadow-lg ml-6">
                 방송 중지
               </Button>
-            </Link>
           </>
           )}
         </div>
