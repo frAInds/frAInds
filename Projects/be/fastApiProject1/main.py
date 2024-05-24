@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException, status, Header
+from fastapi import FastAPI, Depends, HTTPException, status, Header, Request
 from pydantic import BaseModel
 from sqlalchemy import Column, Integer, String, Enum, create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -66,6 +66,11 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     username: Optional[str] = None
+
+
+class BroadcastData(BaseModel):
+    stream_key: str
+    chat_url: str
 
 # FastAPI 앱 생성
 app = FastAPI()
@@ -227,6 +232,17 @@ async def pay(user: UserSignIn, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(db_user)
     return {"status": db_user.status}
+
+@app.post("/api/start-broadcast")
+async def start_broadcast(broadcast_data: BroadcastData):
+    stream_key = broadcast_data.stream_key
+    chat_url = broadcast_data.chat_url
+
+    # 전송된 데이터를 사용하여 방송 시작 로직 처리
+    print(f"Stream Key: {stream_key}")
+    print(f"Chat URL: {chat_url}")
+
+    return {"message": "방송이 성공적으로 시작되었습니다."}
 
 # 앱 실행
 if __name__ == "__main__":
