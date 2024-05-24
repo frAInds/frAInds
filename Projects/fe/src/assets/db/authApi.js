@@ -1,8 +1,7 @@
 //test용 json db server 데이터
-
 export async function loginUserApi(username, password) {
     try{
-        const response = await fetch('/api/account/sign-in', {
+        const response = await fetch('/api/signin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -26,6 +26,13 @@ export default{
       },
       width: {
         '344': '344px',
+        '1/10': '10%',
+        '1/5': '20%',
+        '2/5': '40%',
+        '3/5': '60%',
+        '4/5': '80%',
+        '9/10': '90%',
+        '95p': '95%',
       },
       colors: {
         charcoalBlack: '#282828',
@@ -34,17 +41,20 @@ export default{
         test1A1918: '#1A1918',
         customGray: '#e5e5e1',
         createHeaderText: '#2DADF7',
+        // primary: '#006FEE',
+      
+      
         
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        primary: {
+        primary_tailwind: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
         },
-        secondary: {
+        secondary_tailwind: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
         },
@@ -88,20 +98,10 @@ export default{
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
-      width:{
-        '1/10': '10%',
-        '1/5': '20%',
-        '2/5': '40%',
-        '3/5': '60%',
-        '4/5': '80%',
-        '9/10': '90%',
-        '95p': '95%',
-      },
       transitionProperty: {
         'height': 'height',
       },
     },
   },
-  darkMode: "class",
   plugins: [require("tailwindcss-animate"), nextui(),],
 }

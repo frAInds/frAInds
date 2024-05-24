@@ -12,7 +12,7 @@ export const Root = () => {
   const SLIDE_COUNT = 3;
   const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
   return (
-    <div className="dark:bg-121212 max-w-[100vw] min-h-screen
+    <div className="dark:bg-testBlack max-w-[100vw] min-h-screen
     flex flex-col items-center">
 
         <div className="flex mt-10 text-6xl text-center mb-20 text-indigo-400">

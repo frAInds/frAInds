@@ -1,85 +1,88 @@
 import { useEffect, useState, memo, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import FriendsLogo from "@/common/components/FriendsLogo";
-import { Link, useNavigate } from "react-router-dom";
-// import { logout } from '@/common/reducers/userSlice';
-import { login, logout } from '@/common/reducers/authSlice';
+import { useNavigate } from "react-router-dom";
+import { login } from '@/common/reducers/authSlice';
 import { Input } from "@nextui-org/react";
 
 
-const SignIn = ({ isOnLogin }) => {
+const SignIn = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
-
-    const isLoggedin = useSelector((state) => state.user.isAuthenticated);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    //redux codes go here
-    const dispatch = useDispatch();
-
     useEffect(() => {
-        setUsername('');
-        setPassword('');
+        // setUsername('');
+        // setPassword('');
       }, []);
 
     const handleUsernameChange = useCallback((e) => {
         const value = e.target.value;
+        console.log(value);
         setUsername(value);
-    }, [username]);
+    }, []);
 
     const handlePasswordChange = useCallback((e) => {
         const value = e.target.value;
+        console.log(value);
+
         setPassword(value);
-    }, [password]);
+    }, []);
 
-    const handleLogin = async (e) => {
+    const handleLogin = (e) => {
+      e.preventDefault();
 
-        e.preventDefault();
-
-        try {
-            const response = await fetch('/api/signin', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ username: username, password:password }),
+          console.log(username, password);
+          const data = { username, password };
+          console.log("Sending data:", { username, password });
+          console.log(JSON.stringify({ username, password }));        
+        
+          fetch('/api/signin', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          body: JSON.stringify(data),
+          })
+          .then(
+            (response) => {
+                if (!response.ok) {
+                  throw new Error('Login failed');
+                }
+                return response.json();
+            })
+            .then((responseData) => {
+                const { access_token, username, status } = responseData;
+                console.log("Response data:", responseData);
+                localStorage.setItem('token', access_token); // 토큰 저장
+                console.log(username,"logged in");
+                console.log("User status:", status);
+                const userData = { username: username, status };
+                console.log("User data:", userData);
+                dispatch(login(userData)); // 사용자 정보를 상태에 저장
+                redirectToMainContent();
+            })
+            .catch((error) => {
+              console.error("Login error:", error);
             });
-        
-
-            if (!response.ok) {
-                throw new Error('Login failed!');
-              }
-          
-              const data = await response.json();
-              redirectToMainContent();
-
-              if (!data) {
-                throw new Error('Login failed!');
-              }
-            
-          } catch (error) {
-            console.error('Login failed 2', error);
-          }
-        
     };
 
-    const handleLogout = () => {
-        dispatch(logout());
-    }
+    // const handleLogout = () => {
+        // dispatch(logout());
+    // }
 
     //로그인 성공시 메인페이지로 이동하기 따로 함수로 만듦
     const redirectToMainContent = () => {
-        // console.log("isLoggedin: ",isLoggedin);
-        navigate("/root");
-    }
+      navigate("/broadcast");
+    };
 
     //로그인 여부 확인용 useEffect
-    useEffect(
-        () => {
-            console.log("isLoggedin: ",isLoggedin);
-        }, [isLoggedin]
-    ); 
+    // useEffect(
+    //     () => {
+    //         console.log("isLoggedin: ",isLoggedin);
+    //     }, [isLoggedin]
+    // ); 
 
   // 로그인 상태에 따라 다른 UI 표시
     return (

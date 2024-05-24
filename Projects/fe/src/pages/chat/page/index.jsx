@@ -1,7 +1,20 @@
 import { Outlet } from 'react-router-dom';
 import Header from "@/pages/root/page/components/Header";
+import { useSelector } from 'react-redux';
+import React from 'react';
 
 const Chat = () => {
+
+    const user = useSelector((state) => state.auth.user);
+    React.useEffect(
+        () => {
+            if(user){
+                console.log(user.username + 'logged in');
+            }else{
+                console.log('not logged in');
+            }
+        },[user]);
+
     return (
         <>
             <div>

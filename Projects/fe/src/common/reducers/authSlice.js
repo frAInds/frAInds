@@ -18,18 +18,18 @@ export const login = createAsyncThunk(
     }
 );
 
-//로그아웃 비동기 처리하기
-export const logout = createAsyncThunk(
-    'auth/logout',
-    async (_, { rejectWithValue }) => {
-        try {
-            await logoutUserApi();
-            return;
-        } catch (error) {
-            return rejectWithValue(error.response.data);
-        }
-    }
-)
+// //로그아웃 비동기 처리하기
+// export const logout = createAsyncThunk(
+//     'auth/logout',
+//     async (_, { rejectWithValue }) => {
+//         try {
+//             await logoutUserApi();
+//             return;
+//         } catch (error) {
+//             return rejectWithValue(error.response.data);
+//         }
+//     }
+// )
 
 
 
@@ -61,11 +61,11 @@ export const authSlice = createSlice({
                 state.isAuthenticated = false;
                 state.error = action.payload;
             })
-            .addCase(logout.fulfilled, (state) => {
-                state.isAuthenticated = false;
-                //로그아웃 시 사용자 -> null
-                state.user = null;
-            })
+            // .addCase(logout.fulfilled, (state) => {
+            //     state.isAuthenticated = false;
+            //     //로그아웃 시 사용자 -> null
+            //     state.user = null;
+            // })
     }
 });
 
