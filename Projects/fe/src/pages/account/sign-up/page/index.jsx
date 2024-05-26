@@ -30,7 +30,7 @@ const SignUp = ({ isOnLogin }) => {
     }
   }, [isOnLogin, reset]);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   //username, password regex
   const validateUsername = useCallback((value) => /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{10,20}$/.test(value), []);
@@ -63,34 +63,32 @@ const SignUp = ({ isOnLogin }) => {
       return;
     }
   
-    try {
-      const response = await fetch('/api/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        // 전달할 값(key)와 이 파일에서 사용하는 변수 이름(value)
-        body: JSON.stringify({ username: username, password:password }),
-      });
-  
-      // 실패
-    if (!response.ok) {
-      throw new Error('Sign up failed!');
-    }
+    
+    fetch('/api/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      // 전달할 값(key)와 이 파일에서 사용하는 변수 이름(value)
+      body: JSON.stringify({ username, password }),
+    })
+    .then((response) => {
+      if(!response.ok) {
+        throw new Error('Sign up failed!');
+      }
+      return response.json();
+    })
+    .then((responseData) => {
+      console.log('Sign up success:', responseData);
+      //refresh page
+      window.location.reload();
 
-    const data = await response.json();
-
-    if (!data) {
-      throw new Error('Sign up failed!');
-    }
-  
-    navigate('/');
-  
-    } catch (error) {
-      console.error('Error:', error);
-    }
+    })
+    .catch((error) => {
+      console.error("Sign up error:", error);
+    })
     console.log({ username, password });
-  },[username, password, isUsernameInvalid, isPasswordInvalid, isPasswordMismatch, navigate]);
+  },[isUsernameInvalid, isPasswordInvalid, isPasswordMismatch, username, password]);
 
   return (
     <div className="flex justify-center items-center h-full">

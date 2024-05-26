@@ -8,10 +8,12 @@ const TaeminBroadcast = () => {
         background: '', 
         person: '',
     });
+    const [audioUrl, setAudioUrl] = useState('');
+    const [caption, setCaption] = useState('');
 
     useEffect(() => {
         // API 호출을 통해 이미지 URL을 받아오는 함수
-        const websocketUrl = "ws://localhost:8000/api/django/";
+        const websocketUrl = "ws://localhost:8000/ws/data";
         const websocket = new WebSocket(websocketUrl);
 
         websocket.onopen = () => {
@@ -21,11 +23,7 @@ const TaeminBroadcast = () => {
         websocket.onmessage = (event) => {
             try {
                 const data = JSON.parse(event.data);
-                setImageData({
-                    background: data.background || imageData.background,  // 서버에서 새 배경 이미지 URL을 제공하지 않으면 현재 이미지 유지
-                    person: data.person || imageData.person, // 서버에서 새 인물 이미지 URL을 제공하지 않으면 현재 이미지 유지
-                });
-                setAudioUrl(data.audioUrl);
+                console.log('WebSocket Message Received:', data);
                 setCaption(data.caption || '');
 
 
@@ -50,10 +48,11 @@ const TaeminBroadcast = () => {
     return(
         <>
             {/* container */}
-            <div className="flex justify-center items-center w-full h-screen"> {/* 전체 화면을 채우는 flex 컨테이너 */}
-                <img src={defaultBg} alt="Background" className="absolute w-full h-full object-cover z-0" />
-                <div className="absolute z-10 flex justify-center items-center"> {/* 사람 이미지를 중앙 정렬하기 위한 컨테이너 */}
-                    <img src={defaultPerson} alt="Person" className="size-auto object-cover" />
+            <div className="flex w-full h-[92vh] relative">
+                {/* 전체 화면을 채우는 flex 컨테이너 */}
+                <img src={defaultBg} alt="Background" className="w-full h-5/6 object-cover z-0" />
+                <div className="absolute bottom-0 h-40 w-full bg-black z-10 flex items-center justify-center">
+                    <p className="text-white text-2xl">{caption}</p>
                 </div>
             </div>
         </>
