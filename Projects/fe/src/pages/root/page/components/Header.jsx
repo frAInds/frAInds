@@ -84,9 +84,9 @@ export const Header = ( { showLoginLink = true } ) => {
           
           {isBroadcastSubpage() && (
             <>
-                <Button as={Link} to="/root" startContent={<ChatBotIcon className="mt-3"  />} variant="flat" className="bg-gradient-to-tr from-violet-500 to-blue-500 text-white shadow-lg">
+                {/* <Button as={Link} to="/root" startContent={<ChatBotIcon className="mt-3"  />} variant="flat" className="bg-gradient-to-tr from-violet-500 to-blue-500 text-white shadow-lg">
                   챗봇이랑 놀기
-                </Button>
+                </Button> */}
               <Button as={Link} to="/broadcast" startContent={<ChatBotIcon className="mt-3"  />} variant="solid" color="danger" className=" text-white shadow-lg ml-6">
                 방송 중지
               </Button>

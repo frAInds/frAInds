@@ -6,8 +6,7 @@ const Broadcast = () => {
         <>
             <div>
                 {/* 채팅 화면에서는 로그인 안보여줌 */}
-                {/* <Header /> */}
-
+                <Header />
                 {/* 자식컴포넌트(유태민 etc.) 배치할 위치*/}
                 <div className='bg-gray-200 h-full'>
                     <Outlet />

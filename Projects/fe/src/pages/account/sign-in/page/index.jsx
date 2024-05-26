@@ -74,7 +74,7 @@ const SignIn = () => {
 
     //로그인 성공시 메인페이지로 이동하기 따로 함수로 만듦
     const redirectToMainContent = () => {
-      navigate("/broadcast");
+        navigate("/broadcast");
     };
 
     //로그인 여부 확인용 useEffect

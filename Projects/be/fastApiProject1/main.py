@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException, status, Header, Request
+from fastapi import FastAPI, Depends, HTTPException, status, Header, Request, WebSocket, WebSocketDisconnect, Body
 from pydantic import BaseModel
 from sqlalchemy import Column, Integer, String, Enum, create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -9,6 +9,9 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi.responses import JSONResponse
 from jose import JWTError, jwt
 from datetime import datetime, timedelta, timezone
+import asyncio
+import json
+
 
 #사용자 조회용
 from typing import List, Optional
@@ -46,11 +49,16 @@ class User(Base):
 Base.metadata.create_all(bind=engine)
 
 # Pydantic 모델 정의
+class SignUpResponse(BaseModel):
+    username: str
+    status: UserStatus
 
+#회원가입 api 요청 데이터 정의 모델
 class UserCreate(BaseModel):
     username: str
     password: str
 
+#로그인 api 요청 데이터 정의 모델
 class UserSignIn(BaseModel):
     username: str
     password: str
@@ -60,20 +68,48 @@ class UserOut(BaseModel):
     username: str
     status: UserStatus
 
+#토큰 관련 응답 데이터 정의 모델
 class Token(BaseModel):
     access_token: str
     token_type: str
 
+#토큰 데이터 정의 모델
 class TokenData(BaseModel):
     username: Optional[str] = None
 
-
+# 방송 시작 api 요청 데이터 정의 모델
 class BroadcastData(BaseModel):
     stream_key: str
     chat_url: str
 
+
+
+
+#websocket connection manager
+class ConnectionManager:
+    def __init__(self):
+        self.active_connections: List[WebSocket] = []
+
+    async def connect(self, websocket: WebSocket):
+        await websocket.accept()
+        self.active_connections.append(websocket)
+
+    def disconnect(self, websocket: WebSocket):
+        self.active_connections.remove(websocket)
+
+    async def send_personal_message(self, message: str, websocket: WebSocket):
+        await websocket.send_text(message)
+
+    async def broadcast(self, message: str):
+        for connection in self.active_connections:
+            await connection.send_text(message)
+
+manager = ConnectionManager()
+
+
+
 # FastAPI 앱 생성
-app = FastAPI()
+app = FastAPI(debug=True)
 
 app.add_middleware(
     CORSMiddleware,
@@ -161,18 +197,17 @@ def read_root():
 #     db.refresh(db_user)
 #     return {"message": "User registered successfully"}
 
-@app.post("/api/signup", response_model=Token)
-async def signup(user: UserCreate, db: Session = Depends(SessionLocal)):
-    db_user = get_user(db, username=user.username)
-    if db_user:
-        raise HTTPException(status_code=400, detail="User already registered")
-    hashed_password = get_password_hash(user.password)
-    db_user = User(username=user.username, hashed_password=hashed_password)
-    db.add(db_user)
-    db.commit()
-    db.refresh(db_user)
-    access_token = create_access_token(data={"sub": db_user.username})
-    return {"access_token": access_token, "token_type": "bearer"}
+@app.post("/api/signup", status_code=status.HTTP_201_CREATED)
+def signup(user: UserCreate = Body(...), db: Session = Depends(get_db)):
+        db_user = get_user(db, username=user.username)
+        if db_user:
+            raise HTTPException(status_code=400, detail="User already registered")
+        hashed_password = get_password_hash(user.password)
+        db_user = User(username=user.username, hashed_password=hashed_password)
+        db.add(db_user)
+        db.commit()
+        db.refresh(db_user)
+        return {"username": db_user.username, "status": db_user.status}
 
 
 # 로그인 엔드포인트
@@ -243,6 +278,20 @@ async def start_broadcast(broadcast_data: BroadcastData):
     print(f"Chat URL: {chat_url}")
 
     return {"message": "방송이 성공적으로 시작되었습니다."}
+
+
+@app.websocket("/ws/data")
+async def websocket_endpoint(websocket: WebSocket):
+    await manager.connect(websocket)
+    try:
+        while True:
+            current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            message = f"서버 시간: {current_time}"
+            # data = "서버에서 생성된 데이터"
+            await manager.broadcast(json.dumps({"message": message}))
+            await asyncio.sleep(1)  # 1초마다 데이터 전송
+    except WebSocketDisconnect:
+        manager.disconnect(websocket)
 
 # 앱 실행
 if __name__ == "__main__":
