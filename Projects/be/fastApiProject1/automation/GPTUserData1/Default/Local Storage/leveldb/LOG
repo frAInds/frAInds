@@ -1,0 +1,14 @@
+2024/05/27-03:34:36.626 3604 Reusing MANIFEST C:\Users\PC\Desktop\명지대\수업\4학년1학기\캡스톤디자인\code\automation(2)\automation\GPTUserData1\Default\Local Storage\leveldb/MANIFEST-000001
+2024/05/27-03:34:36.630 3604 Recovering log #26
+2024/05/27-03:34:36.631 3604 Level-0 table #28: started
+2024/05/27-03:34:36.637 3604 Level-0 table #28: 25885 bytes OK
+2024/05/27-03:34:36.644 3604 Delete type=0 #26
+2024/05/27-03:34:36.644 4a84 Compacting 4@0 + 1@1 files
+2024/05/27-03:34:36.657 4a84 Generated table #30@0: 56 keys, 30567 bytes
+2024/05/27-03:34:36.657 4a84 Compacted 4@0 + 1@1 files => 30567 bytes
+2024/05/27-03:34:36.661 4a84 compacted to: files[ 0 1 1 0 0 0 0 ]
+2024/05/27-03:34:36.662 4a84 Delete type=2 #18
+2024/05/27-03:34:36.662 4a84 Delete type=2 #20
+2024/05/27-03:34:36.662 4a84 Delete type=2 #22
+2024/05/27-03:34:36.662 4a84 Delete type=2 #25
+2024/05/27-03:34:36.662 4a84 Delete type=2 #28

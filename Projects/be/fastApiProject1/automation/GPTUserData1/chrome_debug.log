@@ -1,0 +1,7 @@
+[6200:18700:0523/215627.272:WARNING:chrome_main_delegate.cc(742)] This is Chrome version 125.0.6422.76 (not a warning)
+[6200:18700:0523/215627.319:INFO:chrome_browser_cloud_management_controller.cc(168)] Starting CBCM Controller Initialization
+[6200:18700:0523/215627.319:INFO:chrome_browser_cloud_management_controller.cc(196)] No machine level policy manager exists.
+[6200:18700:0523/215627.340:WARNING:browser_management_service.cc(128)] EnterpriseLogoUrl fetch failed with error code -1 and MIME type 
+[4692:14412:0523/215630.887:WARNING:sqlite_persistent_store_backend_base.cc(198)] Failed to post task from FlushAndNotifyInBackground@net\extras\sqlite\sqlite_persistent_store_backend_base.cc:247 to client_task_runner_.
+[4692:14412:0523/215630.887:WARNING:sqlite_persistent_store_backend_base.cc(198)] Failed to post task from FlushAndNotifyInBackground@net\extras\sqlite\sqlite_persistent_store_backend_base.cc:247 to client_task_runner_.
+[6200:18700:0523/215630.955:WARNING:pref_notifier_impl.cc(41)] Pref observer for media_router.cast_allow_all_ips found at shutdown.
