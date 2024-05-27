@@ -11,14 +11,24 @@ import {
     CarouselPrevious,
 } from "@/common/components/ui/carousel"
 import { useNavigate } from 'react-router-dom';
+import { toast, Toaster } from 'react-hot-toast';
 
 
 
 export const BroadcastRoot = () => {
+    //modal에 입력할 값 2개
     const [streamKey, setStreamKey] = useState('');
     const [chatUrl, setChatUrl] = useState('');
+    //입력이 끝나면 로딩 딜레이 감안해서 약 30초 정도?
+    const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
+
+    //성공 알림
+    const toastSuccess = () => toast('방송이 성공적으로 시작되었습니다.', { icon: '🚀' });
+
+    //실패 알림
+    const toastFail = () => toast('방송 시작에 실패했습니다. 다시 시도해주세요.', { icon: '❌' });
 
     const startBroadcast = () => {
         fetch('/api/start-broadcast', {
@@ -30,18 +40,34 @@ export const BroadcastRoot = () => {
         })
         .then(response => {
             if (response.ok) {
-                console.log('방송이 성공적으로 시작되었습니다.');
+                toast.success('방송이 성공적으로 시작되었습니다.', { icon: '🚀' });
+                setIsLoading(true);
 
-                // onclose();
+                //로딩 약 30초 설정
+                setTimeout(() => {
+                    navigate('/broadcast/taemin');
+                }, 30000);
             } else {
-                console.error('방송 시작에 실패했습니다.');
-                alert('방송 시작에 실패했습니다.');
+                // console.error('방송 시작에 실패했습니다.');
+                toast.error('방송 시작에 실패했습니다. 다시 시도해주세요.', { icon: '❌' });
+                setIsLoading(false);
+                // 오류 처리 로직
+                resetInput();
             }
         })
         .catch(error => {
             console.error('방송 시작 중 오류가 발생했습니다.', error);
+            toast.error('방송 시작에 실패했습니다. 다시 시도해주세요.', { icon: '❌' });
+            setIsLoading(false);
             // 오류 처리 로직
+            resetInput();
         });
+    };
+
+    //엔드포인트와 통신 실패시 Input 초기화하기
+    const resetInput = () => {
+        setChatUrl('');
+        setStreamKey('');
     };
 
     const OPTIONS = { loop: true, dragFree: true, align: "center", dragThreshold: 20}
@@ -126,7 +152,7 @@ export const BroadcastRoot = () => {
                                                         <ModalFooter>
                                                             <Button color='success' onClick={startBroadcast}>방송 시작!</Button>
                                                             <Button onClick={onClose}>취소</Button>
-                                                            
+                                                            <Toaster />
                                                         </ModalFooter>
                                                     </>
                                                 )}
