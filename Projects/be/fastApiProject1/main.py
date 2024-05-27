@@ -72,6 +72,8 @@ class UserOut(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str
+    username: str
+    status: str
 
 #토큰 데이터 정의 모델
 class TokenData(BaseModel):
@@ -232,8 +234,13 @@ async def signin(user: UserSignIn, db: Session = Depends(get_db)):
             headers={"WWW-Authenticate": "Bearer"},
         )
     access_token = create_access_token(data={"sub": db_user.username})
-    return {"access_token": access_token, "token_type": "bearer", "username": db_user.username, "status": db_user.status}
-
+    # return {"access_token": access_token, "token_type": "bearer", "username": db_user.username, "status": db_user.status}
+    return Token(
+        access_token=access_token,
+        token_type="bearer",
+        username=db_user.username,
+        status=db_user.status
+    )
 
 @app.get("/api/users/me", response_model=UserCreate)
 def read_users_me(current_user: User = Depends(get_current_user)):

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { toggle } from "@/common/reducers/darkmodeSlice";
 import DropdownContent from "./DropDownContent";
-import { Button } from "@nextui-org/react";
+import { Button, Avatar } from "@nextui-org/react";
 import {BroadcastIcon} from './BroadcastIcon';
 import { ChatBotIcon } from "./ChatbotIcon";
 
@@ -20,8 +20,10 @@ export const Header = ( { showLoginLink = true } ) => {
 
   //로그인 여부 가져오기
   const isAuthenticated = useSelector(
-    (state) => state.user.isAuthenticated
+    (state) => state.auth.isAuthenticated
   );
+  //누구의 로그인 여부인지
+  const user = useSelector((state) => state.auth.user);
 
   //테마변경
   const handleChangeTheme = () => {
@@ -67,21 +69,6 @@ export const Header = ( { showLoginLink = true } ) => {
         <Link to = '/' className="mr-10"><FriendsLogo className="mb-1 "/></Link>
 
         <div className="mt-2">
-          {location.pathname === '/' && (
-            //main 화면일때 -> 방송하기 버튼
-              <Button startContent={<BroadcastIcon />} variant="flat" className="bg-gradient-to-tr from-violet-500 to-blue-500 text-white shadow-lg"
-              as={Link} to="/broadcast">
-                방송하기
-              </Button>
-          )}  
-          {location.pathname === '/broadcast' && (
-            //main 화면이 아닐때 -> 뒤로가기 버튼
-              <Button startContent={<ChatBotIcon className="mt-3"  />} variant="flat" className="bg-gradient-to-tr from-violet-500 to-blue-500 text-white shadow-lg"
-              as={Link} to="/root">
-                챗봇이랑 놀기
-              </Button>
-          )}
-          
           {isBroadcastSubpage() && (
             <>
                 {/* <Button as={Link} to="/root" startContent={<ChatBotIcon className="mt-3"  />} variant="flat" className="bg-gradient-to-tr from-violet-500 to-blue-500 text-white shadow-lg">
@@ -99,9 +86,11 @@ export const Header = ( { showLoginLink = true } ) => {
       <div className="flex items-center  gap-5 text-indigo-400 font-bold text-xl">
         
         {/* //로그인 여부에 따라 다른 화면 보임 */}
-        <div className="flex-grow min-w-[80px] mb-1">
-          { isAuthenticated && <p>welcome user</p>}
-          { showLoginLink && !isAuthenticated && <Link  to={ "/account/sign-in" }>Sign In</Link>}
+        <div className="flex">
+          { isAuthenticated && 
+          <>
+            <Avatar size="md" radius="full" color="default" name={user.username} className=""/>
+          </>}
         </div>
         
         <DropdownContent name='이용 안내' color='success' 
