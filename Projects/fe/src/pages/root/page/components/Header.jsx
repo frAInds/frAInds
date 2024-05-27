@@ -4,15 +4,15 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { toggle } from "@/common/reducers/darkmodeSlice";
-import DropdownContent from "./DropDownContent";
-import { Button, Avatar } from "@nextui-org/react";
+// import DropdownContent from "./DropDownContent";
+import { Button, Avatar, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
 import {BroadcastIcon} from './BroadcastIcon';
 import { ChatBotIcon } from "./ChatbotIcon";
 
 
 
 //Chat.jsx에서 Header 쓸건데 로그인 버튼은 안써도 될듯해서 props로 처리함
-export const Header = ( { showLoginLink = true } ) => {
+export const Header = () => {
   //다크모드, 라이트모드
   const isDarkModeOn = useSelector((state) => state.darkmode.value);
   const dispatch = useDispatch();
@@ -41,18 +41,6 @@ export const Header = ( { showLoginLink = true } ) => {
     }
   }
 
-  const itemsIntro = [{
-    name: '소개',
-    url: '/intro',
-  },
-  {
-    name: '커뮤니티',
-    url: '/community',
-  },
-  {
-    name: '고객센터',
-    url: '/help',
-  },];
   const location = useLocation();
 
   const isBroadcastSubpage = () => {
@@ -60,8 +48,8 @@ export const Header = ( { showLoginLink = true } ) => {
     return location.pathname.startsWith('/broadcast/') && location.pathname.length > '/broadcast/'.length;
   }
 
-
-  return (<>
+  return (
+  <>
     <div className="fixed w-screen flex flex-row h-[70px] items-center z-10 shadow-lg px-8
       justify-between
     dark:bg-test1A1918 bg-white  dark:drop-shadow-xl">
@@ -71,13 +59,10 @@ export const Header = ( { showLoginLink = true } ) => {
         <div className="mt-2">
           {isBroadcastSubpage() && (
             <>
-                {/* <Button as={Link} to="/root" startContent={<ChatBotIcon className="mt-3"  />} variant="flat" className="bg-gradient-to-tr from-violet-500 to-blue-500 text-white shadow-lg">
-                  챗봇이랑 놀기
-                </Button> */}
               <Button as={Link} to="/broadcast" startContent={<ChatBotIcon className="mt-3"  />} variant="solid" color="danger" className=" text-white shadow-lg ml-6">
                 방송 중지
               </Button>
-          </>
+            </>
           )}
         </div>
       </div>
@@ -92,9 +77,16 @@ export const Header = ( { showLoginLink = true } ) => {
             <Avatar size="md" radius="full" color="default" name={user.username} className=""/>
           </>}
         </div>
-        
-        <DropdownContent name='이용 안내' color='success' 
-        items={itemsIntro}/>
+        {/* 이용안내 dropdown menu */}
+        <Dropdown>
+          <DropdownTrigger>
+            <Button variant="bordered" color="secondary">이용 안내</Button>
+          </DropdownTrigger>
+          <DropdownMenu>
+            <DropdownItem key="intro" href="/intro">소개</DropdownItem>
+            <DropdownItem key="help" href="/help">고객센터</DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
 
 
         {isDarkModeOn ?

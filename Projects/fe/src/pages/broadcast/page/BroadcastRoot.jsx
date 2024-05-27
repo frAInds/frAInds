@@ -21,6 +21,7 @@ export const BroadcastRoot = () => {
     const [chatUrl, setChatUrl] = useState('');
     //입력이 끝나면 로딩 딜레이 감안해서 약 30초 정도?
     const [isLoading, setIsLoading] = useState(false);
+    const [selectedCharacter, setSelectedCharacter] = useState(null);
 
     const navigate = useNavigate();
 
@@ -42,7 +43,9 @@ export const BroadcastRoot = () => {
                 setTimeout(() => {
                     //30초 후에는 로딩중이 아님.
                     setIsLoading(false);
-                    navigate('/broadcast/taemin');
+                    if (selectedCharacter) {
+                        navigate(selectedCharacter.url);
+                    }
                 }, 30000);
             } else {
                 // console.error('방송 시작에 실패했습니다.');
@@ -106,7 +109,10 @@ export const BroadcastRoot = () => {
                                         <Card className='ml-8 '>
                                             <img alt="Woman listing to music" className="object-contain" height={400} src={images.src} width={400} />
                                             <CardFooter className='justify-center bg-testBlack/90'>
-                                            <Button onPress={onOpen} className="bg-violet-400 text-xl">
+                                            <Button onPress={() => {
+                                                onOpen();
+                                                setSelectedCharacter(images);   
+                                            }} className="bg-violet-400 text-xl">
                                                 {images.title} 방송 시작
                                             </Button>
 
