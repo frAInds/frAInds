@@ -2,7 +2,7 @@ import { useEffect, useState, memo, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import FriendsLogo from "@/common/components/FriendsLogo";
 import { useNavigate } from "react-router-dom";
-import { login } from '@/common/reducers/authSlice';
+import { loginSuccess, loginFailure } from '@/common/reducers/authSlice';
 import { Input } from "@nextui-org/react";
 
 
@@ -11,11 +11,6 @@ const SignIn = () => {
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    useEffect(() => {
-        // setUsername('');
-        // setPassword('');
-      }, []);
 
     const handleUsernameChange = useCallback((e) => {
         const value = e.target.value;
@@ -31,28 +26,29 @@ const SignIn = () => {
     }, []);
 
     const handleLogin = (e) => {
-      e.preventDefault();
+        e.preventDefault();
 
-          console.log(username, password);
-          const data = { username, password };
-          console.log("Sending data:", { username, password });
-          console.log(JSON.stringify({ username, password }));        
+        console.log(username, password);
+        const data = { username, password };
+        console.log("Sending data:", { username, password });
+        console.log(JSON.stringify({ username, password }));        
         
-          fetch('/api/signin', {
+        fetch('/api/signin', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json',
-            },
-          body: JSON.stringify(data),
-          })
-          .then(
+            'Content-Type': 'application/json',
+        },
+            body: JSON.stringify(data),
+        })
+        .then(
             (response) => {
                 if (!response.ok) {
-                  throw new Error('Login failed');
+                    throw new Error('Login failed');
                 }
-                return response.json();
+                    return response.json();
             })
-            .then((responseData) => {
+        .then(
+            (responseData) => {
                 const { access_token, username, status } = responseData;
                 console.log("Response data:", responseData);
                 localStorage.setItem('token', access_token); // 토큰 저장
@@ -60,29 +56,19 @@ const SignIn = () => {
                 console.log("User status:", status);
                 const userData = { username: username, status };
                 console.log("User data:", userData);
-                dispatch(login(userData)); // 사용자 정보를 상태에 저장
+                dispatch(loginSuccess(userData)); // 사용자 정보를 상태에 저장
                 redirectToMainContent();
             })
-            .catch((error) => {
-              console.error("Login error:", error);
-            });
+        .catch((error) => {
+            console.error("Login error:", error);
+            dispatch(loginFailure(error));
+        });
     };
-
-    // const handleLogout = () => {
-        // dispatch(logout());
-    // }
 
     //로그인 성공시 메인페이지로 이동하기 따로 함수로 만듦
     const redirectToMainContent = () => {
         navigate("/broadcast");
     };
-
-    //로그인 여부 확인용 useEffect
-    // useEffect(
-    //     () => {
-    //         console.log("isLoggedin: ",isLoggedin);
-    //     }, [isLoggedin]
-    // ); 
 
   // 로그인 상태에 따라 다른 UI 표시
     return (

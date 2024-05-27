@@ -1,11 +1,8 @@
 //images
 import exImg from '@/pages/test/page/images/DALLE.webp';
 import exImg1 from '@/pages/test/page/images/cyborg_taemin.png';
-import Header from "@/pages/root/page/components/Header";
 import { useState } from 'react';
-import { Button, Card, CardFooter, Link, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure,Input } from '@nextui-org/react';
-import { Outlet} from 'react-router-dom';
-
+import { Button, Card, CardFooter, Link, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure,Input, CircularProgress } from '@nextui-org/react';
 import {
     Carousel,
     CarouselContent,
@@ -13,6 +10,7 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/common/components/ui/carousel"
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -20,29 +18,31 @@ export const BroadcastRoot = () => {
     const [streamKey, setStreamKey] = useState('');
     const [chatUrl, setChatUrl] = useState('');
 
+    const navigate = useNavigate();
+
     const startBroadcast = () => {
         fetch('/api/start-broadcast', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json',
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({ stream_key: streamKey, chat_url: chatUrl }),
-          })
-          .then(response => {
+        })
+        .then(response => {
             if (response.ok) {
-              console.log('방송이 성공적으로 시작되었습니다.');
-              onclose();
-              // 추가적인 로직 처리
+                console.log('방송이 성공적으로 시작되었습니다.');
+
+                // onclose();
             } else {
-              console.error('방송 시작에 실패했습니다.');
-              // 에러 처리 로직
+                console.error('방송 시작에 실패했습니다.');
+                alert('방송 시작에 실패했습니다.');
             }
-          })
-          .catch(error => {
+        })
+        .catch(error => {
             console.error('방송 시작 중 오류가 발생했습니다.', error);
             // 오류 처리 로직
-          });
-      };
+        });
+    };
 
     const OPTIONS = { loop: true, dragFree: true, align: "center", dragThreshold: 20}
 
@@ -97,7 +97,7 @@ export const BroadcastRoot = () => {
                                                             <Input
                                                                 isRequired
                                                                 autoFocus
-                                                                label="스트림 키(Youtube)"
+                                                                label="스트림 키(OBS에서 확인 가능합니다.)"
                                                                 placeholder='스트림 키를 입력해주세요.'
                                                                 variant='bordered'
                                                                 value={streamKey}
@@ -110,7 +110,7 @@ export const BroadcastRoot = () => {
                                                             <Input
                                                             isRequired
                                                                 label="채팅 URL"
-                                                                placeholder='Youtube Stream URL을 입력해주세요'
+                                                                placeholder='Youtube 라이브 채팅창 URL을 입력해주세요'
                                                                 variant='bordered'
                                                                 value={chatUrl}
                                                                 onChange={(e) => {
