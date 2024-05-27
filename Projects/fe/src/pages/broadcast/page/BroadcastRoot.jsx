@@ -2,7 +2,7 @@
 import exImg from '@/pages/test/page/images/DALLE.webp';
 import exImg1 from '@/pages/test/page/images/cyborg_taemin.png';
 import { useState } from 'react';
-import { Button, Card, CardFooter, Link, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure,Input, CircularProgress } from '@nextui-org/react';
+import { Button, Card, CardFooter, Link, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure,Input, Spinner } from '@nextui-org/react';
 import {
     Carousel,
     CarouselContent,
@@ -11,12 +11,17 @@ import {
     CarouselPrevious,
 } from "@/common/components/ui/carousel"
 import { useNavigate } from 'react-router-dom';
+import { toast, Toaster } from 'react-hot-toast';
 
 
 
 export const BroadcastRoot = () => {
+    //modal에 입력할 값 2개
     const [streamKey, setStreamKey] = useState('');
     const [chatUrl, setChatUrl] = useState('');
+    //입력이 끝나면 로딩 딜레이 감안해서 약 30초 정도?
+    const [isLoading, setIsLoading] = useState(false);
+    const [selectedCharacter, setSelectedCharacter] = useState(null);
 
     const navigate = useNavigate();
 
@@ -30,18 +35,39 @@ export const BroadcastRoot = () => {
         })
         .then(response => {
             if (response.ok) {
-                console.log('방송이 성공적으로 시작되었습니다.');
+                toast.success('방송이 성공적으로 시작되었습니다.', { icon: '🚀' });
+                setIsLoading(true);
+                onOpenChange(false);
 
-                // onclose();
+                //로딩 약 30초 설정
+                setTimeout(() => {
+                    //30초 후에는 로딩중이 아님.
+                    setIsLoading(false);
+                    if (selectedCharacter) {
+                        navigate(selectedCharacter.url);
+                    }
+                }, 30000);
             } else {
-                console.error('방송 시작에 실패했습니다.');
-                alert('방송 시작에 실패했습니다.');
+                // console.error('방송 시작에 실패했습니다.');
+                toast.error('방송 시작에 실패했습니다. 다시 시도해주세요.', { icon: '❌' });
+                setIsLoading(false);
+                // 오류 처리 로직
+                resetInput();
             }
         })
         .catch(error => {
             console.error('방송 시작 중 오류가 발생했습니다.', error);
+            toast.error('방송 시작에 실패했습니다. 다시 시도해주세요.', { icon: '❌' });
+            setIsLoading(false);
             // 오류 처리 로직
+            resetInput();
         });
+    };
+
+    //엔드포인트와 통신 실패시 Input 초기화하기
+    const resetInput = () => {
+        setChatUrl('');
+        setStreamKey('');
     };
 
     const OPTIONS = { loop: true, dragFree: true, align: "center", dragThreshold: 20}
@@ -66,83 +92,93 @@ export const BroadcastRoot = () => {
 
 
     return (
-        <>
-            <div className="dark:bg-121212 max-w-[100vw] min-h-screen
-            flex flex-col items-center">
+        <>  <div className={`relative ${isLoading && !isOpen ? "opacity-10" : ''}`}>
+                <div className="dark:bg-121212 max-w-[100vw] min-h-screen
+                flex flex-col items-center">
 
-                <div className="flex mt-10 text-6xl text-center mb-20 text-indigo-400">
-                    {/* font 추후 수정 예정 */}
-                    <p>[ 방송 캐릭터 선택하기 ]</p>
-                </div>
+                    <div className="flex mt-10 text-6xl text-center mb-20 text-indigo-400">
+                        {/* font 추후 수정 예정 */}
+                        <p>[ 방송 캐릭터 선택하기 ]</p>
+                    </div>
 
-                <Carousel className="w-1/4" options={OPTIONS} >
-                    <CarouselContent>
-                        {images.map((images, index) => (
-                            <CarouselItem key={index}>
-                                <div className="p-1">
-                                    <Card className='ml-8 '>
-                                        <img alt="Woman listing to music" className="object-contain" height={400} src={images.src} width={400} />
-                                        <CardFooter className='justify-center bg-testBlack/90'>
-                                        <Button onPress={onOpen} className="bg-violet-400 text-xl">
-                                            {images.title} 방송 시작
-                                        </Button>
+                    <Carousel className="w-1/4" options={OPTIONS} >
+                        <CarouselContent>
+                            {images.map((images, index) => (
+                                <CarouselItem key={index}>
+                                    <div className="p-1">
+                                        <Card className='ml-8 '>
+                                            <img alt="Woman listing to music" className="object-contain" height={400} src={images.src} width={400} />
+                                            <CardFooter className='justify-center bg-testBlack/90'>
+                                            <Button onPress={() => {
+                                                onOpen();
+                                                setSelectedCharacter(images);   
+                                            }} className="bg-violet-400 text-xl">
+                                                {images.title} 방송 시작
+                                            </Button>
 
-                                        <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement='top-center' className='flex' shadow='none' 
-                                        classNames={{ backdrop: "bg-test1A1918/50 backdrop-opacity-40" }}>
-                                            <ModalContent className='h-[350px]' >
-                                                {(onClose) => (
-                                                    <>
-                                                        <ModalHeader className="flex flex-col gap-1">방송 시작</ModalHeader>
-                                                        <ModalBody className='items-center justify-center gap-4 mt-6'>
-                                                            <Input
+                                            <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement='top-center' className='flex' shadow='none' 
+                                            classNames={{ backdrop: "bg-test1A1918/50 backdrop-opacity-40" }}>
+                                                <ModalContent className='h-[350px]' >
+                                                    {(onClose) => (
+                                                        <>
+                                                            <ModalHeader className="flex flex-col gap-1">방송 시작</ModalHeader>
+                                                            <ModalBody className='items-center justify-center gap-4 mt-6'>
+                                                                <Input
+                                                                    isRequired
+                                                                    autoFocus
+                                                                    label="스트림 키(OBS에서 확인 가능합니다.)"
+                                                                    placeholder='스트림 키를 입력해주세요.'
+                                                                    variant='bordered'
+                                                                    value={streamKey}
+                                                                    onChange={(e) => {
+                                                                        setStreamKey(e.target.value);
+                                                                    }}
+                                                                    >
+                                                                </Input>
+
+                                                                <Input
                                                                 isRequired
-                                                                autoFocus
-                                                                label="스트림 키(OBS에서 확인 가능합니다.)"
-                                                                placeholder='스트림 키를 입력해주세요.'
-                                                                variant='bordered'
-                                                                value={streamKey}
-                                                                onChange={(e) => {
-                                                                    setStreamKey(e.target.value);
-                                                                }}
-                                                                >
-                                                            </Input>
-
-                                                            <Input
-                                                            isRequired
-                                                                label="채팅 URL"
-                                                                placeholder='Youtube 라이브 채팅창 URL을 입력해주세요'
-                                                                variant='bordered'
-                                                                value={chatUrl}
-                                                                onChange={(e) => {
-                                                                    setChatUrl(e.target.value);
-                                                                }}>
-                                                            </Input>
-                                                            <div className='flex justify-end w-full'>
-                                                                <Link isBlock showAnchorIcon isExternal href='https://support.google.com/youtube/answer/9854503?hl=ko#zippy=%2C%EC%8A%A4%ED%8A%B8%EB%A6%BC-%ED%82%A4%2C%EC%8A%A4%ED%8A%B8%EB%A6%BC-url'>스트림 키 가이드</Link>
-                                                                <Link isBlock showAnchorIcon isExternal href='https://support.google.com/youtube/answer/2524549?hl=ko#zippy='>채팅 URL 가이드</Link>
-                                                            </div>
-                                                            
-                                                        </ModalBody>
-                                                        <ModalFooter>
-                                                            <Button color='success' onClick={startBroadcast}>방송 시작!</Button>
-                                                            <Button onClick={onClose}>취소</Button>
-                                                            
-                                                        </ModalFooter>
-                                                    </>
-                                                )}
-                                                
-                                            </ModalContent>
-                                        </Modal>
-                                        </CardFooter>
-                                    </Card>
-                                </div>
-                            </CarouselItem>
-                        ))}
-                    </CarouselContent>
-                    <CarouselPrevious />
-                    <CarouselNext />
-                </Carousel>
+                                                                    label="채팅 URL"
+                                                                    placeholder='Youtube 라이브 채팅창 URL을 입력해주세요'
+                                                                    variant='bordered'
+                                                                    value={chatUrl}
+                                                                    onChange={(e) => {
+                                                                        setChatUrl(e.target.value);
+                                                                    }}>
+                                                                </Input>
+                                                                <div className='flex justify-end w-full'>
+                                                                    <Link isBlock showAnchorIcon isExternal href='https://support.google.com/youtube/answer/9854503?hl=ko#zippy=%2C%EC%8A%A4%ED%8A%B8%EB%A6%BC-%ED%82%A4%2C%EC%8A%A4%ED%8A%B8%EB%A6%BC-url'>스트림 키 가이드</Link>
+                                                                    <Link isBlock showAnchorIcon isExternal href='https://support.google.com/youtube/answer/2524549?hl=ko#zippy='>채팅 URL 가이드</Link>
+                                                                </div>
+                                                                
+                                                            </ModalBody>
+                                                            <ModalFooter>
+                                                                <Button color='success' onClick={startBroadcast}>방송 시작!</Button>
+                                                                <Button onClick={onClose}>취소</Button>
+                                                                <Toaster />
+                                                            </ModalFooter>
+                                                        </>
+                                                    )}
+                                                    
+                                                </ModalContent>
+                                            </Modal>
+                                            </CardFooter>
+                                        </Card>
+                                    </div>
+                                </CarouselItem>
+                            ))}
+                        </CarouselContent>
+                        <CarouselPrevious />
+                        <CarouselNext />
+                    </Carousel>
+                </div>
             </div>
+            {isLoading && (
+                <div className="fixed top-0 left-0 w-screen h-screen bg-black/50 flex items-center justify-center">
+                    <Spinner color='primary' size='lg' label='방송을 시작합니다. 잠시 대기해주세요.'/>
+                </div>
+            
+            )}
         </>
     )
 }
