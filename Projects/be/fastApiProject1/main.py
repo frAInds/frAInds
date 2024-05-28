@@ -11,6 +11,8 @@ from jose import JWTError, jwt
 from datetime import datetime, timedelta, timezone
 import asyncio
 import json
+import base64
+import os
 
 
 #사용자 조회용
@@ -287,16 +289,65 @@ async def start_broadcast(broadcast_data: BroadcastData):
     return {"message": "방송이 성공적으로 시작되었습니다."}
 
 
+# @app.websocket("/ws/data")
+# async def websocket_endpoint(websocket: WebSocket):
+#     await manager.connect(websocket)
+#     try:
+#         # while True:
+#         #     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+#         #     message = f"서버 시간: {current_time}"
+#         #     # data = "서버에서 생성된 데이터"
+#         while True:
+#             current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+#             caption = f"서버 시간: {current_time}"
+#             emotion = "happy"  # 임의의 감정 값
+
+#             # test 디렉토리의 GIF 파일을 base64로 인코딩
+#             gif_path = os.path.join(os.path.dirname(__file__), "test", "taemin_punch.gif")
+#             with open(gif_path, "rb") as gif_file:
+#                 gif_data = base64.b64encode(gif_file.read()).decode('utf-8')
+
+#             data = {
+#                 "person": gif_data,
+#                 "caption": caption,
+#                 "emotion": emotion
+#             }
+#             await manager.broadcast(json.dumps(data))
+#             # await manager.broadcast(json.dumps({"message": message}))
+#             await asyncio.sleep(1000)  # 1초마다 데이터 전송
+#     except WebSocketDisconnect:
+#         manager.disconnect(websocket)
+
 @app.websocket("/ws/data")
 async def websocket_endpoint(websocket: WebSocket):
     await manager.connect(websocket)
     try:
         while True:
             current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            message = f"서버 시간: {current_time}"
-            # data = "서버에서 생성된 데이터"
-            await manager.broadcast(json.dumps({"message": message}))
-            await asyncio.sleep(1)  # 1초마다 데이터 전송
+            caption = f"원신 좋아"
+            emotion = "때리고 싶을 만큼 화남"  # 임의의 감정 값
+
+            # test 디렉토리의 GIF 파일을 base64로 인코딩
+            gif_path = os.path.join(os.path.dirname(__file__), "test", "taemin_punch.gif")
+            with open(gif_path, "rb") as gif_file:
+                gif_data = base64.b64encode(gif_file.read()).decode('utf-8')
+
+            data = {
+                "person": gif_data,
+                "caption": caption,
+                "emotion": emotion
+            }
+
+            await websocket.send_json(data)
+
+            data = {
+                "person": None,
+                "caption": '',
+                "emotion": ''
+            }
+            
+            await asyncio.sleep(10)  # 10초마다 데이터 전송
+
     except WebSocketDisconnect:
         manager.disconnect(websocket)
 

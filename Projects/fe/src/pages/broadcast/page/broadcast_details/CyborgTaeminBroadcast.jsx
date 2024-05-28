@@ -1,5 +1,3 @@
-//강아지 채팅방 url은 chat/dog
-//캐릭터마다 채팅창 양식이 달라서 구분해야함
 import { useEffect, useRef, useState } from 'react';
 import defaultBg from '../images/default_bg.jpg'
 
