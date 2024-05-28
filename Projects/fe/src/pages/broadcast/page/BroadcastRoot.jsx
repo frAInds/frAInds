@@ -177,7 +177,6 @@ export const BroadcastRoot = () => {
                 <div className="fixed top-0 left-0 w-screen h-screen bg-black/50 flex items-center justify-center">
                     <Spinner color='primary' size='lg' label='방송을 시작합니다. 잠시 대기해주세요.'/>
                 </div>
-            
             )}
         </>
     )
